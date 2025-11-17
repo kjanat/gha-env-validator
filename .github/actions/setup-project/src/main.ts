@@ -17,12 +17,15 @@ import { z } from "zod";
 /**
  * Input schema for setup-project action
  */
-const InputSchema = z.object({
+const InputSchemaShape = {
   "node-version": z.string().default("lts/*"),
   "bun-version": z.string().default("latest"),
   "skip-build": z.boolean().default(false),
   "install-args": z.string().default("")
-});
+} as const;
+
+const InputSchema = z.object(InputSchemaShape);
+type SetupInputs = z.infer<typeof InputSchema>;
 
 /**
  * Main execution function
@@ -37,14 +40,14 @@ async function run(): Promise<void> {
     notice(`Setting up project: ${repo.full}`);
 
     // Parse and validate inputs
-    const inputResult = safeValidateInputs(InputSchema);
+    const inputResult = safeValidateInputs(InputSchemaShape);
 
     if (!inputResult.success) {
       setFailed(`Invalid inputs: ${inputResult.error.message}`);
       return;
     }
 
-    const inputs = inputResult.data;
+    const inputs = inputResult.data as SetupInputs;
 
     // Execute setup steps with grouped output
     await setupNode(inputs["node-version"]);

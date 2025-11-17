@@ -2,8 +2,8 @@
   "name": "@kjanat/gha-env-validator-workspace",
   "private": true,
   "workspaces": [
-    "packages/*",
-    ".github/actions/*"
+    "packages/**",
+    ".github/actions/**"
   ],
   "scripts": {
     "build": "bun run --filter @kjanat/gha-env-validator build",
@@ -17,5 +17,9 @@
     "lint:fix": "bun run --filter @kjanat/gha-env-validator lint:fix",
     "test": "bun run --filter @kjanat/gha-env-validator test",
     "typecheck": "bun run --filter @kjanat/gha-env-validator typecheck"
+  },
+  "catalog": {
+    "@types/bun": "^1.3.2",
+    "zod": "^4.1.12"
   }
 }

@@ -16,6 +16,7 @@
     "resolveJsonModule": true,
 
     // Declaration files
+    "composite": true,
     "declaration": true,
     "declarationMap": true,
     "emitDeclarationOnly": true,

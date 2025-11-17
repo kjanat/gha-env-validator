@@ -23,14 +23,15 @@ import { z } from "zod";
 /**
  * Input schema for codecov-upload action
  */
-const InputSchema = z.object({
+const InputSchemaShape = {
   "test-results-file": z.string().default("bun.xml"),
   "coverage-file": z.string().default("lcov.info"),
   "codecov-token": z.string().min(1, "Codecov token is required"),
   "fail-on-error": z.boolean().default(false),
   "use-oidc": z.boolean().default(true)
-});
+} as const;
 
+const InputSchema = z.object(InputSchemaShape);
 type CodecovInputs = z.infer<typeof InputSchema>;
 
 /**
@@ -42,14 +43,14 @@ async function run(): Promise<void> {
     assertGitHubActions();
 
     // Parse and validate inputs
-    const inputResult = safeValidateInputs(InputSchema);
+    const inputResult = safeValidateInputs(InputSchemaShape);
 
     if (!inputResult.success) {
       setFailed(`Invalid inputs: ${inputResult.error.message}`);
       return;
     }
 
-    const inputs = inputResult.data;
+    const inputs = inputResult.data as CodecovInputs;
 
     // Get GitHub context information
     const repo = getRepoInfo();
@@ -61,7 +62,7 @@ async function run(): Promise<void> {
     notice(`Repository: ${repo.full}`);
     notice(`Commit: ${commitSha}`);
     if (isPR && prInfo) {
-      notice(`Pull Request: #${prInfo.number} - ${prInfo.title}`);
+      notice(`Pull Request: ${prInfo.base} → ${prInfo.head}`);
     }
 
     // Upload test results
@@ -75,9 +76,9 @@ async function run(): Promise<void> {
     setOutput("coverage-status", coverageStatus);
 
     // Create summary table
-    await addSummaryTable({
-      headers: ["Upload Type", "File", "Status"],
-      rows: [
+    addSummaryTable(
+      ["Upload Type", "File", "Status"],
+      [
         [
           "Test Results",
           inputs["test-results-file"],
@@ -97,7 +98,7 @@ async function run(): Promise<void> {
             : "❌ Failed"
         ]
       ]
-    });
+    );
 
     // Check if any uploads failed
     const hasFailures = testStatus === "failed" || coverageStatus === "failed";

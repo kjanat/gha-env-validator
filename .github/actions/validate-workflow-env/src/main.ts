@@ -20,13 +20,14 @@ import { z } from "zod";
 /**
  * Input schema for validate-workflow-env action
  */
-const InputSchema = z.object({
+const InputSchemaShape = {
   "custom-schema": z.string().default(""),
   "strict-mode": z.boolean().default(false),
   "required-vars": z.array(z.string()).default([]),
   "mask-sensitive": z.boolean().default(true)
-});
+} as const;
 
+const InputSchema = z.object(InputSchemaShape);
 type ValidationInputs = z.infer<typeof InputSchema>;
 
 /**
@@ -54,14 +55,14 @@ function isSensitive(name: string): boolean {
 async function run(): Promise<void> {
   try {
     // Parse and validate inputs
-    const inputResult = safeValidateInputs(InputSchema);
+    const inputResult = safeValidateInputs(InputSchemaShape);
 
     if (!inputResult.success) {
       setFailed(`Invalid inputs: ${inputResult.error.message}`);
       return;
     }
 
-    const inputs = inputResult.data;
+    const inputs = inputResult.data as ValidationInputs;
 
     startGroup("🔍 Validating GitHub Actions Environment");
 
@@ -103,7 +104,7 @@ async function run(): Promise<void> {
       setOutput("validation-status", "success");
       setOutput("env-count", envCount.toString());
     } else {
-      const errors = validationResult.error.errors;
+      const errors = validationResult.error.issues;
 
       logError(`❌ Environment validation failed with ${errors.length} errors`);
 
@@ -132,8 +133,10 @@ async function run(): Promise<void> {
 /**
  * Build custom schema from required vars list
  */
-function buildCustomSchema(requiredVars: string[]): z.ZodObject<z.ZodRawShape> {
-  const schemaShape: z.ZodRawShape = {};
+function buildCustomSchema(
+  requiredVars: string[]
+): Record<string, z.ZodString> {
+  const schemaShape: Record<string, z.ZodString> = {};
 
   for (const varName of requiredVars) {
     schemaShape[varName] = z
@@ -141,7 +144,7 @@ function buildCustomSchema(requiredVars: string[]): z.ZodObject<z.ZodRawShape> {
       .min(1, `${varName} is required but not set`);
   }
 
-  return z.object(schemaShape);
+  return schemaShape;
 }
 
 /**

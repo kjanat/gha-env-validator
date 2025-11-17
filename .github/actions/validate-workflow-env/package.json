@@ -4,9 +4,14 @@
   "private": true,
   "type": "module",
   "scripts": {
-    "build": "bun build src/main.ts --target=bun --outfile=dist/index.js --packages=external"
+    "build": "bun build src/main.ts --target=bun --outfile=dist/index.js --packages=external",
+    "typecheck": "tsc --noEmit"
   },
   "dependencies": {
-    "@kjanat/gha-env-validator": "workspace:*"
+    "@kjanat/gha-env-validator": "workspace:*",
+    "zod": "catalog:"
+  },
+  "devDependencies": {
+    "@types/bun": "catalog:"
   }
 }

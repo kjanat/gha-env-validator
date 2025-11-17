@@ -35,7 +35,7 @@ type BuildResult = z.infer<typeof BuildResultSchema>;
 /**
  * Input schema for build-matrix-summary action
  */
-const InputSchema = z.object({
+const InputSchemaShape = {
   "matrix-results": z.string().transform((str, ctx) => {
     try {
       const parsed = JSON.parse(str);
@@ -50,8 +50,9 @@ const InputSchema = z.object({
   }),
   title: z.string().default("Build Matrix Results"),
   "include-context": z.boolean().default(true)
-});
+} as const;
 
+const InputSchema = z.object(InputSchemaShape);
 type MatrixInputs = z.infer<typeof InputSchema>;
 
 /**
@@ -60,14 +61,14 @@ type MatrixInputs = z.infer<typeof InputSchema>;
 async function run(): Promise<void> {
   try {
     // Parse and validate inputs
-    const inputResult = safeValidateInputs(InputSchema);
+    const inputResult = safeValidateInputs(InputSchemaShape);
 
     if (!inputResult.success) {
       setFailed(`Invalid inputs: ${inputResult.error.message}`);
       return;
     }
 
-    const inputs = inputResult.data;
+    const inputs = inputResult.data as MatrixInputs;
     const results = inputs["matrix-results"];
 
     // Calculate statistics
@@ -198,7 +199,7 @@ async function generateSummary(
     formatPlatform(result)
   ]);
 
-  await addSummaryTable({ headers, rows });
+  addSummaryTable(headers, rows);
 
   // Add error details if any failures
   if (stats.failed > 0) {
