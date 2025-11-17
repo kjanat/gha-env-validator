@@ -1,1 +1,1 @@
-export { type GitHubActionsEnv, githubActionsSchema } from "./github-defaults.js";
+export { type GitHubActionsEnv, githubActionsSchema } from "./github-defaults.ts";

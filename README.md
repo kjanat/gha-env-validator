@@ -94,6 +94,60 @@ const runId = process.env.GITHUB_RUN_ID; // string | undefined
 const os = process.env.RUNNER_OS; // string | undefined
 ```
 
+## Context Utilities
+
+Convenient helpers for accessing GitHub Actions context:
+
+```typescript
+import {
+  getActor,
+  getCommitSha,
+  getCurrentBranch,
+  getRepoInfo,
+  getRunnerInfo,
+  isPullRequest,
+  isTag,
+} from "@kjanat/gha-env-validator";
+
+const branch = getCurrentBranch(); // 'main'
+const repo = getRepoInfo(); // { owner: 'octocat', name: 'Hello-World', full: '...' }
+const sha = getCommitSha("short"); // 'ffac537'
+
+if (isPullRequest()) {
+  const pr = getPullRequestInfo(); // { base: 'main', head: 'feature' }
+}
+
+const runner = getRunnerInfo(); // { os: 'Linux', arch: 'X64', ... }
+const actor = getActor(); // { name: 'octocat', id: 1234567, ... }
+```
+
+## Action Input Validation
+
+Type-safe input validation for GitHub Actions:
+
+```typescript
+import {
+  getBooleanInput,
+  getInput,
+  validateInputs,
+  z,
+} from "@kjanat/gha-env-validator";
+
+// Simple input retrieval
+const token = getInput("github-token", { required: true });
+const dryRun = getBooleanInput("dry-run"); // Parses true/false, yes/no, 1/0
+
+// Validated inputs with schema
+const inputs = validateInputs({
+  version: z.string().regex(/^\d+\.\d+\.\d+$/),
+  environment: z.enum(["dev", "staging", "prod"]),
+  "dry-run": z.boolean().default(false),
+  targets: z.array(z.string()).default([]),
+});
+
+// inputs.version is type-safe!
+```
+
 ## Workflow Command Helpers
 
 Type-safe utilities for GitHub Actions workflow commands:

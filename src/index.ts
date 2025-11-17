@@ -20,9 +20,9 @@
 export { z, type ZodError } from "zod";
 
 // Export builder functions
-export { createCustomEnvSchema, createEnvSchema } from "./create-env-schema.js";
+export { createCustomEnvSchema, createEnvSchema } from "./create-env-schema.ts";
 // Export schemas
-export { type GitHubActionsEnv, githubActionsSchema } from "./schemas/index.js";
+export { type GitHubActionsEnv, githubActionsSchema } from "./schemas/index.ts";
 // Export validation functions
 export {
   safeValidateCustomEnv,
@@ -30,7 +30,7 @@ export {
   validateCustomEnv,
   validateEnv,
   type ValidateEnvOptions,
-} from "./validate.js";
+} from "./validate.ts";
 
 // Export workflow command utilities
 export {
@@ -59,3 +59,22 @@ export {
   stopCommands,
   warning,
 } from "./workflow-commands.js";
+
+// Export context utilities
+export {
+  getActor,
+  getApiUrls,
+  getCommitSha,
+  getCurrentBranch,
+  getPullRequestInfo,
+  getRepoInfo,
+  getRunnerInfo,
+  getWorkflowRun,
+  isDebugMode,
+  isOnBranch,
+  isPullRequest,
+  isTag,
+} from "./context.js";
+
+// Export action input utilities
+export { getBooleanInput, getInput, getMultilineInput, safeValidateInputs, validateInputs } from "./inputs.js";

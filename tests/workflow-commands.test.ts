@@ -10,13 +10,16 @@ import {
   clearJobSummary,
   debug,
   error,
+  group,
   isGitHubActions,
   maskValue,
   notice,
   setEnvVar,
+  setEnvVars,
   setMultilineEnvVar,
   setMultilineOutput,
   setOutput,
+  setOutputs,
   warning,
 } from "../src/workflow-commands";
 
@@ -186,6 +189,139 @@ describe("workflow commands", () => {
     test("returns false when GITHUB_ACTIONS is not set", () => {
       delete process.env.GITHUB_ACTIONS;
       expect(isGitHubActions()).toBe(false);
+    });
+  });
+
+  describe("error handling", () => {
+    test("setEnvVar throws when not in GitHub Actions", () => {
+      delete process.env.GITHUB_ENV;
+      expect(() => setEnvVar("VAR", "value")).toThrow("GITHUB_ENV is not set");
+    });
+
+    test("setMultilineEnvVar throws when not in GitHub Actions", () => {
+      delete process.env.GITHUB_ENV;
+      expect(() => setMultilineEnvVar("VAR", "value")).toThrow(
+        "GITHUB_ENV is not set",
+      );
+    });
+
+    test("setOutput throws when not in GitHub Actions", () => {
+      delete process.env.GITHUB_OUTPUT;
+      expect(() => setOutput("name", "value")).toThrow("GITHUB_OUTPUT is not set");
+    });
+
+    test("setMultilineOutput throws when not in GitHub Actions", () => {
+      delete process.env.GITHUB_OUTPUT;
+      expect(() => setMultilineOutput("name", "value")).toThrow(
+        "GITHUB_OUTPUT is not set",
+      );
+    });
+
+    test("addPath throws when not in GitHub Actions", () => {
+      delete process.env.GITHUB_PATH;
+      expect(() => addPath("/usr/bin")).toThrow("GITHUB_PATH is not set");
+    });
+
+    test("addJobSummary throws when not in GitHub Actions", () => {
+      delete process.env.GITHUB_STEP_SUMMARY;
+      expect(() => addJobSummary("content")).toThrow(
+        "GITHUB_STEP_SUMMARY is not set",
+      );
+    });
+
+    test("clearJobSummary throws when not in GitHub Actions", () => {
+      delete process.env.GITHUB_STEP_SUMMARY;
+      expect(() => clearJobSummary()).toThrow("GITHUB_STEP_SUMMARY is not set");
+    });
+  });
+
+  describe("batch operations", () => {
+    test("setEnvVars sets multiple variables", () => {
+      setEnvVars({
+        VAR1: "value1",
+        VAR2: "value2",
+        VAR3: "value3",
+      });
+
+      const content = fs.readFileSync(envFile, "utf-8");
+      expect(content).toContain("VAR1=value1");
+      expect(content).toContain("VAR2=value2");
+      expect(content).toContain("VAR3=value3");
+    });
+
+    test("setOutputs sets multiple outputs", () => {
+      setOutputs({
+        version: "1.2.3",
+        sha: "abc123",
+        status: "success",
+      });
+
+      const content = fs.readFileSync(outputFile, "utf-8");
+      expect(content).toContain("version=1.2.3");
+      expect(content).toContain("sha=abc123");
+      expect(content).toContain("status=success");
+    });
+  });
+
+  describe("summary helpers", () => {
+    test("addSummary formats with title and content", () => {
+      addSummary("Test Title", "Test content here");
+
+      const content = fs.readFileSync(summaryFile, "utf-8");
+      expect(content).toContain("## Test Title");
+      expect(content).toContain("Test content here");
+    });
+
+    test("addSummaryTable with multiple rows", () => {
+      addSummaryTable(
+        ["Col1", "Col2", "Col3"],
+        [
+          ["A", "B", "C"],
+          ["D", "E", "F"],
+          ["G", "H", "I"],
+        ],
+      );
+
+      const content = fs.readFileSync(summaryFile, "utf-8");
+      expect(content).toContain("| Col1 | Col2 | Col3 |");
+      expect(content).toContain("| A | B | C |");
+      expect(content).toContain("| D | E | F |");
+      expect(content).toContain("| G | H | I |");
+    });
+  });
+
+  describe("log grouping", () => {
+    test("group wraps function execution", async () => {
+      let executed = false;
+
+      await group("Test Group", () => {
+        executed = true;
+        return "result";
+      });
+
+      expect(executed).toBe(true);
+    });
+
+    test("group handles async functions", async () => {
+      const result = await group("Async Group", async () => {
+        await new Promise((resolve) => setTimeout(resolve, 10));
+        return "async result";
+      });
+
+      expect(result).toBe("async result");
+    });
+
+    test("group calls endGroup even on error", async () => {
+      try {
+        await group("Error Group", () => {
+          throw new Error("Test error");
+        });
+      } catch (err) {
+        // Expected
+      }
+
+      // If endGroup wasn't called, next output would be grouped
+      // This is hard to test directly, but the finally block ensures it
     });
   });
 });

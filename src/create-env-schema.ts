@@ -1,5 +1,5 @@
 import { z, type ZodRawShape } from "zod";
-import { githubActionsSchema } from "./schemas/github-defaults.js";
+import { githubActionsSchema } from "./schemas/github-defaults.ts";
 
 /**
  * Creates a custom environment variable schema by extending the default GitHub Actions schema.
