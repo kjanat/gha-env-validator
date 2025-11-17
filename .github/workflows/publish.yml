@@ -37,17 +37,16 @@ jobs:
           test -f dist/index.js || exit 1
           test -f dist/index.d.ts || exit 1
 
+      - name: Setup npm for trusted publishing
+        run: npm --version || (curl -fsSL https://npmjs.org/install.sh | sh)
+
       - name: Dry run publish
         if: github.event_name == 'workflow_dispatch' && github.event.inputs.dry-run == 'true'
-        run: bun publish --dry-run
-        env:
-          NPM_TOKEN: ${{ secrets.NPM_PUBLISH }}
+        run: npm publish --dry-run --provenance
 
       - name: Publish to npm
         if: github.event_name == 'release' || (github.event_name == 'workflow_dispatch' && github.event.inputs.dry-run != 'true')
-        run: bun publish --access public --tolerate-republish
-        env:
-          NPM_TOKEN: ${{ secrets.NPM_PUBLISH }}
+        run: npm publish --access public --provenance
 
       - name: Summary
         run: |
