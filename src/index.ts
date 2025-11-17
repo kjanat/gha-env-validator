@@ -17,21 +17,42 @@
 // Type augmentation happens automatically via src/types/env.d.ts
 
 // Re-export Zod for convenience
-export { z, type ZodError } from "zod";
-
+export { type ZodError, z } from "zod";
+// Export context utilities
+export {
+  getActor,
+  getApiUrls,
+  getCommitSha,
+  getCurrentBranch,
+  getPullRequestInfo,
+  getRepoInfo,
+  getRunnerInfo,
+  getWorkflowRun,
+  isDebugMode,
+  isOnBranch,
+  isPullRequest,
+  isTag,
+} from "./context.js";
 // Export builder functions
 export { createCustomEnvSchema, createEnvSchema } from "./create-env-schema.ts";
+// Export action input utilities
+export {
+  getBooleanInput,
+  getInput,
+  getMultilineInput,
+  safeValidateInputs,
+  validateInputs,
+} from "./inputs.js";
 // Export schemas
 export { type GitHubActionsEnv, githubActionsSchema } from "./schemas/index.ts";
 // Export validation functions
 export {
   safeValidateCustomEnv,
   safeValidateEnv,
+  type ValidateEnvOptions,
   validateCustomEnv,
   validateEnv,
-  type ValidateEnvOptions,
 } from "./validate.ts";
-
 // Export workflow command utilities
 export {
   addJobSummary,
@@ -59,22 +80,3 @@ export {
   stopCommands,
   warning,
 } from "./workflow-commands.js";
-
-// Export context utilities
-export {
-  getActor,
-  getApiUrls,
-  getCommitSha,
-  getCurrentBranch,
-  getPullRequestInfo,
-  getRepoInfo,
-  getRunnerInfo,
-  getWorkflowRun,
-  isDebugMode,
-  isOnBranch,
-  isPullRequest,
-  isTag,
-} from "./context.js";
-
-// Export action input utilities
-export { getBooleanInput, getInput, getMultilineInput, safeValidateInputs, validateInputs } from "./inputs.js";

@@ -78,9 +78,7 @@ describe("workflow commands", () => {
     test("throws when GITHUB_ENV is not set", () => {
       delete process.env.GITHUB_ENV;
 
-      expect(() => setEnvVar("VAR", "value")).toThrow(
-        "GITHUB_ENV is not set",
-      );
+      expect(() => setEnvVar("VAR", "value")).toThrow("GITHUB_ENV is not set");
     });
   });
 
@@ -207,7 +205,9 @@ describe("workflow commands", () => {
 
     test("setOutput throws when not in GitHub Actions", () => {
       delete process.env.GITHUB_OUTPUT;
-      expect(() => setOutput("name", "value")).toThrow("GITHUB_OUTPUT is not set");
+      expect(() => setOutput("name", "value")).toThrow(
+        "GITHUB_OUTPUT is not set",
+      );
     });
 
     test("setMultilineOutput throws when not in GitHub Actions", () => {

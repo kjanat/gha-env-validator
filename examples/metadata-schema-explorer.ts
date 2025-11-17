@@ -50,10 +50,13 @@ function showStatistics(vars: VariableInfo[]) {
   console.log("📊 Schema Statistics\n");
 
   // By category
-  const byCategory = vars.reduce((acc, v) => {
-    acc[v.category] = (acc[v.category] || 0) + 1;
-    return acc;
-  }, {} as Record<string, number>);
+  const byCategory = vars.reduce(
+    (acc, v) => {
+      acc[v.category] = (acc[v.category] || 0) + 1;
+      return acc;
+    },
+    {} as Record<string, number>,
+  );
 
   console.log("Variables by category:");
   Object.entries(byCategory)
@@ -61,10 +64,13 @@ function showStatistics(vars: VariableInfo[]) {
     .forEach(([cat, count]) => console.log(`  ${cat}: ${count}`));
 
   // By type
-  const byType = vars.reduce((acc, v) => {
-    acc[v.type] = (acc[v.type] || 0) + 1;
-    return acc;
-  }, {} as Record<string, number>);
+  const byType = vars.reduce(
+    (acc, v) => {
+      acc[v.type] = (acc[v.type] || 0) + 1;
+      return acc;
+    },
+    {} as Record<string, number>,
+  );
 
   console.log("\nVariables by Zod type:");
   Object.entries(byType)
@@ -95,7 +101,11 @@ function generateTypeScriptInterface(vars: VariableInfo[]) {
         type = v.enum.map((e) => `"${e}"`).join(" | ");
       } else if (v.type === "ZodNumber" || v.name.includes("_ID")) {
         type = "number";
-      } else if (v.type === "ZodBoolean" || v.name === "CI" || v.name === "GITHUB_ACTIONS") {
+      } else if (
+        v.type === "ZodBoolean" ||
+        v.name === "CI" ||
+        v.name === "GITHUB_ACTIONS"
+      ) {
         type = "boolean";
       }
 

@@ -63,7 +63,11 @@ export function setMultilineEnvVar(name: string, value: string): void {
   }
 
   const delimiter = `EOF_${Math.random().toString(36).substring(7)}`;
-  fs.appendFileSync(envFile, `${name}<<${delimiter}\n${value}\n${delimiter}\n`, "utf-8");
+  fs.appendFileSync(
+    envFile,
+    `${name}<<${delimiter}\n${value}\n${delimiter}\n`,
+    "utf-8",
+  );
 }
 
 /**
@@ -346,7 +350,10 @@ export function maskValue(value: string): void {
  * @param title - Group title
  * @param fn - Function to execute within the group
  */
-export async function group<T>(title: string, fn: () => T | Promise<T>): Promise<T> {
+export async function group<T>(
+  title: string,
+  fn: () => T | Promise<T>,
+): Promise<T> {
   console.log(`::group::${title}`);
   try {
     return await fn();
@@ -449,16 +456,14 @@ export function assertGitHubActions(): void {
 }
 
 // Helper function to format annotation parameters
-function formatAnnotationParams(
-  options?: {
-    file?: string;
-    line?: number;
-    col?: number;
-    endLine?: number;
-    endColumn?: number;
-    title?: string;
-  },
-): string {
+function formatAnnotationParams(options?: {
+  file?: string;
+  line?: number;
+  col?: number;
+  endLine?: number;
+  endColumn?: number;
+  title?: string;
+}): string {
   if (!options || Object.keys(options).length === 0) {
     return "";
   }

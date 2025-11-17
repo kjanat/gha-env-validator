@@ -28,8 +28,12 @@ import {
 async function main() {
   // Validate we're in GitHub Actions
   if (!isGitHubActions()) {
-    console.log("⚠️  Not running in GitHub Actions - skipping workflow commands");
-    console.log("💡 Run this in a GitHub Actions workflow to see full functionality\n");
+    console.log(
+      "⚠️  Not running in GitHub Actions - skipping workflow commands",
+    );
+    console.log(
+      "💡 Run this in a GitHub Actions workflow to see full functionality\n",
+    );
   }
 
   console.log("🚀 GitHub Actions Workflow Commands Demo\n");
@@ -86,7 +90,9 @@ Duration: 2m 34s
 
       console.log("✅ Outputs set (accessible via steps.<id>.outputs.<name>)");
     } else {
-      console.log("📝 Would set outputs: version, commit_sha, deployment_url, etc.");
+      console.log(
+        "📝 Would set outputs: version, commit_sha, deployment_url, etc.",
+      );
     }
   });
 
@@ -114,7 +120,9 @@ Duration: 2m 34s
         ],
       );
 
-      addJobSummary("\n### Next Steps\n\n- Deploy to staging\n- Run E2E tests\n");
+      addJobSummary(
+        "\n### Next Steps\n\n- Deploy to staging\n- Run E2E tests\n",
+      );
 
       console.log("✅ Job summary created (visible in workflow run page)");
     } else {

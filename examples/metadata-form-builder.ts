@@ -67,7 +67,11 @@ for (const [name, schema] of Object.entries(deploymentSchema.shape)) {
   } else if (zodType === "ZodEnum") {
     fieldType = "select";
     options = (schema as any)._zod?.values;
-  } else if (name.includes("RETRIES") || name.includes("NUMBER") || name.includes("ID")) {
+  } else if (
+    name.includes("RETRIES") ||
+    name.includes("NUMBER") ||
+    name.includes("ID")
+  ) {
     fieldType = "number";
   }
 
@@ -95,10 +99,9 @@ console.log(`
 export function DeploymentForm() {
   return (
     <form>
-      ${
-  formFields
-    .map(
-      (field) => `
+      ${formFields
+        .map(
+          (field) => `
       <div>
         <label htmlFor="${field.name}">${field.label}</label>
         <${field.type === "select" ? "select" : "input"}
@@ -109,17 +112,16 @@ export function DeploymentForm() {
           placeholder="${field.example || ""}"
         ${field.type === "select" ? ">" : "/>"}
         ${
-        field.type === "select"
-          ? `
+          field.type === "select"
+            ? `
           ${field.options?.map((opt) => `<option value="${opt}">${opt}</option>`).join("\n          ")}
         </select>`
-          : ""
-      }
+            : ""
+        }
         <small>${field.description}</small>
       </div>`,
-    )
-    .join("\n")
-}
+        )
+        .join("\n")}
     </form>
   );
 }

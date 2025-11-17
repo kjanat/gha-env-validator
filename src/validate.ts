@@ -1,4 +1,4 @@
-import type { z, ZodObject, ZodRawShape } from "zod";
+import type { ZodObject, ZodRawShape, z } from "zod";
 import { type GitHubActionsEnv, githubActionsSchema } from "./schemas/index.js";
 
 /**
@@ -43,7 +43,9 @@ export function validateEnv(
 
   // In Zod v4, use the schema directly - it allows unknown keys by default
   // strict mode uses the schema as-is (strips unknown keys)
-  const schema = strict ? githubActionsSchema : githubActionsSchema.passthrough();
+  const schema = strict
+    ? githubActionsSchema
+    : githubActionsSchema.passthrough();
 
   return schema.parse(env) as GitHubActionsEnv;
 }
@@ -104,7 +106,9 @@ export function validateCustomEnv<T extends ZodRawShape>(
 export function safeValidateEnv(options: ValidateEnvOptions = {}) {
   const { env = process.env, strict = false } = options;
 
-  const schema = strict ? githubActionsSchema : githubActionsSchema.passthrough();
+  const schema = strict
+    ? githubActionsSchema
+    : githubActionsSchema.passthrough();
 
   return schema.safeParse(env);
 }

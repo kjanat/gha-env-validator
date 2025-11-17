@@ -82,8 +82,10 @@ export function getCommitSha(format: "full" | "short" = "full"): string {
  */
 export function isPullRequest(): boolean {
   const env = validateEnv();
-  return env.GITHUB_EVENT_NAME === "pull_request"
-    || env.GITHUB_EVENT_NAME === "pull_request_target";
+  return (
+    env.GITHUB_EVENT_NAME === "pull_request" ||
+    env.GITHUB_EVENT_NAME === "pull_request_target"
+  );
 }
 
 /**

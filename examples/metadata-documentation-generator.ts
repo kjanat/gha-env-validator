@@ -53,5 +53,7 @@ for (const category of categories) {
 }
 
 console.log("\n## Summary\n");
-console.log(`Total variables: ${Object.keys(githubActionsSchema.shape).length}`);
+console.log(
+  `Total variables: ${Object.keys(githubActionsSchema.shape).length}`,
+);
 console.log(`Categories: ${categories.length}`);
