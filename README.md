@@ -244,7 +244,7 @@ See [GitHub Actions documentation](https://docs.github.com/en/actions/reference/
 Each environment variable includes rich metadata using Zod v4's `.meta()` API:
 
 ```typescript
-import { githubActionsSchema } from '@kjanat/gha-env-validator';
+import { githubActionsSchema } from "@kjanat/gha-env-validator";
 
 // Access metadata programmatically
 const shaField = githubActionsSchema.shape.GITHUB_SHA;
@@ -260,6 +260,7 @@ const shaField = githubActionsSchema.shape.GITHUB_SHA;
 ```
 
 **Categories:**
+
 - `environment`: CI flags
 - `action`: Action context
 - `actor`: User/app information
@@ -272,12 +273,88 @@ const shaField = githubActionsSchema.shape.GITHUB_SHA;
 - `workflow`: Workflow execution
 - `runner`: Runner environment
 
-This metadata is useful for:
-- Generating documentation
-- Building forms and UIs
-- Creating configuration tools
-- AI-assisted development
-- Schema introspection
+### Metadata Use Cases
+
+The rich metadata enables powerful tooling and automation:
+
+#### 1. Auto-Generated Documentation
+
+```typescript
+// Generate markdown docs from schema metadata
+for (const [name, schema] of Object.entries(githubActionsSchema.shape)) {
+  const meta = schema._zod.meta;
+  console.log(`### ${name}`);
+  console.log(`**${meta.title}** - ${meta.description}`);
+  console.log(`Example: \`${meta.example}\``);
+}
+```
+
+#### 2. Form/UI Builders
+
+```typescript
+// Build React/Vue forms automatically from schema
+const fields = Object.entries(deploymentSchema.shape).map(([name, schema]) => {
+  const meta = schema._zod.meta;
+  return {
+    name,
+    label: meta.title,
+    description: meta.description,
+    placeholder: meta.example,
+    type: meta.category === "secrets" ? "password" : "text",
+  };
+});
+```
+
+#### 3. CLI Tools & Helpers
+
+```typescript
+// Build interactive CLI explorers
+function searchVars(keyword: string) {
+  return Object.entries(schema.shape)
+    .filter(([_, s]) => s._zod.meta.description.includes(keyword))
+    .map(([name, s]) => ({ name, ...s._zod.meta }));
+}
+```
+
+#### 4. Enhanced Error Messages
+
+```typescript
+// Provide context-aware validation errors
+if (!result.success) {
+  for (const issue of result.error.issues) {
+    const fieldMeta = schema.shape[issue.path[0]]._zod.meta;
+    console.error(`${fieldMeta.title}: ${issue.message}`);
+    console.error(`Expected: ${fieldMeta.example}`);
+  }
+}
+```
+
+#### 5. Schema Exports
+
+```typescript
+// Export to JSON Schema, OpenAPI, GraphQL schemas
+const jsonSchema = {
+  properties: Object.fromEntries(
+    Object.entries(schema.shape).map(([name, s]) => [
+      name,
+      {
+        type: "string",
+        title: s._zod.meta.title,
+        description: s._zod.meta.description,
+        examples: [s._zod.meta.example],
+      },
+    ]),
+  ),
+};
+```
+
+See `examples/` directory for complete implementations:
+
+- `metadata-documentation-generator.ts` - Auto-generate markdown docs
+- `metadata-form-builder.ts` - Build configuration UIs
+- `metadata-cli-helper.ts` - Interactive CLI tools
+- `metadata-validation-reporter.ts` - Rich error messages
+- `metadata-schema-explorer.ts` - Schema introspection
 
 ## Development
 

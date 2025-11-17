@@ -42,8 +42,7 @@ export const githubActionsSchema = z.object({
     .meta({
       id: "GITHUB_REF_PROTECTED",
       title: "Branch Protection Status",
-      description:
-        "true if branch protections or rulesets are configured for the ref that triggered the workflow run.",
+      description: "true if branch protections or rulesets are configured for the ref that triggered the workflow run.",
       category: "git",
       example: "true",
     }),
@@ -194,8 +193,7 @@ export const githubActionsSchema = z.object({
     .meta({
       id: "GITHUB_EVENT_PATH",
       title: "Event Payload Path",
-      description:
-        "The path to the file on the runner that contains the full event webhook payload.",
+      description: "The path to the file on the runner that contains the full event webhook payload.",
       category: "paths",
       example: "/github/workflow/event.json",
     }),
@@ -305,8 +303,7 @@ export const githubActionsSchema = z.object({
     .meta({
       id: "GITHUB_REPOSITORY_ID",
       title: "Repository ID",
-      description:
-        "The ID of the repository. Note that this is different from the repository name.",
+      description: "The ID of the repository. Note that this is different from the repository name.",
       category: "repository",
       example: "123456789",
     }),
@@ -327,8 +324,7 @@ export const githubActionsSchema = z.object({
     .meta({
       id: "GITHUB_REPOSITORY_OWNER_ID",
       title: "Owner Account ID",
-      description:
-        "The repository owner's account ID. Note that this is different from the owner's name.",
+      description: "The repository owner's account ID. Note that this is different from the owner's name.",
       category: "repository",
       example: "1234567",
     }),
@@ -488,7 +484,8 @@ export const githubActionsSchema = z.object({
     .meta({
       id: "RUNNER_OS",
       title: "Runner OS",
-      description: "The operating system of the runner executing the job. Possible values are Linux, Windows, or macOS.",
+      description:
+        "The operating system of the runner executing the job. Possible values are Linux, Windows, or macOS.",
       category: "runner",
       example: "Linux",
     }),
