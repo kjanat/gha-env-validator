@@ -20,7 +20,6 @@ jobs:
 
     steps:
       - uses: actions/checkout@v5
-
       - uses: oven-sh/setup-bun@v2
 
       - name: Install dependencies
@@ -42,20 +41,23 @@ jobs:
         if: github.event_name == 'workflow_dispatch' && github.event.inputs.dry-run == 'true'
         run: bun publish --dry-run
         env:
-          NPM_CONFIG_TOKEN: ${{ secrets.NPM_PUBLISH }}
+          NPM_TOKEN: ${{ secrets.NPM_PUBLISH }}
 
       - name: Publish to npm
         if: github.event_name == 'release' || (github.event_name == 'workflow_dispatch' && github.event.inputs.dry-run != 'true')
         run: bun publish --access public --tolerate-republish
         env:
-          NPM_CONFIG_TOKEN: ${{ secrets.NPM_PUBLISH }}
+          NPM_TOKEN: ${{ secrets.NPM_PUBLISH }}
 
       - name: Summary
         run: |
-          echo "## 📦 Published" >> $GITHUB_STEP_SUMMARY
-          echo "" >> $GITHUB_STEP_SUMMARY
-          echo "**Package:** @kjanat/gha-env-validator" >> $GITHUB_STEP_SUMMARY
-          echo "**Version:** $(bun pm pkg get version)" >> $GITHUB_STEP_SUMMARY
-          echo "**Event:** ${{ github.event_name }}" >> $GITHUB_STEP_SUMMARY
-          echo "" >> $GITHUB_STEP_SUMMARY
-          echo "[View on npm →](https://www.npmjs.com/package/@kjanat/gha-env-validator)" >> $GITHUB_STEP_SUMMARY
+          PKG_NAME=$(bun pm pkg get name)
+          {
+            echo "## 📦 Published"
+            echo ""
+            echo "**Package:** $PKG_NAME"
+            echo "**Version:** $(bun pm pkg get version)"
+            echo "**Event:** ${{ github.event_name }}"
+            echo ""
+            echo "[View on npm →](https://www.npmjs.com/package/$PKG_NAME)"
+          } >> "$GITHUB_STEP_SUMMARY"
