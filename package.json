@@ -41,7 +41,7 @@
   "scripts": {
     "build": "bun build ./src/index.ts --target=node --outfile=dist/index.js --external zod && tsc --project tsconfig.build.json",
     "clean": "rm -rf dist",
-    "docs:build": "typedoc && vitepress build docs",
+    "docs:build": "vitepress build docs",
     "docs:dev": "vitepress dev docs",
     "docs:preview": "vitepress preview docs",
     "postinstall": "lefthook install",
@@ -64,7 +64,7 @@
     "typedoc": "^0.28.14",
     "typedoc-plugin-markdown": "^4.9.0",
     "typescript": "^5.9.3",
-    "vitepress": "^1.6.4"
+    "vitepress": "^2.0.0-alpha.13"
   },
   "peerDependencies": {
     "typescript": "^5"

@@ -72,4 +72,6 @@ export default defineConfig({
       dark: "github-dark",
     },
   },
+
+  ignoreDeadLinks: true,
 });

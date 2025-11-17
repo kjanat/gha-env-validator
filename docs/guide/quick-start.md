@@ -113,7 +113,7 @@ jobs:
 
       - name: Run validation
         env:
-          API_KEY: ${{ secrets.API_KEY }}
+          API_KEY: $\{{ secrets.API_KEY }}
         run: bun run build.ts
 ```
 

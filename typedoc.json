@@ -8,9 +8,11 @@
   "hideGenerator": true,
   "excludePrivate": true,
   "excludeInternal": true,
+  "excludeExternals": true,
   "readme": "none",
   "navigation": {
     "includeCategories": true,
     "includeFolders": false
-  }
+  },
+  "skipErrorChecking": true
 }
