@@ -16,12 +16,29 @@
 
 // Type augmentation happens automatically via src/types/env.d.ts
 
-// Re-export webhook types for convenience
+// Re-export all webhook event types
 export type {
+  CheckRunEvent,
+  CheckSuiteEvent,
+  CreateEvent,
+  DeleteEvent,
+  DeploymentEvent,
+  DeploymentStatusEvent,
+  DiscussionCommentEvent,
+  DiscussionEvent,
+  ForkEvent,
+  GollumEvent,
+  IssueCommentEvent,
+  IssuesEvent,
+  PingEvent,
   PullRequestEvent,
   PushEvent,
   ReleaseEvent,
+  StarEvent,
+  WatchEvent,
   WorkflowDispatchEvent,
+  WorkflowJobEvent,
+  WorkflowRunEvent,
 } from "@octokit/webhooks-types";
 // Re-export Zod for convenience
 export { type ZodError, z } from "zod";
@@ -42,6 +59,47 @@ export {
 } from "./context.ts";
 // Export builder functions
 export { createCustomEnvSchema, createEnvSchema } from "./create-env-schema.ts";
+
+// Export event name type
+export type { GitHubEventName } from "./event-types.ts";
+
+// Export extended event utilities (15 most common events)
+export {
+  getCheckRunEvent,
+  getCheckSuiteEvent,
+  getCreateEvent,
+  getDeleteEvent,
+  getDeploymentEvent,
+  getDeploymentStatusEvent,
+  getDiscussionCommentEvent,
+  getDiscussionEvent,
+  getForkEvent,
+  getGollumEvent,
+  getIssueCommentEvent,
+  getIssuesEvent,
+  getPingEvent,
+  getStarEvent,
+  getWatchEvent,
+  getWorkflowJobEvent,
+  getWorkflowRunEvent,
+  isCheckRunEvent,
+  isCheckSuiteEvent,
+  isCreateEvent,
+  isDeleteEvent,
+  isDeploymentEvent,
+  isDeploymentStatusEvent,
+  isDiscussionCommentEvent,
+  isDiscussionEvent,
+  isForkEvent,
+  isGollumEvent,
+  isIssueCommentEvent,
+  isIssuesEvent,
+  isPingEvent,
+  isStarEvent,
+  isWatchEvent,
+  isWorkflowJobEvent,
+  isWorkflowRunEvent,
+} from "./events.ts";
 // Export github context utilities
 export {
   getEventName,
