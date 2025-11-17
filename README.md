@@ -94,6 +94,39 @@ const runId = process.env.GITHUB_RUN_ID; // string | undefined
 const os = process.env.RUNNER_OS; // string | undefined
 ```
 
+## GitHub Context & Events
+
+Access github context properties and typed event payloads:
+
+```typescript
+import {
+  getEventPayload,
+  getGitHubToken,
+  getPullRequestEvent,
+  getPushEvent,
+  getReleaseEvent,
+  getRepositoryUrl,
+  isEventType,
+  isPushEvent,
+} from "@kjanat/gha-env-validator";
+
+// Get typed event payload
+if (isPushEvent()) {
+  const event = getPushEvent();
+  console.log(event.commits.length);
+  console.log(event.head_commit?.message);
+}
+
+// GitHub token for API calls
+const token = getGitHubToken();
+const response = await fetch(api, {
+  headers: { Authorization: `Bearer ${token}` },
+});
+
+// Repository URLs
+const url = getRepositoryUrl(); // 'https://github.com/owner/repo'
+```
+
 ## Context Utilities
 
 Convenient helpers for accessing GitHub Actions context:

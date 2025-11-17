@@ -16,6 +16,13 @@
 
 // Type augmentation happens automatically via src/types/env.d.ts
 
+// Re-export webhook types for convenience
+export type {
+  PullRequestEvent,
+  PushEvent,
+  ReleaseEvent,
+  WorkflowDispatchEvent,
+} from "@octokit/webhooks-types";
 // Re-export Zod for convenience
 export { type ZodError, z } from "zod";
 // Export context utilities
@@ -32,9 +39,25 @@ export {
   isOnBranch,
   isPullRequest,
   isTag,
-} from "./context.js";
+} from "./context.ts";
 // Export builder functions
 export { createCustomEnvSchema, createEnvSchema } from "./create-env-schema.ts";
+// Export github context utilities
+export {
+  getEventName,
+  getEventPayload,
+  getGitHubToken,
+  getPullRequestEvent,
+  getPushEvent,
+  getReleaseEvent,
+  getRepositoryGitUrl,
+  getRepositoryUrl,
+  getWorkflowDispatchEvent,
+  isEventType,
+  isPushEvent,
+  isReleaseEvent,
+  isWorkflowDispatch,
+} from "./github-context.ts";
 // Export action input utilities
 export {
   getBooleanInput,
@@ -42,7 +65,7 @@ export {
   getMultilineInput,
   safeValidateInputs,
   validateInputs,
-} from "./inputs.js";
+} from "./inputs.ts";
 // Export schemas
 export { type GitHubActionsEnv, githubActionsSchema } from "./schemas/index.ts";
 // Export validation functions
@@ -79,4 +102,4 @@ export {
   startGroup,
   stopCommands,
   warning,
-} from "./workflow-commands.js";
+} from "./workflow-commands.ts";
