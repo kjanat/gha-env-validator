@@ -105,9 +105,10 @@ describe("validateEnv", () => {
       CUSTOM_VAR: "custom-value"
     };
 
-    const result = validateEnv({ env: mockEnv }) as any;
+    const result = validateEnv({ env: mockEnv });
 
-    expect(result.CUSTOM_VAR).toBe("custom-value");
+    // biome-ignore lint/suspicious/noExplicitAny: Testing dynamic custom property access
+    expect((result as any).CUSTOM_VAR).toBe("custom-value");
   });
 
   test("throws error on invalid env", () => {

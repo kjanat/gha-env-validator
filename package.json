@@ -3,14 +3,14 @@
   "version": "0.1.1",
   "description": "Type-safe GitHub Actions environment variable validation with IntelliSense support using Zod",
   "keywords": [
-    "github-actions",
+    "ci-cd",
     "environment-variables",
-    "validation",
-    "typescript",
-    "zod",
-    "type-safe",
+    "github-actions",
     "intellisense",
-    "ci-cd"
+    "type-safe",
+    "typescript",
+    "validation",
+    "zod"
   ],
   "homepage": "https://kjanat.github.io/gha-env-validator/",
   "bugs": {
@@ -51,6 +51,7 @@
   "scripts": {
     "build": "tsdown",
     "clean": "rm -rf dist",
+    "dev": "tsdown --watch",
     "docs:build": "vitepress build docs",
     "docs:dev": "vitepress dev docs",
     "docs:preview": "vitepress preview docs",

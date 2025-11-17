@@ -124,13 +124,23 @@ export {
   safeValidateInputs,
   validateInputs
 } from "~/inputs";
+// Export metadata utilities
+export {
+  getEnumValues,
+  getSchemaMetadata,
+  getZodTypeName,
+  isBooleanSchema,
+  isSchemaOptional,
+  isZodEnum,
+  type ZodMetadata
+} from "~/metadata";
 // Export schemas
 export { type GitHubActionsEnv, githubActionsSchema } from "~/schemas";
 // Export validation functions
 export {
   safeValidateCustomEnv,
   safeValidateEnv,
-  type ValidateEnvOptions, 
+  type ValidateEnvOptions,
   validateCustomEnv,
   validateEnv
 } from "~/validate";

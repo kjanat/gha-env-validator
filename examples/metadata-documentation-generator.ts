@@ -8,10 +8,13 @@
 import { githubActionsSchema } from "@kjanat/gha-env-validator";
 
 // Group variables by category
-const varsByCategory = new Map<string, Array<{ name: string; meta: any }>>();
+const varsByCategory = new Map<
+  string,
+  Array<{ name: string; meta: ZodMetadata }>
+>();
 
 for (const [name, schema] of Object.entries(githubActionsSchema.shape)) {
-  const meta = (schema as any)._zod?.meta || {};
+  const meta = getSchemaMetadata(schema);
   const category = meta.category || "uncategorized";
 
   if (!varsByCategory.has(category)) {

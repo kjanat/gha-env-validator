@@ -7,9 +7,11 @@
 
 import {
   createEnvSchema,
+  getSchemaMetadata,
   safeValidateCustomEnv,
   z
 } from "@kjanat/gha-env-validator";
+import type { ZodType } from "zod";
 
 // Create schema with metadata
 const deploySchema = createEnvSchema({
@@ -46,7 +48,9 @@ const testEnv = {
   // ... GitHub Actions vars would be here in real scenario
 };
 
-const result = safeValidateCustomEnv(deploySchema, { env: testEnv as any });
+const result = safeValidateCustomEnv(deploySchema, {
+  env: testEnv as Record<string, string>
+});
 
 if (!result.success) {
   console.log("❌ Validation Failed\n");
@@ -55,8 +59,9 @@ if (!result.success) {
   // Enhanced error reporting using metadata
   for (const issue of result.error.issues) {
     const fieldName = issue.path[0] as string;
-    const schema = (deploySchema.shape as any)[fieldName];
-    const meta = schema?._zod?.meta || {};
+    const shapeRecord = deploySchema.shape as Record<string, ZodType>;
+    const schema = shapeRecord[fieldName];
+    const meta = schema ? getSchemaMetadata(schema) : {};
 
     console.log(`━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━`);
     console.log(`\n🔴 ${fieldName}`);
@@ -98,8 +103,10 @@ if (!result.success) {
 
   for (const issue of result.error.issues) {
     const fieldName = issue.path[0] as string;
-    const schema = (deploySchema.shape as any)[fieldName];
-    const category = schema?._zod?.meta?.category || "unknown";
+    const shapeRecord = deploySchema.shape as Record<string, ZodType>;
+    const schema = shapeRecord[fieldName];
+    const meta = schema ? getSchemaMetadata(schema) : {};
+    const category = meta.category || "unknown";
     errorsByCategory.set(category, (errorsByCategory.get(category) || 0) + 1);
   }
 

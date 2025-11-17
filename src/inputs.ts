@@ -4,7 +4,8 @@
  * Provides utilities for validating and parsing action inputs with Zod schemas.
  */
 
-import { type ZodObject, type ZodRawShape, z } from "zod";
+import { type ZodObject, type ZodRawShape, type ZodType, z } from "zod";
+import { isBooleanSchema } from "./metadata";
 
 /**
  * Gets an action input value.
@@ -143,9 +144,7 @@ export function validateInputs<T extends ZodRawShape>(
     // Handle different types
     if (value !== undefined && value !== "") {
       // Check if it's a boolean schema
-      const schemaType = (zodSchema as any).type;
-
-      if (schemaType === "boolean") {
+      if (isBooleanSchema(zodSchema as ZodType)) {
         const normalized = value.toLowerCase();
         inputs[name] = ["true", "yes", "1"].includes(normalized);
       } else {
@@ -187,9 +186,7 @@ export function safeValidateInputs<T extends ZodRawShape>(schema: T) {
     const value = process.env[envName]?.trim();
 
     if (value !== undefined && value !== "") {
-      const schemaType = (zodSchema as any).type;
-
-      if (schemaType === "boolean") {
+      if (isBooleanSchema(zodSchema as ZodType)) {
         const normalized = value.toLowerCase();
         inputs[name] = ["true", "yes", "1"].includes(normalized);
       } else {

@@ -5,7 +5,13 @@
  * Useful for understanding available variables and their relationships.
  */
 
-import { githubActionsSchema } from "@kjanat/gha-env-validator";
+import {
+  getEnumValues,
+  getSchemaMetadata,
+  getZodTypeName,
+  githubActionsSchema,
+  isSchemaOptional
+} from "@kjanat/gha-env-validator";
 
 interface VariableInfo {
   name: string;
@@ -24,10 +30,10 @@ function extractVariableInfo(): VariableInfo[] {
   const variables: VariableInfo[] = [];
 
   for (const [name, schema] of Object.entries(githubActionsSchema.shape)) {
-    const meta = (schema as any)._zod?.meta || {};
-    const zodType = (schema as any)._zod?.type || "unknown";
-    const isOptional = (schema as any).isOptional?.() || false;
-    const enumValues = (schema as any)._zod?.values;
+    const meta = getSchemaMetadata(schema);
+    const zodType = getZodTypeName(schema);
+    const isOptional = isSchemaOptional(schema);
+    const enumValues = getEnumValues(schema);
 
     variables.push({
       name,
@@ -38,7 +44,7 @@ function extractVariableInfo(): VariableInfo[] {
       example: meta.example || "",
       type: zodType,
       optional: isOptional,
-      enum: enumValues,
+      enum: enumValues
     });
   }
 
@@ -55,13 +61,13 @@ function showStatistics(vars: VariableInfo[]) {
       acc[v.category] = (acc[v.category] || 0) + 1;
       return acc;
     },
-    {} as Record<string, number>,
+    {} as Record<string, number>
   );
 
   console.log("Variables by category:");
-  for (const [cat, count] of Object.entries(byCategory).sort(
-    (a, b) => b[1] - a[1],
-  )) {
+  for (
+    const [cat, count] of Object.entries(byCategory).sort((a, b) => b[1] - a[1])
+  ) {
     console.log(`  ${cat}: ${count}`);
   }
 
@@ -71,13 +77,13 @@ function showStatistics(vars: VariableInfo[]) {
       acc[v.type] = (acc[v.type] || 0) + 1;
       return acc;
     },
-    {} as Record<string, number>,
+    {} as Record<string, number>
   );
 
   console.log("\nVariables by Zod type:");
-  for (const [type, count] of Object.entries(byType).sort(
-    (a, b) => b[1] - a[1],
-  )) {
+  for (
+    const [type, count] of Object.entries(byType).sort((a, b) => b[1] - a[1])
+  ) {
     console.log(`  ${type}: ${count}`);
   }
 
@@ -122,7 +128,17 @@ function generateTypeScriptInterface(vars: VariableInfo[]) {
 
 // Generate JSON Schema (useful for external tools)
 function generateJsonSchemaStub(vars: VariableInfo[]) {
-  const properties: Record<string, any> = {};
+  const properties: Record<
+    string,
+    {
+      type: string;
+      title?: string;
+      description?: string;
+      examples?: string[];
+      category?: string;
+      enum?: string[];
+    }
+  > = {};
 
   vars.forEach((v) => {
     properties[v.name] = {
@@ -130,7 +146,7 @@ function generateJsonSchemaStub(vars: VariableInfo[]) {
       title: v.title,
       description: v.description,
       examples: [v.example],
-      category: v.category,
+      category: v.category
     };
 
     if (v.enum) {
@@ -142,7 +158,7 @@ function generateJsonSchemaStub(vars: VariableInfo[]) {
     $schema: "http://json-schema.org/draft-07/schema#",
     type: "object",
     properties,
-    required: vars.filter((v) => !v.optional).map((v) => v.name),
+    required: vars.filter((v) => !v.optional).map((v) => v.name)
   };
 }
 

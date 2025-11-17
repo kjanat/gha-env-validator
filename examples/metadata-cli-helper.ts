@@ -5,14 +5,18 @@
  * for exploring and understanding GitHub Actions variables.
  */
 
-import { githubActionsSchema } from "@kjanat/gha-env-validator";
+import {
+  getSchemaMetadata,
+  githubActionsSchema
+} from "@kjanat/gha-env-validator";
+import type { ZodType } from "zod";
 
 // CLI command: Show all variables in a category
 function showCategory(category: string) {
   console.log(`\n📁 ${category.toUpperCase()} Variables:\n`);
 
   for (const [name, schema] of Object.entries(githubActionsSchema.shape)) {
-    const meta = (schema as any)._zod?.meta || {};
+    const meta = getSchemaMetadata(schema);
 
     if (meta.category === category) {
       console.log(`  ${name}`);
@@ -28,9 +32,9 @@ function searchVariables(keyword: string) {
   console.log(`\n🔍 Search results for "${keyword}":\n`);
 
   for (const [name, schema] of Object.entries(githubActionsSchema.shape)) {
-    const meta = (schema as any)._zod?.meta || {};
-    const searchText =
-      `${name} ${meta.title} ${meta.description}`.toLowerCase();
+    const meta = getSchemaMetadata(schema);
+    const searchText = `${name} ${meta.title} ${meta.description}`
+      .toLowerCase();
 
     if (searchText.includes(keyword.toLowerCase())) {
       console.log(`  ✓ ${name}`);
@@ -42,7 +46,8 @@ function searchVariables(keyword: string) {
 
 // CLI command: Show variable details
 function showVariable(name: string) {
-  const schema = (githubActionsSchema.shape as any)[name];
+  const shapeRecord = githubActionsSchema.shape as Record<string, ZodType>;
+  const schema = shapeRecord[name];
 
   if (!schema) {
     console.log(`❌ Variable "${name}" not found`);
@@ -64,7 +69,7 @@ function listCategories() {
   const categories = new Set<string>();
 
   for (const [_, schema] of Object.entries(githubActionsSchema.shape)) {
-    const meta = (schema as any)._zod?.meta || {};
+    const meta = getSchemaMetadata(schema);
     if (meta.category) {
       categories.add(meta.category);
     }

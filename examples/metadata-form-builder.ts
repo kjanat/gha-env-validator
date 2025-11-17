@@ -5,7 +5,14 @@
  * for building UIs that configure GitHub Actions workflows.
  */
 
-import { createEnvSchema, z } from "@kjanat/gha-env-validator";
+import {
+  createEnvSchema,
+  getEnumValues,
+  getSchemaMetadata,
+  getZodTypeName,
+  isSchemaOptional,
+  z
+} from "@kjanat/gha-env-validator";
 
 // Example: Build a deployment configuration form
 const deploymentSchema = createEnvSchema({
@@ -55,8 +62,8 @@ interface FormField {
 const formFields: FormField[] = [];
 
 for (const [name, schema] of Object.entries(deploymentSchema.shape)) {
-  const meta = (schema as any)._zod?.meta || {};
-  const zodType = (schema as any)._zod?.type;
+  const meta = getSchemaMetadata(schema);
+  const zodType = getZodTypeName(schema);
 
   // Determine field type
   let fieldType: FormField["type"] = "text";
@@ -66,7 +73,7 @@ for (const [name, schema] of Object.entries(deploymentSchema.shape)) {
     fieldType = "password";
   } else if (zodType === "ZodEnum") {
     fieldType = "select";
-    options = (schema as any)._zod?.values;
+    options = getEnumValues(schema);
   } else if (
     name.includes("RETRIES") ||
     name.includes("NUMBER") ||
@@ -80,7 +87,7 @@ for (const [name, schema] of Object.entries(deploymentSchema.shape)) {
     label: meta.title || name,
     description: meta.description || "",
     type: fieldType,
-    required: !(schema as any).isOptional(),
+    required: !isSchemaOptional(schema),
     options,
     example: meta.example,
     validation: {
