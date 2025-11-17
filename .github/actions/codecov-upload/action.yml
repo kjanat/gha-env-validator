@@ -1,0 +1,47 @@
+name: "Codecov Upload"
+description: "Upload test results and coverage to Codecov with type-safe GitHub context"
+author: "@kjanat"
+
+inputs:
+  test-results-file:
+    description: "Path to test results file (JUnit XML)"
+    required: false
+    default: "bun.xml"
+
+  coverage-file:
+    description: "Path to coverage file (lcov format)"
+    required: false
+    default: "lcov.info"
+
+  codecov-token:
+    description: "Codecov token for authentication"
+    required: true
+
+  fail-on-error:
+    description: "Fail the action if upload fails"
+    required: false
+    default: "false"
+
+  use-oidc:
+    description: "Use OIDC for authentication instead of token"
+    required: false
+    default: "true"
+
+outputs:
+  test-results-status:
+    description: "Test results upload status: success, failed, or skipped"
+    value: ${{ steps.upload.outputs.test-results-status }}
+
+  coverage-status:
+    description: "Coverage upload status: success, failed, or skipped"
+    value: ${{ steps.upload.outputs.coverage-status }}
+
+runs:
+  using: composite
+  steps:
+    - name: Upload to Codecov
+      id: upload
+      shell: bash
+      run: node ${{ github.action_path }}/dist/index.js
+      env:
+        CODECOV_TOKEN: ${{ inputs.codecov-token }}

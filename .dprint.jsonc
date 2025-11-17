@@ -21,7 +21,17 @@
     "module.sortImportDeclarations": "maintain",
     "ignoreNodeCommentText": "dprint-ignore"
   },
-  "markdown": {},
+  "markdown": {
+    "lineWidth": 80,
+    "newLineKind": "lf",
+    "textWrap": "always",
+    "emphasisKind": "asterisks",
+    "strongKind": "asterisks",
+    "ignoreDirective": "dprint-ignore",
+    "ignoreFileDirective": "dprint-ignore-file",
+    "ignoreStartDirective": "dprint-ignore-start",
+    "ignoreEndDirective": "dprint-ignore-end"
+  },
   "toml": {},
   "json": { "trailingCommas": "never" },
   "dockerfile": {},

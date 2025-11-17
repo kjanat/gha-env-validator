@@ -1,0 +1,12 @@
+{
+  "name": "setup-project-action",
+  "version": "1.0.0",
+  "private": true,
+  "type": "module",
+  "scripts": {
+    "build": "bun build src/main.ts --target=bun --outfile=dist/index.js --packages=external"
+  },
+  "dependencies": {
+    "@kjanat/gha-env-validator": "workspace:*"
+  }
+}

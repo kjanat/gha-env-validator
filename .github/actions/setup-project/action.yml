@@ -1,0 +1,45 @@
+name: "Setup Project"
+description: "Setup Node.js, Bun, install dependencies, and optionally build - with type-safe env validation"
+author: "@kjanat"
+
+inputs:
+  node-version:
+    description: "Node.js version to use"
+    required: false
+    default: "lts/*"
+
+  bun-version:
+    description: "Bun version to use"
+    required: false
+    default: "latest"
+
+  skip-build:
+    description: "Skip the build step"
+    required: false
+    default: "false"
+
+  install-args:
+    description: "Additional arguments for bun install"
+    required: false
+    default: ""
+
+outputs:
+  node-version:
+    description: "Actual Node.js version installed"
+    value: ${{ steps.setup.outputs.node-version }}
+
+  bun-version:
+    description: "Actual Bun version installed"
+    value: ${{ steps.setup.outputs.bun-version }}
+
+  build-status:
+    description: "Build status: skipped, success, or failed"
+    value: ${{ steps.setup.outputs.build-status }}
+
+runs:
+  using: composite
+  steps:
+    - name: Validate and setup
+      id: setup
+      shell: bash
+      run: node ${{ github.action_path }}/dist/index.js
