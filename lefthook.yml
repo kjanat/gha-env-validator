@@ -1,0 +1,22 @@
+# Lefthook configuration
+# https://github.com/evilmartians/lefthook
+
+pre-commit:
+  parallel: false
+
+  commands:
+    # 1. Format staged files with dprint
+    format:
+      glob: "*.{ts,js,json,md,yml,yaml}"
+      run: |
+        dprint fmt {staged_files}
+        git add {staged_files}
+      stage_fixed: true
+
+    # 2. Run tests
+    test:
+      run: bun test
+
+    # 3. Type check
+    typecheck:
+      run: bun run typecheck
