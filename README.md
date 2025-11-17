@@ -228,7 +228,7 @@ TypeScript type representing all GitHub Actions default environment variables wi
 
 ## Included GitHub Actions Variables
 
-All GitHub Actions default environment variables are included:
+All GitHub Actions default environment variables are included with rich metadata:
 
 - `CI`, `GITHUB_ACTIONS` (boolean)
 - `GITHUB_ACTOR`, `GITHUB_REPOSITORY`, `GITHUB_SHA`, etc. (string)
@@ -238,6 +238,46 @@ All GitHub Actions default environment variables are included:
 - And many more...
 
 See [GitHub Actions documentation](https://docs.github.com/en/actions/reference/workflows-and-actions/variables) for complete list.
+
+## Metadata Support (Zod v4)
+
+Each environment variable includes rich metadata using Zod v4's `.meta()` API:
+
+```typescript
+import { githubActionsSchema } from '@kjanat/gha-env-validator';
+
+// Access metadata programmatically
+const shaField = githubActionsSchema.shape.GITHUB_SHA;
+
+// Metadata structure:
+// {
+//   id: "GITHUB_SHA",
+//   title: "Commit SHA",
+//   description: "The commit SHA that triggered the workflow...",
+//   category: "git",
+//   example: "ffac537e6cbbf934b08745a378932722df287a53"
+// }
+```
+
+**Categories:**
+- `environment`: CI flags
+- `action`: Action context
+- `actor`: User/app information
+- `api`: GitHub API endpoints
+- `git`: Git refs and branches
+- `paths`: File system paths
+- `event`: Trigger events
+- `job`: Job information
+- `repository`: Repository details
+- `workflow`: Workflow execution
+- `runner`: Runner environment
+
+This metadata is useful for:
+- Generating documentation
+- Building forms and UIs
+- Creating configuration tools
+- AI-assisted development
+- Schema introspection
 
 ## Development
 
