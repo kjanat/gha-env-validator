@@ -404,12 +404,14 @@ describe("workflow commands", () => {
       const { setFailed } = require("../src/workflow-commands");
       const originalExitCode = process.exitCode;
 
-      setFailed("Build failed");
+      try {
+        setFailed("Build failed");
 
-      expect(process.exitCode).toBe(1);
-
-      // Restore immediately to not affect other tests
-      process.exitCode = originalExitCode || 0;
+        expect(process.exitCode).toBe(1);
+      } finally {
+        // Always restore, even if expect fails
+        process.exitCode = 0;
+      }
     });
   });
 
