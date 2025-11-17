@@ -5,7 +5,7 @@
     "": {
       "name": "@kjanat/gha-env-validator",
       "dependencies": {
-        "@zod/zod": "npm:@jsr/zod__zod",
+        "zod": "^4.1.12",
       },
       "devDependencies": {
         "@biomejs/biome": "2.3.5",
@@ -45,8 +45,6 @@
     "@types/node": ["@types/node@24.10.1", "", { "dependencies": { "undici-types": "~7.16.0" } }, "sha512-GNWcUTRBgIRJD5zj+Tq0fKOJ5XZajIiBroOF0yvj2bSU1WvNdYS/dn9UxwsujGW4JX06dnHyjV2y9rRaybH0iQ=="],
 
     "@types/react": ["@types/react@19.2.4", "", { "dependencies": { "csstype": "^3.0.2" } }, "sha512-tBFxBp9Nfyy5rsmefN+WXc1JeW/j2BpBHFdLZbEVfs9wn3E3NRFxwV0pJg8M1qQAexFpvz73hJXFofV0ZAu92A=="],
-
-    "@zod/zod": ["@jsr/zod__zod@4.1.12", "https://npm.jsr.io/~/11/@jsr/zod__zod/4.1.12.tgz", {}, "sha512-irbHmNTOgKG6Zu2AO30OEYDhX4xRVtYmRDkB+/9je3FZ5Nckv4+tciez8EK+MHjw4Ed5j5bx2To5zzb4SX2T3w=="],
 
     "bun-types": ["bun-types@1.3.2", "", { "dependencies": { "@types/node": "*" }, "peerDependencies": { "@types/react": "^19" } }, "sha512-i/Gln4tbzKNuxP70OWhJRZz1MRfvqExowP7U6JKoI8cntFrtxg7RJK3jvz7wQW54UuvNC8tbKHHri5fy74FVqg=="],
 

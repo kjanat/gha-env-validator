@@ -41,12 +41,11 @@ export function validateEnv(
 ): GitHubActionsEnv {
   const { env = process.env, strict = false } = options;
 
-  if (strict) {
-    return githubActionsSchema.parse(env);
-  }
+  // In Zod v4, use the schema directly - it allows unknown keys by default
+  // strict mode uses the schema as-is (strips unknown keys)
+  const schema = strict ? githubActionsSchema : githubActionsSchema.passthrough();
 
-  // Pass through unknown vars by default for flexibility
-  return githubActionsSchema.passthrough().parse(env) as GitHubActionsEnv;
+  return schema.parse(env) as GitHubActionsEnv;
 }
 
 /**
@@ -78,11 +77,9 @@ export function validateCustomEnv<T extends ZodRawShape>(
 ): z.infer<ZodObject<T>> {
   const { env = process.env, strict = false } = options;
 
-  if (strict) {
-    return schema.parse(env);
-  }
+  const finalSchema = strict ? schema : schema.passthrough();
 
-  return schema.passthrough().parse(env);
+  return finalSchema.parse(env);
 }
 
 /**
@@ -104,16 +101,12 @@ export function validateCustomEnv<T extends ZodRawShape>(
  * @param options - Validation options
  * @returns Safe parse result with success/error
  */
-export function safeValidateEnv(
-  options: ValidateEnvOptions = {},
-): z.SafeParseReturnType<unknown, GitHubActionsEnv> {
+export function safeValidateEnv(options: ValidateEnvOptions = {}) {
   const { env = process.env, strict = false } = options;
 
-  if (strict) {
-    return githubActionsSchema.safeParse(env);
-  }
+  const schema = strict ? githubActionsSchema : githubActionsSchema.passthrough();
 
-  return githubActionsSchema.passthrough().safeParse(env);
+  return schema.safeParse(env);
 }
 
 /**
@@ -126,12 +119,10 @@ export function safeValidateEnv(
 export function safeValidateCustomEnv<T extends ZodRawShape>(
   schema: ZodObject<T>,
   options: ValidateEnvOptions = {},
-): z.SafeParseReturnType<unknown, z.infer<ZodObject<T>>> {
+) {
   const { env = process.env, strict = false } = options;
 
-  if (strict) {
-    return schema.safeParse(env);
-  }
+  const finalSchema = strict ? schema : schema.passthrough();
 
-  return schema.passthrough().safeParse(env);
+  return finalSchema.safeParse(env);
 }
