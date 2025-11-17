@@ -1,8 +1,8 @@
 # @kjanat/gha-env-validator
 
-[![CI](https://github.com/kjanat/gha-env-validator/actions/workflows/ci.yml/badge.svg)](https://github.com/kjanat/gha-env-validator/actions/workflows/ci.yml)
-[![npm version](https://badge.fury.io/js/@kjanat%2Fgha-env-validator.svg)](https://www.npmjs.com/package/@kjanat/gha-env-validator)
-[![License: MIT](https://img.shields.io/badge/License-MIT-yellow.svg)](https://opensource.org/licenses/MIT)
+[![npm version][badge:npm-version]][npm]
+[![CI][badge:ci]][ci]
+[![License: MIT][badge:license]][oss-license]
 
 Type-safe GitHub Actions environment variable validation with IntelliSense support using Zod.
 
@@ -43,6 +43,8 @@ yarn add @kjanat/gha-env-validator zod
 
 ### Basic Usage (Default GitHub Actions Variables)
 
+<!-- dprint-ignore-start -->
+
 ```typescript
 import { validateEnv } from "@kjanat/gha-env-validator";
 
@@ -50,11 +52,13 @@ import { validateEnv } from "@kjanat/gha-env-validator";
 const env = validateEnv();
 
 // Now you have type-safe access with IntelliSense
-console.log(env.GITHUB_SHA); // string
-console.log(env.GITHUB_RUN_ID); // number (transformed from string)
-console.log(env.GITHUB_REPOSITORY); // string
-console.log(env.RUNNER_OS); // "Linux" | "Windows" | "macOS"
+console.log(env.GITHUB_SHA);        // string
+console.log(env.GITHUB_RUN_ID);     // number (transformed from string)
+console.log(env.GITHUB_REPOSITORY); // string
+console.log(env.RUNNER_OS);         // "Linux" | "Windows" | "macOS"
 ```
+
+<!-- dprint-ignore-end -->
 
 <details>
 <summary>Adding Custom Environment Variables</summary>
@@ -78,10 +82,10 @@ const schema = createEnvSchema({
 // Validate with both GitHub Actions defaults AND custom variables
 const env = validateCustomEnv(schema);
 
-console.log(env.API_KEY); // string
-console.log(env.GITHUB_SHA); // string (from defaults)
-console.log(env.MAX_RETRIES); // number (transformed)
-console.log(env.DRY_RUN); // boolean (transformed)
+console.log(env.API_KEY);     // string
+console.log(env.GITHUB_SHA);  // string (from defaults)
+console.log(env.MAX_RETRIES); // number (transformed)
+console.log(env.DRY_RUN);     // boolean (transformed)
 ```
 
 </details>
@@ -112,9 +116,9 @@ Simply importing the package augments `process.env` with types:
 import "@kjanat/gha-env-validator";
 
 // Now you get autocomplete for GitHub Actions variables
-const sha = process.env.GITHUB_SHA; // string | undefined
+const sha = process.env.GITHUB_SHA;      // string | undefined
 const runId = process.env.GITHUB_RUN_ID; // string | undefined
-const os = process.env.RUNNER_OS; // string | undefined
+const os = process.env.RUNNER_OS;        // string | undefined
 ```
 
 <details>
@@ -169,16 +173,16 @@ import {
   isTag
 } from "@kjanat/gha-env-validator";
 
-const branch = getCurrentBranch(); // 'main'
-const repo = getRepoInfo(); // { owner: 'octocat', name: 'Hello-World', full: '...' }
-const sha = getCommitSha("short"); // 'ffac537'
+const branch = getCurrentBranch(); // 'main'
+const repo = getRepoInfo();        // { owner: 'octocat', name: 'Hello-World', full: '...' }
+const sha = getCommitSha("short"); // 'ffac537'
 
 if (isPullRequest()) {
   const pr = getPullRequestInfo(); // { base: 'main', head: 'feature' }
 }
 
-const runner = getRunnerInfo(); // { os: 'Linux', arch: 'X64', ... }
-const actor = getActor(); // { name: 'octocat', id: 1234567, ... }
+const runner = getRunnerInfo(); // { os: 'Linux', arch: 'X64', ... }
+const actor = getActor();       // { name: 'octocat', id: 1234567, ... }
 ```
 
 </details>
@@ -478,7 +482,7 @@ All GitHub Actions default environment variables are included with rich metadata
 - `RUNNER_ARCH` (enum: "X86" | "X64" | "ARM" | "ARM64")
 - And many more...
 
-See [GitHub Actions documentation](https://docs.github.com/en/actions/reference/workflows-and-actions/variables) for complete list.
+See [GitHub Actions documentation][github-actions-variables] for complete list.
 
 </details>
 
@@ -625,7 +629,7 @@ bun run build
 
 ### Build System
 
-This package uses [tsdown](https://tsdown.dev/) for building:
+This package uses [tsdown][tsdown.dev] for building:
 
 - **Dual format**: Ships both ESM (`.mjs`) and CJS (`.cjs`) outputs
 - **Type declarations**: Separate `.d.mts` and `.d.cts` for module systems
@@ -642,3 +646,15 @@ This package uses [tsdown](https://tsdown.dev/) for building:
 ## License
 
 [MIT](./LICENSE)
+
+<!-- Link definitions -->
+
+[badge:ci]: https://img.shields.io/github/actions/workflow/status/kjanat/gha-env-validator/ci.yml?style=for-the-badge&logo=github&logoColor=white&logoSize=auto&label=CI&labelColor=%23181717
+[badge:npm-version]: https://img.shields.io/npm/v/%40kjanat%2Fgha-env-validator?registry_uri=https%3A%2F%2Fregistry.npmjs.com&style=for-the-badge&logo=npm&logoColor=white&logoSize=auto&labelColor=%23181717&color=%23CB3837&link=https%3A%2F%2Fwww.npmjs.com%2Fpackage%2F%40kjanat%2Fgha-env-validator%3FactiveTab%3Dreadme
+[badge:license]: https://img.shields.io/github/license/kjanat/gha-env-validator?style=for-the-badge&logo=opensourceinitiative&logoColor=white&logoSize=auto&labelColor=%23181717&color=%233DA639
+[npm]: https://www.npmjs.com/package/@kjanat/gha-env-validator
+[ci]: https://github.com/kjanat/gha-env-validator/actions/workflows/ci.yml
+[oss-license]: https://opensource.org/licenses/MIT
+
+[tsdown.dev]: https://tsdown.dev/
+[github-actions-variables]: https://docs.github.com/en/actions/reference/workflows-and-actions/variables
