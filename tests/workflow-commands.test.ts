@@ -20,7 +20,7 @@ import {
   setMultilineOutput,
   setOutput,
   setOutputs,
-  warning,
+  warning
 } from "@kjanat/gha-env-validator";
 
 describe("workflow commands", () => {
@@ -168,8 +168,8 @@ describe("workflow commands", () => {
         ["Metric", "Value"],
         [
           ["Tests", "42"],
-          ["Coverage", "95%"],
-        ],
+          ["Coverage", "95%"]
+        ]
       );
 
       const content = fs.readFileSync(summaryFile, "utf-8");
@@ -198,23 +198,20 @@ describe("workflow commands", () => {
 
     test("setMultilineEnvVar throws when not in GitHub Actions", () => {
       delete process.env.GITHUB_ENV;
-      expect(() => setMultilineEnvVar("VAR", "value")).toThrow(
-        "GITHUB_ENV is not set",
-      );
+      expect(() => setMultilineEnvVar("VAR", "value"))
+        .toThrow("GITHUB_ENV is not set");
     });
 
     test("setOutput throws when not in GitHub Actions", () => {
       delete process.env.GITHUB_OUTPUT;
-      expect(() => setOutput("name", "value")).toThrow(
-        "GITHUB_OUTPUT is not set",
-      );
+      expect(() => setOutput("name", "value"))
+        .toThrow("GITHUB_OUTPUT is not set");
     });
 
     test("setMultilineOutput throws when not in GitHub Actions", () => {
       delete process.env.GITHUB_OUTPUT;
-      expect(() => setMultilineOutput("name", "value")).toThrow(
-        "GITHUB_OUTPUT is not set",
-      );
+      expect(() => setMultilineOutput("name", "value"))
+        .toThrow("GITHUB_OUTPUT is not set");
     });
 
     test("addPath throws when not in GitHub Actions", () => {
@@ -224,9 +221,8 @@ describe("workflow commands", () => {
 
     test("addJobSummary throws when not in GitHub Actions", () => {
       delete process.env.GITHUB_STEP_SUMMARY;
-      expect(() => addJobSummary("content")).toThrow(
-        "GITHUB_STEP_SUMMARY is not set",
-      );
+      expect(() => addJobSummary("content"))
+        .toThrow("GITHUB_STEP_SUMMARY is not set");
     });
 
     test("clearJobSummary throws when not in GitHub Actions", () => {
@@ -240,7 +236,7 @@ describe("workflow commands", () => {
       setEnvVars({
         VAR1: "value1",
         VAR2: "value2",
-        VAR3: "value3",
+        VAR3: "value3"
       });
 
       const content = fs.readFileSync(envFile, "utf-8");
@@ -253,7 +249,7 @@ describe("workflow commands", () => {
       setOutputs({
         version: "1.2.3",
         sha: "abc123",
-        status: "success",
+        status: "success"
       });
 
       const content = fs.readFileSync(outputFile, "utf-8");
@@ -278,8 +274,8 @@ describe("workflow commands", () => {
         [
           ["A", "B", "C"],
           ["D", "E", "F"],
-          ["G", "H", "I"],
-        ],
+          ["G", "H", "I"]
+        ]
       );
 
       const content = fs.readFileSync(summaryFile, "utf-8");
@@ -316,7 +312,7 @@ describe("workflow commands", () => {
         await group("Error Group", () => {
           throw new Error("Test error");
         });
-      } catch (_err) {
+      } catch {
         // Expected
       }
 
@@ -340,7 +336,7 @@ describe("workflow commands", () => {
         file: "app.ts",
         line: 42,
         col: 10,
-        title: "Test Title",
+        title: "Test Title"
       });
     });
 
@@ -355,7 +351,7 @@ describe("workflow commands", () => {
         col: 5,
         endLine: 10,
         endColumn: 15,
-        title: "Warning Title",
+        title: "Warning Title"
       });
     });
 
@@ -366,7 +362,7 @@ describe("workflow commands", () => {
     test("error with file annotation", () => {
       error("test error", {
         file: "error.ts",
-        line: 100,
+        line: 100
       });
     });
 
@@ -377,7 +373,7 @@ describe("workflow commands", () => {
 
   describe("manual grouping", () => {
     test("startGroup and endGroup work", () => {
-      const { startGroup, endGroup } = require("../src/workflow-commands");
+      const { startGroup, endGroup } = require("~/workflow-commands");
 
       startGroup("Manual Group");
       endGroup();
@@ -386,10 +382,7 @@ describe("workflow commands", () => {
 
   describe("command control", () => {
     test("stopCommands returns token", () => {
-      const {
-        stopCommands,
-        resumeCommands,
-      } = require("../src/workflow-commands");
+      const { stopCommands, resumeCommands } = require("~/workflow-commands");
 
       const token = stopCommands();
       expect(token).toMatch(/^stop_/);
@@ -401,7 +394,7 @@ describe("workflow commands", () => {
 
   describe("workflow failure", () => {
     test("setFailed sets exit code", () => {
-      const { setFailed } = require("../src/workflow-commands");
+      const { setFailed } = require("~/workflow-commands");
 
       try {
         setFailed("Build failed");
@@ -416,19 +409,18 @@ describe("workflow commands", () => {
 
   describe("assertGitHubActions", () => {
     test("does not throw when in GitHub Actions", () => {
-      const { assertGitHubActions } = require("../src/workflow-commands");
+      const { assertGitHubActions } = require("~/workflow-commands");
 
       expect(() => assertGitHubActions()).not.toThrow();
     });
 
     test("throws when not in GitHub Actions", () => {
-      const { assertGitHubActions } = require("../src/workflow-commands");
+      const { assertGitHubActions } = require("~/workflow-commands");
       const saved = process.env.GITHUB_ACTIONS;
       delete process.env.GITHUB_ACTIONS;
 
-      expect(() => assertGitHubActions()).toThrow(
-        "Not running in GitHub Actions",
-      );
+      expect(() => assertGitHubActions())
+        .toThrow("Not running in GitHub Actions");
 
       // Restore
       process.env.GITHUB_ACTIONS = saved;

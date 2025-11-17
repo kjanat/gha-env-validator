@@ -1,4 +1,1 @@
-export {
-  type GitHubActionsEnv,
-  githubActionsSchema,
-} from "./github-defaults.ts";
+export { type GitHubActionsEnv, githubActionsSchema } from "./github-defaults";

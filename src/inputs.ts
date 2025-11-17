@@ -26,7 +26,7 @@ import { type ZodObject, type ZodRawShape, z } from "zod";
  */
 export function getInput(
   name: string,
-  options: { required?: boolean } = {},
+  options: { required?: boolean } = {}
 ): string | undefined {
   const envName = `INPUT_${name.replace(/[ -]/g, "_").toUpperCase()}`;
   const value = process.env[envName]?.trim();
@@ -57,7 +57,7 @@ export function getInput(
  */
 export function getBooleanInput(
   name: string,
-  options: { required?: boolean } = {},
+  options: { required?: boolean } = {}
 ): boolean {
   const value = getInput(name, options);
 
@@ -75,9 +75,7 @@ export function getBooleanInput(
     return false;
   }
 
-  throw new Error(
-    `Input '${name}' has invalid boolean value '${value}'. Expected: true/false, yes/no, or 1/0.`,
-  );
+  throw new Error(`Input '${name}' has invalid boolean value '${value}'. Expected: true/false, yes/no, or 1/0.`);
 }
 
 /**
@@ -100,7 +98,7 @@ export function getBooleanInput(
  */
 export function getMultilineInput(
   name: string,
-  options: { required?: boolean } = {},
+  options: { required?: boolean } = {}
 ): string[] {
   const value = getInput(name, options);
 
@@ -134,7 +132,7 @@ export function getMultilineInput(
  * @returns Validated inputs object
  */
 export function validateInputs<T extends ZodRawShape>(
-  schema: T,
+  schema: T
 ): z.infer<ZodObject<T>> {
   const inputs: Record<string, unknown> = {};
 

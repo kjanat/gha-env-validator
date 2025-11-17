@@ -12,5 +12,5 @@ export default defineConfig({
   sourcemap: false,
   minify: false,
   treeshake: true,
-  fixedExtension: true,
+  fixedExtension: true
 });

@@ -19,7 +19,7 @@ export const githubActionsSchema = z.object({
       title: "CI Environment Flag",
       description: "Always set to true.",
       category: "environment",
-      example: "true",
+      example: "true"
     }),
 
   GITHUB_ACTIONS: z
@@ -32,7 +32,7 @@ export const githubActionsSchema = z.object({
       description:
         "Always set to true when GitHub Actions is running the workflow. You can use this variable to differentiate when tests are being run locally or by GitHub Actions.",
       category: "environment",
-      example: "true",
+      example: "true"
     }),
 
   GITHUB_REF_PROTECTED: z
@@ -45,7 +45,7 @@ export const githubActionsSchema = z.object({
       description:
         "true if branch protections or rulesets are configured for the ref that triggered the workflow run.",
       category: "git",
-      example: "true",
+      example: "true"
     }),
 
   // Action context
@@ -55,7 +55,7 @@ export const githubActionsSchema = z.object({
     description:
       "The name of the action currently running, or the id of a step. GitHub removes special characters, and uses the name __run when the current step runs a script without an id.",
     category: "action",
-    example: "__repo-owner_name-of-action-repo",
+    example: "__repo-owner_name-of-action-repo"
   }),
 
   GITHUB_ACTION_PATH: z.string().optional().meta({
@@ -64,7 +64,7 @@ export const githubActionsSchema = z.object({
     description:
       "The path where an action is located. This property is only supported in composite actions. You can use this path to change directories to where the action is located and access other files in that same repository.",
     category: "action",
-    example: "/home/runner/work/_actions/repo-owner/name-of-action-repo/v1",
+    example: "/home/runner/work/_actions/repo-owner/name-of-action-repo/v1"
   }),
 
   GITHUB_ACTION_REPOSITORY: z.string().optional().meta({
@@ -73,7 +73,7 @@ export const githubActionsSchema = z.object({
     description:
       "For a step executing an action, this is the owner and repository name of the action. For example, actions/checkout.",
     category: "action",
-    example: "actions/checkout",
+    example: "actions/checkout"
   }),
 
   // Actor/user information
@@ -82,7 +82,7 @@ export const githubActionsSchema = z.object({
     title: "Workflow Actor",
     description: "The name of the person or app that initiated the workflow.",
     category: "actor",
-    example: "octocat",
+    example: "octocat"
   }),
 
   GITHUB_ACTOR_ID: z.string().transform(Number).meta({
@@ -91,7 +91,7 @@ export const githubActionsSchema = z.object({
     description:
       "The account ID of the person or app that triggered the initial workflow run. Note that this is different from the actor username.",
     category: "actor",
-    example: "1234567",
+    example: "1234567"
   }),
 
   GITHUB_TRIGGERING_ACTOR: z.string().meta({
@@ -100,32 +100,32 @@ export const githubActionsSchema = z.object({
     description:
       "The username of the user that initiated the workflow run. If the workflow run is a re-run, this value may differ from github.actor. Any workflow re-runs will use the privileges of github.actor, even if the actor initiating the re-run (github.triggering_actor) has different privileges.",
     category: "actor",
-    example: "octocat",
+    example: "octocat"
   }),
 
   // API endpoints
-  GITHUB_API_URL: z.string().url().meta({
+  GITHUB_API_URL: z.url().meta({
     id: "GITHUB_API_URL",
     title: "API URL",
     description: "Returns the API URL.",
     category: "api",
-    example: "https://api.github.com",
+    example: "https://api.github.com"
   }),
 
-  GITHUB_GRAPHQL_URL: z.string().url().meta({
+  GITHUB_GRAPHQL_URL: z.url().meta({
     id: "GITHUB_GRAPHQL_URL",
     title: "GraphQL API URL",
     description: "Returns the GraphQL API URL.",
     category: "api",
-    example: "https://api.github.com/graphql",
+    example: "https://api.github.com/graphql"
   }),
 
-  GITHUB_SERVER_URL: z.string().url().meta({
+  GITHUB_SERVER_URL: z.url().meta({
     id: "GITHUB_SERVER_URL",
     title: "Server URL",
     description: "The URL of the GitHub server.",
     category: "api",
-    example: "https://github.com",
+    example: "https://github.com"
   }),
 
   // Pull request refs (optional - only present in PR contexts)
@@ -135,7 +135,7 @@ export const githubActionsSchema = z.object({
     description:
       "The name of the base ref or target branch of the pull request in a workflow run. This is only set when the event that triggers a workflow run is either pull_request or pull_request_target.",
     category: "git",
-    example: "main",
+    example: "main"
   }),
 
   GITHUB_HEAD_REF: z.string().optional().meta({
@@ -144,7 +144,7 @@ export const githubActionsSchema = z.object({
     description:
       "The head ref or source branch of the pull request in a workflow run. This property is only set when the event that triggers a workflow run is either pull_request or pull_request_target.",
     category: "git",
-    example: "feature-branch-1",
+    example: "feature-branch-1"
   }),
 
   // File paths for GitHub Actions features
@@ -154,7 +154,7 @@ export const githubActionsSchema = z.object({
     description:
       "The path on the runner to the file that sets variables from workflow commands. The path to this file is unique to the current step and changes for each step in a job.",
     category: "paths",
-    example: "/home/runner/work/_temp/_runner_file_commands/set_env",
+    example: "/home/runner/work/_temp/_runner_file_commands/set_env"
   }),
 
   GITHUB_EVENT_PATH: z.string().meta({
@@ -163,7 +163,7 @@ export const githubActionsSchema = z.object({
     description:
       "The path to the file on the runner that contains the full event webhook payload.",
     category: "paths",
-    example: "/github/workflow/event.json",
+    example: "/github/workflow/event.json"
   }),
 
   GITHUB_OUTPUT: z.string().meta({
@@ -172,7 +172,7 @@ export const githubActionsSchema = z.object({
     description:
       "The path on the runner to the file that sets the current step's outputs from workflow commands. The path to this file is unique to the current step and changes for each step in a job.",
     category: "paths",
-    example: "/home/runner/work/_temp/_runner_file_commands/set_output",
+    example: "/home/runner/work/_temp/_runner_file_commands/set_output"
   }),
 
   GITHUB_PATH: z.string().meta({
@@ -181,7 +181,7 @@ export const githubActionsSchema = z.object({
     description:
       "The path on the runner to the file that sets system PATH variables from workflow commands. The path to this file is unique to the current step and changes for each step in a job.",
     category: "paths",
-    example: "/home/runner/work/_temp/_runner_file_commands/add_path",
+    example: "/home/runner/work/_temp/_runner_file_commands/add_path"
   }),
 
   GITHUB_STEP_SUMMARY: z.string().meta({
@@ -190,7 +190,7 @@ export const githubActionsSchema = z.object({
     description:
       "The path on the runner to the file that contains job summaries from workflow commands. The path to this file is unique to the current step and changes for each step in a job.",
     category: "paths",
-    example: "/home/runner/work/_temp/_runner_file_commands/step_summary",
+    example: "/home/runner/work/_temp/_runner_file_commands/step_summary"
   }),
 
   // Event information
@@ -199,7 +199,7 @@ export const githubActionsSchema = z.object({
     title: "Event Name",
     description: "The name of the event that triggered the workflow.",
     category: "event",
-    example: "workflow_dispatch",
+    example: "workflow_dispatch"
   }),
 
   // Job information
@@ -208,7 +208,7 @@ export const githubActionsSchema = z.object({
     title: "Job ID",
     description: "The job_id of the current job.",
     category: "job",
-    example: "greeting_job",
+    example: "greeting_job"
   }),
 
   // Ref information
@@ -218,7 +218,7 @@ export const githubActionsSchema = z.object({
     description:
       "The fully-formed ref of the branch or tag that triggered the workflow run. For branches the format is refs/heads/<branch_name>, for tags it is refs/tags/<tag_name>, and for pull requests it is refs/pull/<pr_number>/merge.",
     category: "git",
-    example: "refs/heads/feature-branch-1",
+    example: "refs/heads/feature-branch-1"
   }),
 
   GITHUB_REF_NAME: z.string().meta({
@@ -227,7 +227,7 @@ export const githubActionsSchema = z.object({
     description:
       "The short ref name of the branch or tag that triggered the workflow run. This value matches the branch or tag name shown on GitHub. For pull requests, the format is <pr_number>/merge.",
     category: "git",
-    example: "feature-branch-1",
+    example: "feature-branch-1"
   }),
 
   GITHUB_REF_TYPE: z.enum(["branch", "tag"]).meta({
@@ -236,7 +236,7 @@ export const githubActionsSchema = z.object({
     description:
       "The type of ref that triggered the workflow run. Valid values are branch or tag.",
     category: "git",
-    example: "branch",
+    example: "branch"
   }),
 
   // Repository information
@@ -245,7 +245,7 @@ export const githubActionsSchema = z.object({
     title: "Repository",
     description: "The owner and repository name.",
     category: "repository",
-    example: "octocat/Hello-World",
+    example: "octocat/Hello-World"
   }),
 
   GITHUB_REPOSITORY_ID: z.string().transform(Number).meta({
@@ -254,7 +254,7 @@ export const githubActionsSchema = z.object({
     description:
       "The ID of the repository. Note that this is different from the repository name.",
     category: "repository",
-    example: "123456789",
+    example: "123456789"
   }),
 
   GITHUB_REPOSITORY_OWNER: z.string().meta({
@@ -262,7 +262,7 @@ export const githubActionsSchema = z.object({
     title: "Repository Owner",
     description: "The repository owner's name.",
     category: "repository",
-    example: "octocat",
+    example: "octocat"
   }),
 
   GITHUB_REPOSITORY_OWNER_ID: z.string().transform(Number).meta({
@@ -271,7 +271,7 @@ export const githubActionsSchema = z.object({
     description:
       "The repository owner's account ID. Note that this is different from the owner's name.",
     category: "repository",
-    example: "1234567",
+    example: "1234567"
   }),
 
   // Retention settings
@@ -281,7 +281,7 @@ export const githubActionsSchema = z.object({
     description:
       "The number of days that workflow run logs and artifacts are kept.",
     category: "workflow",
-    example: "90",
+    example: "90"
   }),
 
   // Run information
@@ -291,7 +291,7 @@ export const githubActionsSchema = z.object({
     description:
       "A unique number for each attempt of a particular workflow run in a repository. This number begins at 1 for the workflow run's first attempt, and increments with each re-run.",
     category: "workflow",
-    example: "1",
+    example: "1"
   }),
 
   GITHUB_RUN_ID: z.string().transform(Number).meta({
@@ -300,7 +300,7 @@ export const githubActionsSchema = z.object({
     description:
       "A unique number for each workflow run within a repository. This number does not change if you re-run the workflow run.",
     category: "workflow",
-    example: "1658821493",
+    example: "1658821493"
   }),
 
   GITHUB_RUN_NUMBER: z.string().transform(Number).meta({
@@ -309,7 +309,7 @@ export const githubActionsSchema = z.object({
     description:
       "A unique number for each run of a particular workflow in a repository. This number begins at 1 for the workflow's first run, and increments with each new run. This number does not change if you re-run the workflow run.",
     category: "workflow",
-    example: "42",
+    example: "42"
   }),
 
   // SHA information
@@ -319,7 +319,7 @@ export const githubActionsSchema = z.object({
     description:
       "The commit SHA that triggered the workflow. The value of this commit SHA depends on the event that triggered the workflow.",
     category: "git",
-    example: "ffac537e6cbbf934b08745a378932722df287a53",
+    example: "ffac537e6cbbf934b08745a378932722df287a53"
   }),
 
   // Workflow information
@@ -329,7 +329,7 @@ export const githubActionsSchema = z.object({
     description:
       "The name of the workflow. If the workflow file doesn't specify a name, the value of this variable is the full path of the workflow file in the repository.",
     category: "workflow",
-    example: "CI",
+    example: "CI"
   }),
 
   GITHUB_WORKFLOW_REF: z.string().meta({
@@ -338,7 +338,7 @@ export const githubActionsSchema = z.object({
     description: "The ref path to the workflow.",
     category: "workflow",
     example:
-      "octocat/hello-world/.github/workflows/my-workflow.yml@refs/heads/my_branch",
+      "octocat/hello-world/.github/workflows/my-workflow.yml@refs/heads/my_branch"
   }),
 
   GITHUB_WORKFLOW_SHA: z.string().meta({
@@ -346,7 +346,7 @@ export const githubActionsSchema = z.object({
     title: "Workflow File SHA",
     description: "The commit SHA for the workflow file.",
     category: "workflow",
-    example: "ffac537e6cbbf934b08745a378932722df287a53",
+    example: "ffac537e6cbbf934b08745a378932722df287a53"
   }),
 
   // Workspace
@@ -356,7 +356,7 @@ export const githubActionsSchema = z.object({
     description:
       "The default working directory on the runner for steps, and the default location of your repository when using the checkout action.",
     category: "paths",
-    example: "/home/runner/work/my-repo-name/my-repo-name",
+    example: "/home/runner/work/my-repo-name/my-repo-name"
   }),
 
   // Runner information
@@ -366,7 +366,7 @@ export const githubActionsSchema = z.object({
     description:
       "The architecture of the runner executing the job. Possible values are X86, X64, ARM, or ARM64.",
     category: "runner",
-    example: "X64",
+    example: "X64"
   }),
 
   RUNNER_DEBUG: z.string().optional().meta({
@@ -375,7 +375,7 @@ export const githubActionsSchema = z.object({
     description:
       "This is set only if debug logging is enabled, and always has the value of 1. It can be useful as an indicator to enable additional debugging or verbose logging in your own job steps.",
     category: "runner",
-    example: "1",
+    example: "1"
   }),
 
   RUNNER_ENVIRONMENT: z.enum(["github-hosted", "self-hosted"]).meta({
@@ -384,7 +384,7 @@ export const githubActionsSchema = z.object({
     description:
       "The environment of the runner executing the job. Possible values are: github-hosted for GitHub-hosted runners provided by GitHub, and self-hosted for self-hosted runners configured by the repository owner.",
     category: "runner",
-    example: "github-hosted",
+    example: "github-hosted"
   }),
 
   RUNNER_NAME: z.string().meta({
@@ -393,7 +393,7 @@ export const githubActionsSchema = z.object({
     description:
       "The name of the runner executing the job. This name may not be unique in a workflow run as runners at the repository and organization levels could use the same name.",
     category: "runner",
-    example: "Hosted Agent",
+    example: "Hosted Agent"
   }),
 
   RUNNER_OS: z.enum(["Linux", "Windows", "macOS"]).meta({
@@ -402,7 +402,7 @@ export const githubActionsSchema = z.object({
     description:
       "The operating system of the runner executing the job. Possible values are Linux, Windows, or macOS.",
     category: "runner",
-    example: "Linux",
+    example: "Linux"
   }),
 
   RUNNER_TEMP: z.string().meta({
@@ -411,7 +411,7 @@ export const githubActionsSchema = z.object({
     description:
       "The path to a temporary directory on the runner. This directory is emptied at the beginning and end of each job. Note that files will not be removed if the runner's user account does not have permission to delete them.",
     category: "runner",
-    example: "/home/runner/work/_temp",
+    example: "/home/runner/work/_temp"
   }),
 
   RUNNER_TOOL_CACHE: z.string().meta({
@@ -420,8 +420,8 @@ export const githubActionsSchema = z.object({
     description:
       "The path to the directory containing preinstalled tools for GitHub-hosted runners.",
     category: "runner",
-    example: "/opt/hostedtoolcache",
-  }),
+    example: "/opt/hostedtoolcache"
+  })
 });
 
 /**

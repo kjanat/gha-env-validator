@@ -5,7 +5,7 @@
  * for common workflow context operations.
  */
 
-import { validateEnv } from "./validate.js";
+import { validateEnv } from "~/validate";
 
 /**
  * Gets the current branch name.
@@ -115,7 +115,7 @@ export function getPullRequestInfo(): {
 
   return {
     base: env.GITHUB_BASE_REF,
-    head: env.GITHUB_HEAD_REF,
+    head: env.GITHUB_HEAD_REF
   };
 }
 
@@ -182,7 +182,7 @@ export function getRunnerInfo(): {
     os: env.RUNNER_OS,
     arch: env.RUNNER_ARCH,
     environment: env.RUNNER_ENVIRONMENT,
-    name: env.RUNNER_NAME,
+    name: env.RUNNER_NAME
   };
 }
 
@@ -211,7 +211,8 @@ export function getWorkflowRun(): {
     id: env.GITHUB_RUN_ID,
     number: env.GITHUB_RUN_NUMBER,
     attempt: env.GITHUB_RUN_ATTEMPT,
-    url: `${env.GITHUB_SERVER_URL}/${env.GITHUB_REPOSITORY}/actions/runs/${env.GITHUB_RUN_ID}`,
+    url:
+      `${env.GITHUB_SERVER_URL}/${env.GITHUB_REPOSITORY}/actions/runs/${env.GITHUB_RUN_ID}`
   };
 }
 
@@ -238,7 +239,7 @@ export function getActor(): {
   return {
     name: env.GITHUB_ACTOR,
     id: env.GITHUB_ACTOR_ID,
-    triggering: env.GITHUB_TRIGGERING_ACTOR,
+    triggering: env.GITHUB_TRIGGERING_ACTOR
   };
 }
 
@@ -283,6 +284,6 @@ export function getApiUrls(): {
   return {
     rest: env.GITHUB_API_URL,
     graphql: env.GITHUB_GRAPHQL_URL,
-    server: env.GITHUB_SERVER_URL,
+    server: env.GITHUB_SERVER_URL
   };
 }

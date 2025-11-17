@@ -71,9 +71,9 @@ function listCategories() {
   }
 
   console.log("\n📚 Available Categories:\n");
-  Array.from(categories)
-    .sort()
-    .forEach((cat) => console.log(`  - ${cat}`));
+  for (const cat of [...categories].sort()) {
+    console.log(`  - ${cat}`);
+  }
   console.log();
 }
 

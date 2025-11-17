@@ -36,7 +36,7 @@ import {
   isStarEvent,
   isWatchEvent,
   isWorkflowJobEvent,
-  isWorkflowRunEvent,
+  isWorkflowRunEvent
 } from "@kjanat/gha-env-validator";
 
 describe("event system", () => {
@@ -105,8 +105,8 @@ describe("event system", () => {
         action: "completed",
         workflow_run: {
           id: 123,
-          status: "completed",
-        },
+          status: "completed"
+        }
       };
 
       process.env.GITHUB_EVENT_NAME = "workflow_run";
@@ -128,8 +128,8 @@ describe("event system", () => {
         action: "queued",
         workflow_job: {
           id: 456,
-          status: "queued",
-        },
+          status: "queued"
+        }
       };
 
       process.env.GITHUB_EVENT_NAME = "workflow_job";
@@ -153,8 +153,8 @@ describe("event system", () => {
         action: "completed",
         check_run: {
           id: 789,
-          status: "completed",
-        },
+          status: "completed"
+        }
       };
 
       process.env.GITHUB_EVENT_NAME = "check_run";
@@ -176,8 +176,8 @@ describe("event system", () => {
         action: "completed",
         check_suite: {
           id: 101,
-          status: "completed",
-        },
+          status: "completed"
+        }
       };
 
       process.env.GITHUB_EVENT_NAME = "check_suite";
@@ -201,8 +201,8 @@ describe("event system", () => {
         action: "opened",
         issue: {
           number: 42,
-          title: "Test issue",
-        },
+          title: "Test issue"
+        }
       };
 
       process.env.GITHUB_EVENT_NAME = "issues";
@@ -224,12 +224,12 @@ describe("event system", () => {
       const mockEvent = {
         action: "created",
         issue: {
-          number: 42,
+          number: 42
         },
         comment: {
           id: 789,
-          body: "Test comment",
-        },
+          body: "Test comment"
+        }
       };
 
       process.env.GITHUB_EVENT_NAME = "issue_comment";
@@ -253,8 +253,8 @@ describe("event system", () => {
         action: "created",
         discussion: {
           id: 123,
-          title: "Test discussion",
-        },
+          title: "Test discussion"
+        }
       };
 
       process.env.GITHUB_EVENT_NAME = "discussion";
@@ -275,8 +275,8 @@ describe("event system", () => {
       const mockEvent = {
         action: "created",
         comment: {
-          id: 456,
-        },
+          id: 456
+        }
       };
 
       process.env.GITHUB_EVENT_NAME = "discussion_comment";
@@ -299,8 +299,8 @@ describe("event system", () => {
       const mockEvent = {
         deployment: {
           id: 999,
-          environment: "production",
-        },
+          environment: "production"
+        }
       };
 
       process.env.GITHUB_EVENT_NAME = "deployment";
@@ -321,8 +321,8 @@ describe("event system", () => {
       const mockEvent = {
         deployment_status: {
           id: 888,
-          state: "success",
-        },
+          state: "success"
+        }
       };
 
       process.env.GITHUB_EVENT_NAME = "deployment_status";
@@ -345,8 +345,8 @@ describe("event system", () => {
       const mockEvent = {
         forkee: {
           id: 111,
-          name: "forked-repo",
-        },
+          name: "forked-repo"
+        }
       };
 
       process.env.GITHUB_EVENT_NAME = "fork";
@@ -366,7 +366,7 @@ describe("event system", () => {
     test("getStarEvent returns typed event", () => {
       const mockEvent = {
         action: "created",
-        starred_at: "2025-01-01T00:00:00Z",
+        starred_at: "2025-01-01T00:00:00Z"
       };
 
       process.env.GITHUB_EVENT_NAME = "star";
@@ -385,7 +385,7 @@ describe("event system", () => {
 
     test("getWatchEvent returns typed event", () => {
       const mockEvent = {
-        action: "started",
+        action: "started"
       };
 
       process.env.GITHUB_EVENT_NAME = "watch";
@@ -405,7 +405,7 @@ describe("event system", () => {
     test("getCreateEvent returns typed event", () => {
       const mockEvent = {
         ref: "feature-branch",
-        ref_type: "branch",
+        ref_type: "branch"
       };
 
       process.env.GITHUB_EVENT_NAME = "create";
@@ -425,7 +425,7 @@ describe("event system", () => {
     test("getDeleteEvent returns typed event", () => {
       const mockEvent = {
         ref: "old-branch",
-        ref_type: "branch",
+        ref_type: "branch"
       };
 
       process.env.GITHUB_EVENT_NAME = "delete";
@@ -449,9 +449,9 @@ describe("event system", () => {
         pages: [
           {
             page_name: "Home",
-            action: "edited",
-          },
-        ],
+            action: "edited"
+          }
+        ]
       };
 
       process.env.GITHUB_EVENT_NAME = "gollum";
@@ -473,7 +473,7 @@ describe("event system", () => {
     test("getPingEvent returns typed event", () => {
       const mockEvent = {
         zen: "Design for failure.",
-        hook_id: 123,
+        hook_id: 123
       };
 
       process.env.GITHUB_EVENT_NAME = "ping";

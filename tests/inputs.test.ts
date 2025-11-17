@@ -5,7 +5,7 @@ import {
   getMultilineInput,
   safeValidateInputs,
   validateInputs,
-  z,
+  z
 } from "@kjanat/gha-env-validator";
 
 describe("action inputs", () => {
@@ -43,9 +43,8 @@ describe("action inputs", () => {
     });
 
     test("throws when required input is missing", () => {
-      expect(() => getInput("required-input", { required: true })).toThrow(
-        "Input required and not supplied: required-input",
-      );
+      expect(() => getInput("required-input", { required: true }))
+        .toThrow("Input required and not supplied: required-input");
     });
 
     test("returns undefined for empty string", () => {
@@ -101,9 +100,8 @@ describe("action inputs", () => {
     test("throws for invalid boolean values", () => {
       process.env.INPUT_FLAG = "invalid";
 
-      expect(() => getBooleanInput("flag")).toThrow(
-        "Input 'flag' has invalid boolean value 'invalid'",
-      );
+      expect(() => getBooleanInput("flag"))
+        .toThrow("Input 'flag' has invalid boolean value 'invalid'");
     });
   });
 
@@ -146,7 +144,7 @@ describe("action inputs", () => {
       const inputs = validateInputs({
         "api-key": z.string().min(1),
         environment: z.enum(["dev", "staging", "production"]),
-        port: z.string(),
+        port: z.string()
       });
 
       expect(inputs["api-key"]).toBe("secret-key");
@@ -160,7 +158,7 @@ describe("action inputs", () => {
 
       const inputs = validateInputs({
         "dry-run": z.boolean(),
-        "skip-tests": z.boolean(),
+        "skip-tests": z.boolean()
       });
 
       expect(inputs["dry-run"]).toBe(true);
@@ -170,7 +168,7 @@ describe("action inputs", () => {
     test("applies defaults for missing inputs", () => {
       const inputs = validateInputs({
         optional: z.string().default("default-value"),
-        flag: z.boolean().default(false),
+        flag: z.boolean().default(false)
       });
 
       expect(inputs.optional).toBe("default-value");
@@ -182,8 +180,8 @@ describe("action inputs", () => {
 
       expect(() =>
         validateInputs({
-          env: z.enum(["dev", "prod"]),
-        }),
+          env: z.enum(["dev", "prod"])
+        })
       ).toThrow();
     });
   });
@@ -193,7 +191,7 @@ describe("action inputs", () => {
       process.env.INPUT_NAME = "test";
 
       const result = safeValidateInputs({
-        name: z.string(),
+        name: z.string()
       });
 
       expect(result.success).toBe(true);
@@ -206,7 +204,7 @@ describe("action inputs", () => {
       process.env.INPUT_PORT = "not-a-number";
 
       const result = safeValidateInputs({
-        port: z.number(),
+        port: z.number()
       });
 
       expect(result.success).toBe(false);

@@ -10,7 +10,7 @@
     "includes": ["**", "!!**/dist"]
   },
   "formatter": {
-    "enabled": true,
+    "enabled": false,
     "indentStyle": "space",
     "indentWidth": 2
   },
@@ -19,20 +19,25 @@
     "rules": {
       "recommended": true,
       "suspicious": {
-        "noExplicitAny": "off",
-        "useIterableCallbackReturn": "off"
+        "noExplicitAny": "warn",
+        "useIterableCallbackReturn": "warn"
       },
       "style": {
-        "useTemplate": "off"
+        "useTemplate": "warn"
       },
       "correctness": {
         "noUnusedVariables": "warn"
       }
+    },
+    "domains": {
+      "project": "recommended",
+      "test": "recommended"
     }
   },
   "javascript": {
     "formatter": {
-      "quoteStyle": "double"
+      "quoteStyle": "double",
+      "trailingCommas": "none"
     }
   },
   "assist": {
@@ -40,7 +45,8 @@
     "actions": {
       "source": {
         "recommended": true,
-        "organizeImports": "on"
+        "organizeImports": "on",
+        "useSortedAttributes": "on"
       }
     }
   }

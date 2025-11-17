@@ -20,11 +20,24 @@ Type-safe GitHub Actions environment variable validation with IntelliSense suppo
 
 ```bash
 npm install @kjanat/gha-env-validator zod
-# or
+```
+
+<details>
+<summary>Other package managers</summary>
+
+```bash
 bun add @kjanat/gha-env-validator zod
-# or
+```
+
+```bash
+pnpm add @kjanat/gha-env-validator zod
+```
+
+```bash
 yarn add @kjanat/gha-env-validator zod
 ```
+
+</details>
 
 ## Quick Start
 
@@ -43,13 +56,14 @@ console.log(env.GITHUB_REPOSITORY); // string
 console.log(env.RUNNER_OS); // "Linux" | "Windows" | "macOS"
 ```
 
-### Adding Custom Environment Variables
+<details>
+<summary>Adding Custom Environment Variables</summary>
 
 ```typescript
 import {
   createEnvSchema,
   validateCustomEnv,
-  z,
+  z
 } from "@kjanat/gha-env-validator";
 
 // Extend the default GitHub Actions schema with your custom variables
@@ -58,7 +72,7 @@ const schema = createEnvSchema({
   API_URL: z.string().url(),
   NODE_ENV: z.enum(["development", "production", "test"]),
   MAX_RETRIES: z.string().transform(Number),
-  DRY_RUN: z.string().transform(s => s === "true"),
+  DRY_RUN: z.string().transform((s) => s === "true")
 });
 
 // Validate with both GitHub Actions defaults AND custom variables
@@ -70,7 +84,10 @@ console.log(env.MAX_RETRIES); // number (transformed)
 console.log(env.DRY_RUN); // boolean (transformed)
 ```
 
-### Safe Validation (No Throwing)
+</details>
+
+<details>
+<summary>Safe Validation (No Throwing)</summary>
 
 ```typescript
 import { safeValidateEnv } from "@kjanat/gha-env-validator";
@@ -85,6 +102,8 @@ if (result.success) {
 }
 ```
 
+</details>
+
 ## IntelliSense Support
 
 Simply importing the package augments `process.env` with types:
@@ -98,7 +117,8 @@ const runId = process.env.GITHUB_RUN_ID; // string | undefined
 const os = process.env.RUNNER_OS; // string | undefined
 ```
 
-## GitHub Context & Events
+<details>
+<summary>GitHub Context & Events</summary>
 
 Access github context properties and typed event payloads:
 
@@ -111,7 +131,7 @@ import {
   getReleaseEvent,
   getRepositoryUrl,
   isEventType,
-  isPushEvent,
+  isPushEvent
 } from "@kjanat/gha-env-validator";
 
 // Get typed event payload
@@ -124,14 +144,17 @@ if (isPushEvent()) {
 // GitHub token for API calls
 const token = getGitHubToken();
 const response = await fetch(api, {
-  headers: { Authorization: `Bearer ${token}` },
+  headers: { Authorization: `Bearer ${token}` }
 });
 
 // Repository URLs
 const url = getRepositoryUrl(); // 'https://github.com/owner/repo'
 ```
 
-## Context Utilities
+</details>
+
+<details>
+<summary>Context Utilities</summary>
 
 Convenient helpers for accessing GitHub Actions context:
 
@@ -143,7 +166,7 @@ import {
   getRepoInfo,
   getRunnerInfo,
   isPullRequest,
-  isTag,
+  isTag
 } from "@kjanat/gha-env-validator";
 
 const branch = getCurrentBranch(); // 'main'
@@ -158,7 +181,10 @@ const runner = getRunnerInfo(); // { os: 'Linux', arch: 'X64', ... }
 const actor = getActor(); // { name: 'octocat', id: 1234567, ... }
 ```
 
-## Action Input Validation
+</details>
+
+<details>
+<summary>Action Input Validation</summary>
 
 Type-safe input validation for GitHub Actions:
 
@@ -167,7 +193,7 @@ import {
   getBooleanInput,
   getInput,
   validateInputs,
-  z,
+  z
 } from "@kjanat/gha-env-validator";
 
 // Simple input retrieval
@@ -179,13 +205,16 @@ const inputs = validateInputs({
   version: z.string().regex(/^\d+\.\d+\.\d+$/),
   environment: z.enum(["dev", "staging", "prod"]),
   "dry-run": z.boolean().default(false),
-  targets: z.array(z.string()).default([]),
+  targets: z.array(z.string()).default([])
 });
 
 // inputs.version is type-safe!
 ```
 
-## Workflow Command Helpers
+</details>
+
+<details>
+<summary>Workflow Command Helpers</summary>
 
 Type-safe utilities for GitHub Actions workflow commands:
 
@@ -213,7 +242,7 @@ setOutput("version", "1.2.3");
 setOutputs({
   version: "1.2.3",
   commit_sha: "abc123",
-  build_time: new Date().toISOString(),
+  build_time: new Date().toISOString()
 });
 ```
 
@@ -223,7 +252,7 @@ setOutputs({
 import {
   addJobSummary,
   addSummary,
-  addSummaryTable,
+  addSummaryTable
 } from "@kjanat/gha-env-validator";
 
 // Raw markdown
@@ -235,7 +264,10 @@ addSummary("Deployment", "🚀 Deployed to production");
 // Tables
 addSummaryTable(
   ["Metric", "Value"],
-  [["Tests", "42 passed"], ["Coverage", "95%"]],
+  [
+    ["Tests", "42 passed"],
+    ["Coverage", "95%"]
+  ]
 );
 ```
 
@@ -274,7 +306,7 @@ import {
   addPath,
   isGitHubActions,
   maskValue,
-  setFailed,
+  setFailed
 } from "@kjanat/gha-env-validator";
 
 // Hide secrets in logs
@@ -294,7 +326,10 @@ if (buildFailed) {
 }
 ```
 
-## GitHub Actions Workflow Example
+</details>
+
+<details>
+<summary>GitHub Actions Workflow Example</summary>
 
 ```yaml
 name: CI
@@ -326,12 +361,12 @@ jobs:
 import {
   createEnvSchema,
   validateCustomEnv,
-  z,
+  z
 } from "@kjanat/gha-env-validator";
 
 const schema = createEnvSchema({
   API_KEY: z.string().min(1),
-  NODE_ENV: z.enum(["development", "production", "test"]),
+  NODE_ENV: z.enum(["development", "production", "test"])
 });
 
 try {
@@ -346,7 +381,10 @@ try {
 }
 ```
 
-## API Reference
+</details>
+
+<details>
+<summary>API Reference</summary>
 
 ### `validateEnv(options?)`
 
@@ -426,7 +464,10 @@ Pre-built Zod schema for all GitHub Actions default environment variables.
 
 TypeScript type representing all GitHub Actions default environment variables with proper types (string, number, boolean, enums).
 
-## Included GitHub Actions Variables
+</details>
+
+<details>
+<summary>Included GitHub Actions Variables</summary>
 
 All GitHub Actions default environment variables are included with rich metadata:
 
@@ -439,7 +480,10 @@ All GitHub Actions default environment variables are included with rich metadata
 
 See [GitHub Actions documentation](https://docs.github.com/en/actions/reference/workflows-and-actions/variables) for complete list.
 
-## Metadata Support (Zod v4)
+</details>
+
+<details>
+<summary>Metadata Support (Zod v4)</summary>
 
 Each environment variable includes rich metadata using Zod v4's `.meta()` API:
 
@@ -500,7 +544,7 @@ const fields = Object.entries(deploymentSchema.shape).map(([name, schema]) => {
     label: meta.title,
     description: meta.description,
     placeholder: meta.example,
-    type: meta.category === "secrets" ? "password" : "text",
+    type: meta.category === "secrets" ? "password" : "text"
   };
 });
 ```
@@ -534,17 +578,16 @@ if (!result.success) {
 ```typescript
 // Export to JSON Schema, OpenAPI, GraphQL schemas
 const jsonSchema = {
-  properties: Object.fromEntries(
-    Object.entries(schema.shape).map(([name, s]) => [
+  properties: Object
+    .fromEntries(Object.entries(schema.shape).map(([name, s]) => [
       name,
       {
         type: "string",
         title: s._zod.meta.title,
         description: s._zod.meta.description,
-        examples: [s._zod.meta.example],
-      },
-    ]),
-  ),
+        examples: [s._zod.meta.example]
+      }
+    ]))
 };
 ```
 
@@ -556,22 +599,46 @@ See `examples/` directory for complete implementations:
 - `metadata-validation-reporter.ts` - Rich error messages
 - `metadata-schema-explorer.ts` - Schema introspection
 
+</details>
+
 ## Development
 
 ```bash
 # Install dependencies
 bun install
 
-# Run tests
+# Run tests (builds first, then runs all tests)
 bun test
 
 # Type check
 bun run typecheck
 
-# Build
+# Lint
+bun run lint
+
+# Format code
+bun run format
+
+# Build (dual ESM+CJS with tsdown)
 bun run build
 ```
 
+### Build System
+
+This package uses [tsdown](https://tsdown.dev/) for building:
+
+- **Dual format**: Ships both ESM (`.mjs`) and CJS (`.cjs`) outputs
+- **Type declarations**: Separate `.d.mts` and `.d.cts` for module systems
+- **Node 18+**: Target platform with tree-shaking enabled
+- **Clean builds**: Automatic cleanup before each build
+
+### Code Quality
+
+- **Biome**: Fast linting and formatting
+- **Dprint**: Markdown and JSON formatting
+- **Lefthook**: Pre-commit hooks for automated quality checks
+- **100% test coverage**: All modules fully tested
+
 ## License
 
-MIT © kjanat
+[MIT](./LICENSE)

@@ -21,9 +21,9 @@ import type {
   StarEvent,
   WatchEvent,
   WorkflowJobEvent,
-  WorkflowRunEvent,
+  WorkflowRunEvent
 } from "@octokit/webhooks-types";
-import { getEventPayload, isEventType } from "./github-context.ts";
+import { getEventPayload, isEventType } from "~/github-context";
 
 // Common CI/CD Events
 

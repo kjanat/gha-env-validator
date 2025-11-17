@@ -38,7 +38,7 @@ export type {
   WatchEvent,
   WorkflowDispatchEvent,
   WorkflowJobEvent,
-  WorkflowRunEvent,
+  WorkflowRunEvent
 } from "@octokit/webhooks-types";
 // Re-export Zod for convenience
 export { type ZodError, z } from "zod";
@@ -55,13 +55,13 @@ export {
   isDebugMode,
   isOnBranch,
   isPullRequest,
-  isTag,
-} from "./context.ts";
+  isTag
+} from "~/context";
 // Export builder functions
-export { createCustomEnvSchema, createEnvSchema } from "./create-env-schema.ts";
+export { createCustomEnvSchema, createEnvSchema } from "~/create-env-schema";
 
 // Export event name type
-export type { GitHubEventName } from "./event-types.ts";
+export type { GitHubEventName } from "~/event-types";
 
 // Export extended event utilities (15 most common events)
 export {
@@ -98,8 +98,8 @@ export {
   isStarEvent,
   isWatchEvent,
   isWorkflowJobEvent,
-  isWorkflowRunEvent,
-} from "./events.ts";
+  isWorkflowRunEvent
+} from "~/events";
 // Export github context utilities
 export {
   getEventName,
@@ -114,26 +114,26 @@ export {
   isEventType,
   isPushEvent,
   isReleaseEvent,
-  isWorkflowDispatch,
-} from "./github-context.ts";
+  isWorkflowDispatch
+} from "~/github-context";
 // Export action input utilities
 export {
   getBooleanInput,
   getInput,
   getMultilineInput,
   safeValidateInputs,
-  validateInputs,
-} from "./inputs.ts";
+  validateInputs
+} from "~/inputs";
 // Export schemas
-export { type GitHubActionsEnv, githubActionsSchema } from "./schemas/index.ts";
+export { type GitHubActionsEnv, githubActionsSchema } from "~/schemas";
 // Export validation functions
 export {
   safeValidateCustomEnv,
   safeValidateEnv,
-  type ValidateEnvOptions,
+  type ValidateEnvOptions, 
   validateCustomEnv,
-  validateEnv,
-} from "./validate.ts";
+  validateEnv
+} from "~/validate";
 // Export workflow command utilities
 export {
   addJobSummary,
@@ -159,5 +159,5 @@ export {
   setOutputs,
   startGroup,
   stopCommands,
-  warning,
-} from "./workflow-commands.ts";
+  warning
+} from "~/workflow-commands";

@@ -8,7 +8,7 @@
 import {
   createEnvSchema,
   safeValidateCustomEnv,
-  z,
+  z
 } from "@kjanat/gha-env-validator";
 
 // Create schema with metadata
@@ -18,7 +18,7 @@ const deploySchema = createEnvSchema({
     title: "API Endpoint",
     description: "Base URL for API requests",
     category: "api",
-    example: "https://api.example.com",
+    example: "https://api.example.com"
   }),
 
   ENVIRONMENT: z.enum(["dev", "staging", "prod"]).meta({
@@ -26,7 +26,7 @@ const deploySchema = createEnvSchema({
     title: "Environment",
     description: "Deployment target environment",
     category: "deployment",
-    example: "staging",
+    example: "staging"
   }),
 
   PORT: z.string().transform(Number).meta({
@@ -34,15 +34,15 @@ const deploySchema = createEnvSchema({
     title: "Server Port",
     description: "Port number for the server",
     category: "deployment",
-    example: "3000",
-  }),
+    example: "3000"
+  })
 });
 
 // Simulate validation with missing/invalid vars
 const testEnv = {
   // Missing API_URL
   ENVIRONMENT: "invalid-env",
-  PORT: "not-a-number",
+  PORT: "not-a-number"
   // ... GitHub Actions vars would be here in real scenario
 };
 

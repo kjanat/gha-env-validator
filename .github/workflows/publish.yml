@@ -21,6 +21,10 @@ jobs:
     outputs:
       release: ${{ steps.plan.outputs.release }}
       dry-run: ${{ steps.plan.outputs.dry-run }}
+      package: ${{ steps.plan.outputs.package }}
+      version: ${{ steps.plan.outputs.version }}
+      url: ${{ steps.plan.outputs.url }}
+
     steps:
       - uses: actions/checkout@v5
       - uses: oven-sh/setup-bun@v2
@@ -28,30 +32,30 @@ jobs:
         id: plan
         run: |
           PKG_NAME="$(bun pm pkg get name | tr -d '"')"
-          PKG_VERSION=$(bun pm pkg get version | tr -d '"')
-          if [[ "${{ github.event_name }}" == "workflow_dispatch" && "${{ github.event.inputs.dry-run }}" == "true" ]]; then
+          PKG_VERSION="$(bun pm pkg get version | tr -d '"')"
+          PKG_URL="https://www.npmjs.com/package/${PKG_NAME}"
+          IS_DRY_RUN="false"
+          if [[ "$GITHUB_EVENT_NAME" == "workflow_dispatch" && "${{ github.event.inputs.dry-run }}" == "true" ]]; then
             IS_DRY_RUN="true"
-          else
-            IS_DRY_RUN="false"
           fi
-          if [[ "${IS_DRY_RUN}" = "false" ]]; then
-            IS_PUBLISH="true"
-          else
-            IS_PUBLISH="false"
-          fi
+          IS_PUBLISH=$([[ "$IS_DRY_RUN" == "false" ]] && echo "true" || echo "false")
           {
             printf "## 📦 Plan\n\n"
-            printf "**Package:** \`%s\`  %s\n" "${PKG_NAME}"
-            printf "**Version:** \`%s\`  %s\n" "${PKG_VERSION}"
-            printf "**Event:** \`%s\`  %s\n" "${{ github.ref }}"
-            printf "**Dry run:** \`%s\`  %s\n" "${IS_DRY_RUN}"
-            printf "**Publish:** \`%s\`  \n\n" "${IS_PUBLISH}"
-            printf "[View on npm →](https://www.npmjs.com/package/%s \"%s\")\n" "$PKG_NAME" "View ${PKG_NAME} on npm"
-            echo "DONE"
+            printf "**Package:**  \`%s\`  \n"     "$PKG_NAME"
+            printf "**Version:**  \`%s\`  \n"     "$PKG_VERSION"
+            printf "**Event:**    \`%s\`  \n"     "$GITHUB_REF"
+            printf "**Dry run:**  \`%s\`  \n"     "$IS_DRY_RUN"
+            printf "**Publish:**  \`%s\`  \n\n"   "$IS_PUBLISH"
+            printf "[View on npm →](%s \"%s\")\n" "$PKG_URL" "View ${PKG_NAME} on npm"
           } >> "$GITHUB_STEP_SUMMARY"
-
-          echo "release=${IS_PUBLISH}" >> "$GITHUB_OUTPUT"
-          echo "dry-run=${IS_DRY_RUN}" >> "$GITHUB_OUTPUT"
+          {
+            echo "release=${IS_PUBLISH}";
+            echo "release=${IS_PUBLISH}";
+            echo "dry-run=${IS_DRY_RUN}";
+            echo "package=${PKG_NAME}";
+            echo "version=${PKG_VERSION}";
+            echo "url=${PKG_URL}"
+          } >> "$GITHUB_OUTPUT"
 
   publish:
     runs-on: ubuntu-latest
@@ -81,28 +85,51 @@ jobs:
         run: bun test
 
       - name: Verify build
+        if: ${{ needs.plan.outputs.release != 'true' }}
         run: |
           ls -lh dist/
-          test -f dist/index.js || exit 1
-          test -f dist/index.d.ts || exit 1
+          test -f dist/index.mjs || exit 1
+          test -f dist/index.d.mts || exit 1
 
       - name: Dry run publish
+        id: dry-run
         if: ${{ needs.plan.outputs.dry-run == 'true' }}
         run: npm publish --dry-run --provenance
 
       - name: Publish to npm
+        id: publish
         if: ${{ needs.plan.outputs.release == 'true' }}
         run: npm publish --access public --provenance
 
       - name: Summary
+        if: ${{ !cancelled() }}
         run: |
-          PKG_NAME=$(bun pm pkg get name)
+          # Figure out which step actually ran
+          if [ "${{ steps.publish.outcome }}" != "" ] && [ "${{ steps.publish.outcome }}" != "skipped" ]; then
+            OUTCOME="${{ steps.publish.outcome }}"
+          elif [ "${{ steps['dry-run'].outcome }}" != "" ] && [ "${{ steps['dry-run'].outcome }}" != "skipped" ]; then
+            OUTCOME="${{ steps['dry-run'].outcome }}"
+          else
+            OUTCOME="skipped"
+          fi
+
+          if [ "$OUTCOME" = "success" ]; then
+            RESULT="✅ Success"
+          else
+            RESULT="❌ Failed (${OUTCOME})"
+          fi
+
           {
-            echo "## 📦 Published"
-            echo ""
-            echo "**Package:** $PKG_NAME"
-            echo "**Version:** $(bun pm pkg get version)"
-            echo "**Event:** ${{ github.event_name }}"
-            echo ""
-            echo "[View on npm →](https://www.npmjs.com/package/$PKG_NAME)"
+            echo "## 📦 Published";
+            echo "";
+            echo "**Package:** \`${PKG_NAME}\`  ";
+            echo "**Version:** \`${RELEASE_VERSION}\`  ";
+            echo "**Event:** \`${GITHUB_EVENT_NAME}\`  ";
+            echo "**Result:** \`${RESULT}\`";
+            echo "";
+            echo "[View on npm →](${RELEASE_URL} \"View ${PKG_NAME} on npm\")"
           } >> "$GITHUB_STEP_SUMMARY"
+        env:
+          PKG_NAME: ${{ needs.plan.outputs.package }}
+          RELEASE_VERSION: ${{ needs.plan.outputs.version }}
+          RELEASE_URL: ${{ needs.plan.outputs.url }}

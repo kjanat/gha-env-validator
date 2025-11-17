@@ -26,7 +26,7 @@ Extend the default schema with your own variables:
 import {
   createEnvSchema,
   validateCustomEnv,
-  z,
+  z
 } from "@kjanat/gha-env-validator";
 
 const schema = createEnvSchema({
@@ -35,7 +35,7 @@ const schema = createEnvSchema({
   API_URL: z.string().url(),
   NODE_ENV: z.enum(["development", "production", "test"]),
   PORT: z.string().transform(Number),
-  DEBUG: z.string().transform(s => s === "true"),
+  DEBUG: z.string().transform(s => s === "true")
 });
 
 const env = validateCustomEnv(schema);
@@ -55,7 +55,7 @@ import { createCustomEnvSchema, z } from "@kjanat/gha-env-validator";
 
 const schema = createCustomEnvSchema({
   DATABASE_URL: z.string().url(),
-  MAX_CONNECTIONS: z.string().transform(Number),
+  MAX_CONNECTIONS: z.string().transform(Number)
 });
 
 const env = z.object(schema).parse(process.env);
@@ -87,12 +87,12 @@ import { validateEnv } from "@kjanat/gha-env-validator";
 
 // Pass custom environment object
 const env = validateEnv({
-  env: customEnvObject,
+  env: customEnvObject
 });
 
 // Strict mode - strip unknown variables
 const strictEnv = validateEnv({
-  strict: true,
+  strict: true
 });
 ```
 
@@ -139,7 +139,7 @@ Use Zod's `.default()` for optional variables:
 ```typescript
 const schema = createEnvSchema({
   LOG_LEVEL: z.enum(["debug", "info", "warn", "error"]).default("info"),
-  MAX_RETRIES: z.string().transform(Number).default("3"),
+  MAX_RETRIES: z.string().transform(Number).default("3")
 });
 ```
 

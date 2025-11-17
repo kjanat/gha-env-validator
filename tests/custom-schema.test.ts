@@ -2,7 +2,7 @@ import { describe, expect, test } from "bun:test";
 import {
   createCustomEnvSchema,
   createEnvSchema,
-  z,
+  z
 } from "@kjanat/gha-env-validator";
 
 describe("createEnvSchema", () => {
@@ -10,7 +10,7 @@ describe("createEnvSchema", () => {
     const schema = createEnvSchema({
       API_KEY: z.string().min(1),
       NODE_ENV: z.enum(["development", "production", "test"]),
-      PORT: z.string().transform(Number),
+      PORT: z.string().transform(Number)
     });
 
     const mockEnv = {
@@ -58,7 +58,7 @@ describe("createEnvSchema", () => {
       // Custom vars
       API_KEY: "secret-key",
       NODE_ENV: "production",
-      PORT: "3000",
+      PORT: "3000"
     };
 
     const result = schema.parse(mockEnv);
@@ -76,7 +76,7 @@ describe("createEnvSchema", () => {
   test("fails when custom variables are invalid", () => {
     const schema = createEnvSchema({
       API_KEY: z.string().min(10),
-      NODE_ENV: z.enum(["development", "production", "test"]),
+      NODE_ENV: z.enum(["development", "production", "test"])
     });
 
     const mockEnv = {
@@ -123,7 +123,7 @@ describe("createEnvSchema", () => {
       RUNNER_TOOL_CACHE: "/opt/hostedtoolcache",
       // Custom vars with invalid values
       API_KEY: "short", // Too short (min 10)
-      NODE_ENV: "invalid", // Not in enum
+      NODE_ENV: "invalid" // Not in enum
     };
 
     expect(() => schema.parse(mockEnv)).toThrow();
@@ -133,13 +133,13 @@ describe("createEnvSchema", () => {
 describe("createCustomEnvSchema", () => {
   test("creates schema without GitHub Actions defaults", () => {
     const schema = createCustomEnvSchema({
-      DATABASE_URL: z.string().url(),
-      MAX_CONNECTIONS: z.string().transform(Number),
+      DATABASE_URL: z.url(),
+      MAX_CONNECTIONS: z.string().transform(Number)
     });
 
     const mockEnv = {
       DATABASE_URL: "postgresql://localhost:5432/db",
-      MAX_CONNECTIONS: "10",
+      MAX_CONNECTIONS: "10"
     };
 
     const result = schema.parse(mockEnv);
@@ -150,11 +150,11 @@ describe("createCustomEnvSchema", () => {
 
   test("fails on invalid custom variables", () => {
     const schema = createCustomEnvSchema({
-      DATABASE_URL: z.string().url(),
+      DATABASE_URL: z.string().url()
     });
 
     const mockEnv = {
-      DATABASE_URL: "not-a-url",
+      DATABASE_URL: "not-a-url"
     };
 
     expect(() => schema.parse(mockEnv)).toThrow();
@@ -169,12 +169,12 @@ describe("createCustomEnvSchema", () => {
       DEBUG: z
         .string()
         .transform((s) => s === "true")
-        .pipe(z.boolean()),
+        .pipe(z.boolean())
     });
 
     const mockEnv = {
       FEATURE_FLAGS: "feature1,feature2,feature3",
-      DEBUG: "true",
+      DEBUG: "true"
     };
 
     const result = schema.parse(mockEnv);

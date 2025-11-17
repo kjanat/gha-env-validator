@@ -10,7 +10,7 @@ Set environment variables for subsequent steps:
 import {
   setEnvVar,
   setEnvVars,
-  setMultilineEnvVar,
+  setMultilineEnvVar
 } from "@kjanat/gha-env-validator";
 
 // Single variable
@@ -20,7 +20,7 @@ setEnvVar("NODE_ENV", "production");
 setEnvVars({
   API_URL: "https://api.example.com",
   DEBUG: "false",
-  MAX_RETRIES: "3",
+  MAX_RETRIES: "3"
 });
 
 // Multiline values (JSON, logs, etc.)
@@ -36,7 +36,7 @@ Set outputs for downstream steps/jobs:
 import {
   setMultilineOutput,
   setOutput,
-  setOutputs,
+  setOutputs
 } from "@kjanat/gha-env-validator";
 
 // Single output
@@ -46,7 +46,7 @@ setOutput("version", "1.2.3");
 setOutputs({
   version: "1.2.3",
   commit_sha: "abc123",
-  build_time: new Date().toISOString(),
+  build_time: new Date().toISOString()
 });
 
 // Multiline output
@@ -72,7 +72,7 @@ import {
   addJobSummary,
   addSummary,
   addSummaryTable,
-  clearJobSummary,
+  clearJobSummary
 } from "@kjanat/gha-env-validator";
 
 // Raw markdown
@@ -87,8 +87,8 @@ addSummaryTable(
   [
     ["Tests", "42", "✅"],
     ["Coverage", "95%", "✅"],
-    ["Duration", "2m 34s", "✅"],
-  ],
+    ["Duration", "2m 34s", "✅"]
+  ]
 );
 
 // Clear and restart
@@ -114,7 +114,7 @@ warning("Deprecated API usage", {
   file: "app.ts",
   line: 42,
   col: 10,
-  title: "Deprecation Warning",
+  title: "Deprecation Warning"
 });
 
 // Error with full context
@@ -124,7 +124,7 @@ error("Build failed", {
   col: 5,
   endLine: 105,
   endColumn: 20,
-  title: "Type Error",
+  title: "Type Error"
 });
 ```
 
@@ -195,7 +195,7 @@ resumeCommands(token);
 import {
   assertGitHubActions,
   isGitHubActions,
-  setFailed,
+  setFailed
 } from "@kjanat/gha-env-validator";
 
 // Check environment
@@ -224,7 +224,7 @@ import {
   notice,
   setFailed,
   setOutputs,
-  validateEnv,
+  validateEnv
 } from "@kjanat/gha-env-validator";
 
 async function main() {
@@ -240,15 +240,15 @@ async function main() {
 
     setOutputs({
       version: "1.2.3",
-      commit: env.GITHUB_SHA.substring(0, 7),
+      commit: env.GITHUB_SHA.substring(0, 7)
     });
 
     addSummaryTable(
       ["Item", "Status"],
       [
         ["Build", "✅"],
-        ["Tests", "✅"],
-      ],
+        ["Tests", "✅"]
+      ]
     );
 
     notice("✅ Workflow completed");

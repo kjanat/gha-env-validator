@@ -7,6 +7,15 @@ Default to using Bun instead of Node.js.
 - Use `bun run <script>` instead of `npm run <script>` or `yarn run <script>` or `pnpm run <script>`
 - Bun automatically loads .env, so don't use dotenv.
 
+## Build System
+
+This project uses `tsdown` for building, not `tsc` or other bundlers:
+
+- Run `bun run build` to create dual ESM+CJS outputs
+- Output goes to `dist/` with `.mjs` (ESM), `.cjs` (CommonJS), and `.d.mts`/`.d.cts` (type declarations)
+- Configuration is in `tsdown.config.ts`
+- Build runs automatically before tests and publishing
+
 ## APIs
 
 - `Bun.serve()` supports WebSockets, HTTPS, and routes. Don't use `express`.
@@ -103,3 +112,25 @@ bun --hot ./index.ts
 ```
 
 For more information, read the Bun API docs in `node_modules/bun-types/docs/**.md`.
+
+## Code Quality
+
+- **Biome** for linting: `bun run lint` or `bun run lint:fix`
+- **Dprint** for formatting: `bun run format`
+- **Lefthook** for pre-commit hooks (auto-installs on `bun install`)
+- **100% test coverage** maintained across all modules
+
+## CI/CD
+
+- **CI workflow** (`.github/workflows/ci.yml`): runs on push/PR to master/main
+  - Installs dependencies with Bun
+  - Builds package first (tests import from package name)
+  - Runs lint, typecheck, and tests
+  - Verifies dist artifacts
+
+- **Publish workflow** (`.github/workflows/publish.yml`): runs on version tags or manual dispatch
+  - Uses OIDC trusted publishing for npm
+  - Supports dry-run mode for testing
+  - Publishes with provenance attestation
+
+- **Docs workflow** (`.github/workflows/docs.yml`): deploys VitePress docs to GitHub Pages

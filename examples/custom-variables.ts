@@ -5,7 +5,7 @@
 import {
   createEnvSchema,
   validateCustomEnv,
-  z,
+  z
 } from "@kjanat/gha-env-validator";
 
 // Define your custom environment variables
@@ -28,7 +28,7 @@ const schema = createEnvSchema({
 
   // Optional variables
   SENTRY_DSN: z.string().url().optional(),
-  LOG_LEVEL: z.enum(["debug", "info", "warn", "error"]).optional(),
+  LOG_LEVEL: z.enum(["debug", "info", "warn", "error"]).optional()
 });
 
 // Validate environment
@@ -37,8 +37,8 @@ const env = validateCustomEnv(schema);
 console.log("🔧 Custom Environment Configuration:");
 console.log("  API URL:", env.API_URL);
 console.log("  Environment:", env.NODE_ENV);
-console.log("  Port:", env.PORT, "(type:", typeof env.PORT + ")");
-console.log("  Debug mode:", env.DEBUG, "(type:", typeof env.DEBUG + ")");
+console.log("  Port:", env.PORT, "(type:", `${typeof env.PORT})`);
+console.log("  Debug mode:", env.DEBUG, "(type:", `${typeof env.DEBUG})`);
 console.log("  Max retries:", env.MAX_RETRIES);
 console.log("  Timeout:", env.TIMEOUT_MS, "ms");
 

@@ -5,7 +5,7 @@ import {
   safeValidateEnv,
   validateCustomEnv,
   validateEnv,
-  z,
+  z
 } from "@kjanat/gha-env-validator";
 
 describe("validateEnv", () => {
@@ -50,7 +50,7 @@ describe("validateEnv", () => {
       RUNNER_NAME: "GitHub Actions 2",
       RUNNER_OS: "Linux",
       RUNNER_TEMP: "/home/runner/work/_temp",
-      RUNNER_TOOL_CACHE: "/opt/hostedtoolcache",
+      RUNNER_TOOL_CACHE: "/opt/hostedtoolcache"
     };
 
     const result = validateEnv({ env: mockEnv });
@@ -102,7 +102,7 @@ describe("validateEnv", () => {
       RUNNER_OS: "Linux",
       RUNNER_TEMP: "/home/runner/work/_temp",
       RUNNER_TOOL_CACHE: "/opt/hostedtoolcache",
-      CUSTOM_VAR: "custom-value",
+      CUSTOM_VAR: "custom-value"
     };
 
     const result = validateEnv({ env: mockEnv }) as any;
@@ -113,7 +113,7 @@ describe("validateEnv", () => {
   test("throws error on invalid env", () => {
     const invalidEnv = {
       GITHUB_ACTIONS: "true",
-      GITHUB_ACTOR: "octocat",
+      GITHUB_ACTOR: "octocat"
     };
 
     expect(() => validateEnv({ env: invalidEnv })).toThrow();
@@ -124,7 +124,7 @@ describe("validateCustomEnv", () => {
   test("validates with custom schema", () => {
     const schema = createEnvSchema({
       API_KEY: z.string().min(1),
-      PORT: z.string().transform(Number),
+      PORT: z.string().transform(Number)
     });
 
     const mockEnv = {
@@ -169,7 +169,7 @@ describe("validateCustomEnv", () => {
       RUNNER_TEMP: "/home/runner/work/_temp",
       RUNNER_TOOL_CACHE: "/opt/hostedtoolcache",
       API_KEY: "secret-key",
-      PORT: "3000",
+      PORT: "3000"
     };
 
     const result = validateCustomEnv(schema, { env: mockEnv });
@@ -222,7 +222,7 @@ describe("safeValidateEnv", () => {
       RUNNER_NAME: "GitHub Actions 2",
       RUNNER_OS: "Linux",
       RUNNER_TEMP: "/home/runner/work/_temp",
-      RUNNER_TOOL_CACHE: "/opt/hostedtoolcache",
+      RUNNER_TOOL_CACHE: "/opt/hostedtoolcache"
     };
 
     const result = safeValidateEnv({ env: mockEnv });
@@ -236,7 +236,7 @@ describe("safeValidateEnv", () => {
   test("returns error on invalid env", () => {
     const invalidEnv = {
       GITHUB_ACTIONS: "true",
-      GITHUB_ACTOR: "octocat",
+      GITHUB_ACTOR: "octocat"
     };
 
     const result = safeValidateEnv({ env: invalidEnv });
@@ -251,7 +251,7 @@ describe("safeValidateEnv", () => {
 describe("safeValidateCustomEnv", () => {
   test("returns success on valid custom env", () => {
     const schema = createEnvSchema({
-      API_KEY: z.string().min(1),
+      API_KEY: z.string().min(1)
     });
 
     const mockEnv = {
@@ -295,7 +295,7 @@ describe("safeValidateCustomEnv", () => {
       RUNNER_OS: "Linux",
       RUNNER_TEMP: "/home/runner/work/_temp",
       RUNNER_TOOL_CACHE: "/opt/hostedtoolcache",
-      API_KEY: "secret-key",
+      API_KEY: "secret-key"
     };
 
     const result = safeValidateCustomEnv(schema, { env: mockEnv });
@@ -308,7 +308,7 @@ describe("safeValidateCustomEnv", () => {
 
   test("returns error on invalid custom env", () => {
     const schema = createEnvSchema({
-      API_KEY: z.string().min(10),
+      API_KEY: z.string().min(10)
     });
 
     const mockEnv = {
@@ -352,16 +352,16 @@ describe("safeValidateCustomEnv", () => {
       RUNNER_OS: "Linux",
       RUNNER_TEMP: "/home/runner/work/_temp",
       RUNNER_TOOL_CACHE: "/opt/hostedtoolcache",
-      API_KEY: "short", // Too short
+      API_KEY: "short" // Too short
     };
 
     const result = safeValidateCustomEnv(schema, { env: mockEnv });
 
     expect(result.success).toBe(false);
     if (!result.success) {
-      expect(
-        result.error.issues.some((issue) => issue.path.includes("API_KEY")),
-      ).toBe(true);
+      expect(result.error.issues.some((issue) =>
+        issue.path.includes("API_KEY")
+      )).toBe(true);
     }
   });
 });

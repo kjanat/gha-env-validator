@@ -59,9 +59,11 @@ function showStatistics(vars: VariableInfo[]) {
   );
 
   console.log("Variables by category:");
-  Object.entries(byCategory)
-    .sort((a, b) => b[1] - a[1])
-    .forEach(([cat, count]) => console.log(`  ${cat}: ${count}`));
+  for (const [cat, count] of Object.entries(byCategory).sort(
+    (a, b) => b[1] - a[1],
+  )) {
+    console.log(`  ${cat}: ${count}`);
+  }
 
   // By type
   const byType = vars.reduce(
@@ -73,9 +75,11 @@ function showStatistics(vars: VariableInfo[]) {
   );
 
   console.log("\nVariables by Zod type:");
-  Object.entries(byType)
-    .sort((a, b) => b[1] - a[1])
-    .forEach(([type, count]) => console.log(`  ${type}: ${count}`));
+  for (const [type, count] of Object.entries(byType).sort(
+    (a, b) => b[1] - a[1],
+  )) {
+    console.log(`  ${type}: ${count}`);
+  }
 
   // Optional vs required
   const optional = vars.filter((v) => v.optional).length;
@@ -155,7 +159,7 @@ generateTypeScriptInterface(variables.slice(0, 5)); // Show first 5 for demo
 
 console.log("📄 JSON Schema (stub):");
 const jsonSchema = generateJsonSchemaStub(variables.slice(0, 3));
-console.log(JSON.stringify(jsonSchema, null, 2).slice(0, 500) + "...\n");
+console.log(`${JSON.stringify(jsonSchema, null, 2).slice(0, 500)}...\n`);
 
 console.log("💡 Use metadata for:");
 console.log("  ✓ IDE extensions");

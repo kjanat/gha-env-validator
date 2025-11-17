@@ -40,4 +40,10 @@ docs/.vitepress/dist
 docs/.vitepress/cache
 .temp
 _*.md
+
+# Bundler
 dist/
+
+# Bun
+bun.xml
+lcov.info

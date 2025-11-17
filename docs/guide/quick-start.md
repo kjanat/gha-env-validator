@@ -24,14 +24,14 @@ Extend the schema with your own environment variables:
 import {
   createEnvSchema,
   validateCustomEnv,
-  z,
+  z
 } from "@kjanat/gha-env-validator";
 
 const schema = createEnvSchema({
   API_KEY: z.string().min(1),
   API_URL: z.string().url(),
   NODE_ENV: z.enum(["development", "production", "test"]),
-  MAX_RETRIES: z.string().transform(Number),
+  MAX_RETRIES: z.string().transform(Number)
 });
 
 const env = validateCustomEnv(schema);
@@ -80,7 +80,7 @@ import {
   getCommitSha,
   getCurrentBranch,
   getRepoInfo,
-  isPullRequest,
+  isPullRequest
 } from "@kjanat/gha-env-validator";
 
 const branch = getCurrentBranch(); // 'main'
@@ -125,11 +125,11 @@ import {
   createEnvSchema,
   setOutput,
   validateCustomEnv,
-  z,
+  z
 } from "@kjanat/gha-env-validator";
 
 const schema = createEnvSchema({
-  API_KEY: z.string().min(1),
+  API_KEY: z.string().min(1)
 });
 
 const env = validateCustomEnv(schema);

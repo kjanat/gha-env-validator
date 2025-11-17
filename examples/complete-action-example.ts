@@ -28,7 +28,7 @@ import {
   setOutputs,
   validateCustomEnv,
   validateInputs,
-  z,
+  z
 } from "@kjanat/gha-env-validator";
 
 async function main() {
@@ -37,7 +37,7 @@ async function main() {
     await group("Validating Environment", async () => {
       const envSchema = createEnvSchema({
         API_KEY: z.string().min(1),
-        DEPLOY_ENV: z.enum(["dev", "staging", "prod"]).default("dev"),
+        DEPLOY_ENV: z.enum(["dev", "staging", "prod"]).default("dev")
       });
 
       const env = validateCustomEnv(envSchema);
@@ -50,7 +50,7 @@ async function main() {
         version: z.string().regex(/^\d+\.\d+\.\d+$/, "Must be semver format"),
         "skip-tests": z.boolean().default(false),
         environment: z.enum(["dev", "staging", "prod"]),
-        targets: z.array(z.string()).default([]),
+        targets: z.array(z.string()).default([])
       };
 
       const validated = validateInputs(inputSchema);
@@ -94,7 +94,7 @@ async function main() {
         branch: context.branch,
         repository: context.repo.full,
         build_url: context.run.url,
-        runner_os: context.runner.os,
+        runner_os: context.runner.os
       });
 
       notice("Outputs set for downstream jobs");
@@ -111,8 +111,8 @@ async function main() {
           ["Commit", context.sha],
           ["Actor", `${context.actor.name} (#${context.actor.id})`],
           ["Runner", `${context.runner.os} (${context.runner.arch})`],
-          ["Run", `#${context.run.number} (attempt ${context.run.attempt})`],
-        ],
+          ["Run", `#${context.run.number} (attempt ${context.run.attempt})`]
+        ]
       );
 
       notice("Job summary created");

@@ -43,7 +43,7 @@ describe("githubActionsSchema", () => {
       RUNNER_NAME: "GitHub Actions 2",
       RUNNER_OS: "Linux",
       RUNNER_TEMP: "/home/runner/work/_temp",
-      RUNNER_TOOL_CACHE: "/opt/hostedtoolcache",
+      RUNNER_TOOL_CACHE: "/opt/hostedtoolcache"
     };
 
     const result = githubActionsSchema.parse(mockEnv);
@@ -100,7 +100,7 @@ describe("githubActionsSchema", () => {
       RUNNER_NAME: "GitHub Actions 2",
       RUNNER_OS: "Linux",
       RUNNER_TEMP: "/home/runner/work/_temp",
-      RUNNER_TOOL_CACHE: "/opt/hostedtoolcache",
+      RUNNER_TOOL_CACHE: "/opt/hostedtoolcache"
     };
 
     const result = githubActionsSchema.parse(mockEnv);
@@ -113,7 +113,7 @@ describe("githubActionsSchema", () => {
   test("fails on missing required fields", () => {
     const incompleteEnv = {
       GITHUB_ACTIONS: "true",
-      GITHUB_ACTOR: "octocat",
+      GITHUB_ACTOR: "octocat"
     };
 
     expect(() => githubActionsSchema.parse(incompleteEnv)).toThrow();
@@ -160,7 +160,7 @@ describe("githubActionsSchema", () => {
       RUNNER_NAME: "My Runner",
       RUNNER_OS: "macOS", // Test enum
       RUNNER_TEMP: "/tmp",
-      RUNNER_TOOL_CACHE: "/opt/tools",
+      RUNNER_TOOL_CACHE: "/opt/tools"
     };
 
     const result = githubActionsSchema.parse(mockEnv);
@@ -212,7 +212,7 @@ describe("githubActionsSchema", () => {
       RUNNER_NAME: "GitHub Actions 2",
       RUNNER_OS: "Linux",
       RUNNER_TEMP: "/home/runner/work/_temp",
-      RUNNER_TOOL_CACHE: "/opt/hostedtoolcache",
+      RUNNER_TOOL_CACHE: "/opt/hostedtoolcache"
     };
 
     expect(() => githubActionsSchema.parse(mockEnv)).toThrow();

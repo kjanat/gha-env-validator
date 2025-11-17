@@ -29,9 +29,7 @@ export function setEnvVar(name: string, value: string): void {
   const envFile = process.env.GITHUB_ENV;
 
   if (!envFile) {
-    throw new Error(
-      "GITHUB_ENV is not set. This function only works in GitHub Actions.",
-    );
+    throw new Error("GITHUB_ENV is not set. This function only works in GitHub Actions.");
   }
 
   fs.appendFileSync(envFile, `${name}=${value}\n`, "utf-8");
@@ -57,16 +55,14 @@ export function setMultilineEnvVar(name: string, value: string): void {
   const envFile = process.env.GITHUB_ENV;
 
   if (!envFile) {
-    throw new Error(
-      "GITHUB_ENV is not set. This function only works in GitHub Actions.",
-    );
+    throw new Error("GITHUB_ENV is not set. This function only works in GitHub Actions.");
   }
 
   const delimiter = `EOF_${Math.random().toString(36).substring(7)}`;
   fs.appendFileSync(
     envFile,
     `${name}<<${delimiter}\n${value}\n${delimiter}\n`,
-    "utf-8",
+    "utf-8"
   );
 }
 
@@ -90,9 +86,7 @@ export function setOutput(name: string, value: string): void {
   const outputFile = process.env.GITHUB_OUTPUT;
 
   if (!outputFile) {
-    throw new Error(
-      "GITHUB_OUTPUT is not set. This function only works in GitHub Actions.",
-    );
+    throw new Error("GITHUB_OUTPUT is not set. This function only works in GitHub Actions.");
   }
 
   fs.appendFileSync(outputFile, `${name}=${value}\n`, "utf-8");
@@ -120,16 +114,14 @@ export function setMultilineOutput(name: string, value: string): void {
   const outputFile = process.env.GITHUB_OUTPUT;
 
   if (!outputFile) {
-    throw new Error(
-      "GITHUB_OUTPUT is not set. This function only works in GitHub Actions.",
-    );
+    throw new Error("GITHUB_OUTPUT is not set. This function only works in GitHub Actions.");
   }
 
   const delimiter = `EOF_${Math.random().toString(36).substring(7)}`;
   fs.appendFileSync(
     outputFile,
     `${name}<<${delimiter}\n${value}\n${delimiter}\n`,
-    "utf-8",
+    "utf-8"
   );
 }
 
@@ -150,9 +142,7 @@ export function addPath(path: string): void {
   const pathFile = process.env.GITHUB_PATH;
 
   if (!pathFile) {
-    throw new Error(
-      "GITHUB_PATH is not set. This function only works in GitHub Actions.",
-    );
+    throw new Error("GITHUB_PATH is not set. This function only works in GitHub Actions.");
   }
 
   fs.appendFileSync(pathFile, `${path}\n`, "utf-8");
@@ -178,9 +168,7 @@ export function addJobSummary(markdown: string): void {
   const summaryFile = process.env.GITHUB_STEP_SUMMARY;
 
   if (!summaryFile) {
-    throw new Error(
-      "GITHUB_STEP_SUMMARY is not set. This function only works in GitHub Actions.",
-    );
+    throw new Error("GITHUB_STEP_SUMMARY is not set. This function only works in GitHub Actions.");
   }
 
   fs.appendFileSync(summaryFile, markdown, "utf-8");
@@ -201,9 +189,7 @@ export function clearJobSummary(): void {
   const summaryFile = process.env.GITHUB_STEP_SUMMARY;
 
   if (!summaryFile) {
-    throw new Error(
-      "GITHUB_STEP_SUMMARY is not set. This function only works in GitHub Actions.",
-    );
+    throw new Error("GITHUB_STEP_SUMMARY is not set. This function only works in GitHub Actions.");
   }
 
   fs.writeFileSync(summaryFile, "", "utf-8");
@@ -250,7 +236,7 @@ export function notice(
     endLine?: number;
     endColumn?: number;
     title?: string;
-  },
+  }
 ): void {
   const params = formatAnnotationParams(options);
   console.log(`::notice${params}::${message}`);
@@ -279,7 +265,7 @@ export function warning(
     endLine?: number;
     endColumn?: number;
     title?: string;
-  },
+  }
 ): void {
   const params = formatAnnotationParams(options);
   console.log(`::warning${params}::${message}`);
@@ -308,7 +294,7 @@ export function error(
     endLine?: number;
     endColumn?: number;
     title?: string;
-  },
+  }
 ): void {
   const params = formatAnnotationParams(options);
   console.log(`::error${params}::${message}`);
@@ -352,7 +338,7 @@ export function maskValue(value: string): void {
  */
 export async function group<T>(
   title: string,
-  fn: () => T | Promise<T>,
+  fn: () => T | Promise<T>
 ): Promise<T> {
   console.log(`::group::${title}`);
   try {
@@ -449,9 +435,7 @@ export function isGitHubActions(): boolean {
  */
 export function assertGitHubActions(): void {
   if (!isGitHubActions()) {
-    throw new Error(
-      "Not running in GitHub Actions. Workflow commands are only available in GitHub Actions environment.",
-    );
+    throw new Error("Not running in GitHub Actions. Workflow commands are only available in GitHub Actions environment.");
   }
 }
 
@@ -573,7 +557,7 @@ export function addSummaryTable(headers: string[], rows: string[][]): void {
     table += `| ${row.join(" | ")} |\n`;
   }
 
-  addJobSummary(table + "\n");
+  addJobSummary(`${table}\n`);
 }
 
 /**

@@ -18,7 +18,7 @@
 import {
   createEnvSchema,
   validateCustomEnv,
-  z,
+  z
 } from "@kjanat/gha-env-validator";
 
 // Define deployment-specific environment variables
@@ -38,7 +38,7 @@ const deploymentSchema = createEnvSchema({
   ENABLE_ROLLBACK: z
     .string()
     .transform((s) => s === "true")
-    .optional(),
+    .optional()
 });
 
 try {

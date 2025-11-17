@@ -6,19 +6,33 @@
   "useTabs": false,
 
   // Language specific
-  "typescript": {},
+  "typescript": {
+    "lineWidth": 80,
+    "indentWidth": 2,
+    "trailingCommas": "never",
+    "operatorPosition": "maintain",
+    "arguments.preferHanging": "onlySingleItem",
+    "arrayExpression.preferHanging": "onlySingleItem",
+    "exportDeclaration.sortNamedExports": "maintain",
+    "exportDeclaration.sortTypeOnlyExports": "none",
+    "importDeclaration.sortNamedImports": "maintain",
+    "importDeclaration.sortTypeOnlyImports": "none",
+    "module.sortExportDeclarations": "maintain",
+    "module.sortImportDeclarations": "maintain",
+    "ignoreNodeCommentText": "dprint-ignore"
+  },
   "markdown": {},
   "toml": {},
   "json": { "trailingCommas": "never" },
   "dockerfile": {},
-  "biome": {
-    "indentWidth": 2,
-    "indentStyle": "space",
-    "lineEnding": "lf",
-    "quoteStyle": "double",
-    "trailingCommas": "none",
-    "semicolons": "always"
-  },
+  // "biome": {
+  //   "indentWidth": 2,
+  //   "indentStyle": "space",
+  //   "lineEnding": "lf",
+  //   "quoteStyle": "double",
+  //   "semicolons": "always",
+  //   "trailingCommas": "never"
+  // },
   "ruff": {},
   "malva": {},
   "markup": {},
@@ -46,7 +60,7 @@
     "https://plugins.dprint.dev/markdown-0.20.0.wasm",
     "https://plugins.dprint.dev/toml-0.7.0.wasm",
     "https://plugins.dprint.dev/dockerfile-0.3.3.wasm",
-    "https://plugins.dprint.dev/biome-0.11.4.wasm",
+    // "https://plugins.dprint.dev/biome-0.11.4.wasm",
     "https://plugins.dprint.dev/ruff-0.6.5.wasm",
     "https://plugins.dprint.dev/g-plane/malva-v0.15.0.wasm",
     "https://plugins.dprint.dev/g-plane/markup_fmt-v0.24.1.wasm",

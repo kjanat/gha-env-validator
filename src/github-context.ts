@@ -14,9 +14,9 @@ import type {
   PullRequestEvent,
   PushEvent,
   ReleaseEvent,
-  WorkflowDispatchEvent,
+  WorkflowDispatchEvent
 } from "@octokit/webhooks-types";
-import { validateEnv } from "./validate.ts";
+import { validateEnv } from "~/validate";
 
 /**
  * Gets the full event webhook payload.
@@ -136,11 +136,9 @@ export function getGitHubToken(): string {
   const token = process.env.GITHUB_TOKEN;
 
   if (!token) {
-    throw new Error(
-      "GITHUB_TOKEN not found. Make sure to set it in your workflow:\n" +
-        "  env:\n" +
-        "    GITHUB_TOKEN: ${{ github.token }}",
-    );
+    throw new Error("GITHUB_TOKEN not found. Make sure to set it in your workflow:\n" +
+      "  env:\n" +
+      "    GITHUB_TOKEN: ${{ github.token }}");
   }
 
   return token;

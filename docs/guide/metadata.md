@@ -69,7 +69,7 @@ const fields = Object.entries(deploymentSchema.shape).map(([name, schema]) => {
     label: meta.title,
     description: meta.description,
     placeholder: meta.example,
-    category: meta.category,
+    category: meta.category
   };
 });
 
@@ -99,18 +99,17 @@ Export to JSON Schema, OpenAPI, GraphQL:
 
 ```typescript
 const jsonSchema = {
-  properties: Object.fromEntries(
-    Object.entries(schema.shape).map(([name, s]) => [
+  properties: Object
+    .fromEntries(Object.entries(schema.shape).map(([name, s]) => [
       name,
       {
         type: "string",
         title: s._zod.meta.title,
         description: s._zod.meta.description,
         examples: [s._zod.meta.example],
-        "x-category": s._zod.meta.category,
-      },
-    ]),
-  ),
+        "x-category": s._zod.meta.category
+      }
+    ]))
 };
 ```
 

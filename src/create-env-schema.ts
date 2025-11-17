@@ -1,5 +1,5 @@
 import { type ZodRawShape, z } from "zod";
-import { githubActionsSchema } from "./schemas/github-defaults.ts";
+import { githubActionsSchema } from "~/schemas";
 
 /**
  * Creates a custom environment variable schema by extending the default GitHub Actions schema.
@@ -44,7 +44,7 @@ export function createEnvSchema<T extends ZodRawShape>(customSchema: T) {
  * @returns Zod schema without GitHub Actions defaults
  */
 export function createCustomEnvSchema<T extends ZodRawShape>(
-  customSchema: T,
+  customSchema: T
 ): z.ZodObject<T> {
   return z.object(customSchema);
 }

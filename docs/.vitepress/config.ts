@@ -11,7 +11,7 @@ export default defineConfig({
     nav: [
       { text: "Guide", link: "/guide/getting-started" },
       { text: "API", link: "/api/" },
-      { text: "Examples", link: "/guide/examples" },
+      { text: "Examples", link: "/guide/examples" }
     ],
 
     sidebar: {
@@ -21,8 +21,8 @@ export default defineConfig({
           items: [
             { text: "Introduction", link: "/guide/getting-started" },
             { text: "Installation", link: "/guide/installation" },
-            { text: "Quick Start", link: "/guide/quick-start" },
-          ],
+            { text: "Quick Start", link: "/guide/quick-start" }
+          ]
         },
         {
           text: "Features",
@@ -31,40 +31,40 @@ export default defineConfig({
             { text: "Action Inputs", link: "/guide/inputs" },
             { text: "Workflow Commands", link: "/guide/workflow-commands" },
             { text: "Context Utilities", link: "/guide/context" },
-            { text: "Metadata", link: "/guide/metadata" },
-          ],
+            { text: "Metadata", link: "/guide/metadata" }
+          ]
         },
         {
           text: "Examples",
-          items: [{ text: "Complete Examples", link: "/guide/examples" }],
-        },
+          items: [{ text: "Complete Examples", link: "/guide/examples" }]
+        }
       ],
       "/api/": [
         {
           text: "API Reference",
-          items: [{ text: "Overview", link: "/api/" }],
-        },
-      ],
+          items: [{ text: "Overview", link: "/api/" }]
+        }
+      ]
     },
 
     socialLinks: [
-      { icon: "github", link: "https://github.com/kjanat/gha-env-validator" },
+      { icon: "github", link: "https://github.com/kjanat/gha-env-validator" }
     ],
 
     search: {
-      provider: "local",
+      provider: "local"
     },
 
     footer: {
       message: "Released under the MIT License.",
-      copyright: "Copyright © 2025 kjanat",
-    },
+      copyright: "Copyright © 2025 kjanat"
+    }
   },
 
   markdown: {
     theme: {
       light: "github-light",
-      dark: "github-dark",
-    },
-  },
+      dark: "github-dark"
+    }
+  }
 });

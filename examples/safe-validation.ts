@@ -6,7 +6,7 @@ import {
   createEnvSchema,
   safeValidateCustomEnv,
   safeValidateEnv,
-  z,
+  z
 } from "@kjanat/gha-env-validator";
 
 console.log("🔍 Safe Validation Examples\n");
@@ -29,7 +29,7 @@ if (defaultResult.success) {
 console.log("\n2️⃣  Validating custom environment variables...");
 const customSchema = createEnvSchema({
   API_KEY: z.string().min(10, "API_KEY must be at least 10 characters"),
-  NODE_ENV: z.enum(["development", "production", "test"]),
+  NODE_ENV: z.enum(["development", "production", "test"])
 });
 
 const customResult = safeValidateCustomEnv(customSchema);

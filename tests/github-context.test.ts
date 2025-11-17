@@ -13,7 +13,7 @@ import {
   isEventType,
   isPushEvent,
   isReleaseEvent,
-  isWorkflowDispatch,
+  isWorkflowDispatch
 } from "@kjanat/gha-env-validator";
 
 describe("github context", () => {
@@ -79,7 +79,7 @@ describe("github context", () => {
     test("reads and parses event JSON", () => {
       const mockEvent = {
         action: "opened",
-        number: 123,
+        number: 123
       };
 
       fs.writeFileSync(eventFile, JSON.stringify(mockEvent), "utf-8");
@@ -97,9 +97,9 @@ describe("github context", () => {
         commits: [
           {
             id: "abc123",
-            message: "Test commit",
-          },
-        ],
+            message: "Test commit"
+          }
+        ]
       };
 
       fs.writeFileSync(eventFile, JSON.stringify(pushEvent), "utf-8");
@@ -118,8 +118,8 @@ describe("github context", () => {
         number: 42,
         pull_request: {
           number: 42,
-          title: "Test PR",
-        },
+          title: "Test PR"
+        }
       };
 
       fs.writeFileSync(eventFile, JSON.stringify(prEvent), "utf-8");

@@ -128,7 +128,7 @@ import {
   getCurrentBranch,
   isOnBranch,
   isPullRequest,
-  isTag,
+  isTag
 } from "@kjanat/gha-env-validator";
 
 if (isPullRequest()) {

@@ -22,6 +22,6 @@ console.log(
   "  Run ID (number):",
   typeof env.GITHUB_RUN_ID,
   "=",
-  env.GITHUB_RUN_ID,
+  env.GITHUB_RUN_ID
 );
 console.log("  CI (boolean):", typeof env.CI, "=", env.CI);

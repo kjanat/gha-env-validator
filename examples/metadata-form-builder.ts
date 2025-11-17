@@ -14,7 +14,7 @@ const deploymentSchema = createEnvSchema({
     title: "Deployment Environment",
     description: "Target environment for deployment",
     category: "deployment",
-    example: "production",
+    example: "production"
   }),
 
   API_KEY: z.string().min(1).meta({
@@ -23,7 +23,7 @@ const deploymentSchema = createEnvSchema({
     description: "Secret API key for authentication",
     category: "secrets",
     example: "sk_prod_...",
-    sensitive: true, // Custom metadata field
+    sensitive: true // Custom metadata field
   }),
 
   MAX_RETRIES: z.string().transform(Number).meta({
@@ -33,8 +33,8 @@ const deploymentSchema = createEnvSchema({
     category: "deployment",
     example: "3",
     min: 0,
-    max: 10,
-  }),
+    max: 10
+  })
 });
 
 // Generate form configuration from metadata
@@ -85,8 +85,8 @@ for (const [name, schema] of Object.entries(deploymentSchema.shape)) {
     example: meta.example,
     validation: {
       min: meta.min,
-      max: meta.max,
-    },
+      max: meta.max
+    }
   });
 }
 
@@ -99,9 +99,9 @@ console.log(`
 export function DeploymentForm() {
   return (
     <form>
-      ${formFields
-        .map(
-          (field) => `
+      ${
+  formFields
+    .map((field) => `
       <div>
         <label htmlFor="${field.name}">${field.label}</label>
         <${field.type === "select" ? "select" : "input"}
@@ -112,16 +112,20 @@ export function DeploymentForm() {
           placeholder="${field.example || ""}"
         ${field.type === "select" ? ">" : "/>"}
         ${
-          field.type === "select"
-            ? `
-          ${field.options?.map((opt) => `<option value="${opt}">${opt}</option>`).join("\n          ")}
-        </select>`
-            : ""
+      field.type === "select"
+        ? `
+          ${
+          field.options
+            ?.map((opt) => `<option value="${opt}">${opt}</option>`)
+            .join("\n          ")
         }
+        </select>`
+        : ""
+    }
         <small>${field.description}</small>
-      </div>`,
-        )
-        .join("\n")}
+      </div>`)
+    .join("\n")
+}
     </form>
   );
 }

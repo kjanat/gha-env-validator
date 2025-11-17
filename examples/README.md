@@ -105,11 +105,11 @@ Use these examples as templates for your own validation scripts. The typical pat
 import {
   createEnvSchema,
   validateCustomEnv,
-  z,
+  z
 } from "@kjanat/gha-env-validator";
 
 const schema = createEnvSchema({
-  YOUR_VAR: z.string(),
+  YOUR_VAR: z.string()
   // ... more vars
 });
 

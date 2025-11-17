@@ -11,7 +11,7 @@ import {
   isDebugMode,
   isOnBranch,
   isPullRequest,
-  isTag,
+  isTag
 } from "@kjanat/gha-env-validator";
 
 describe("context utilities", () => {
@@ -178,9 +178,8 @@ describe("context utilities", () => {
       expect(run.id).toBe(1658821493);
       expect(run.number).toBe(42);
       expect(run.attempt).toBe(1);
-      expect(run.url).toBe(
-        "https://github.com/octocat/Hello-World/actions/runs/1658821493",
-      );
+      expect(run.url)
+        .toBe("https://github.com/octocat/Hello-World/actions/runs/1658821493");
     });
   });
 

@@ -57,7 +57,7 @@ const inputs = validateInputs({
   environment: z.enum(["dev", "staging", "prod"]),
   "dry-run": z.boolean().default(false),
   "max-retries": z.string().transform(Number),
-  targets: z.array(z.string()).default([]),
+  targets: z.array(z.string()).default([])
 });
 
 // Fully typed!
@@ -74,7 +74,7 @@ import { safeValidateInputs, z } from "@kjanat/gha-env-validator";
 
 const result = safeValidateInputs({
   "api-key": z.string().min(10),
-  retries: z.number().int().min(0).max(5),
+  retries: z.number().int().min(0).max(5)
 });
 
 if (result.success) {
@@ -115,7 +115,7 @@ const inputs = validateInputs({
   version: z.string().regex(/^\d+\.\d+\.\d+$/, "Invalid semver"),
   environment: z.enum(["dev", "staging", "prod"]),
   "dry-run": z.boolean(),
-  targets: z.array(z.string()).default([]),
+  targets: z.array(z.string()).default([])
 });
 
 console.log(`Deploying ${inputs.version} to ${inputs.environment}`);

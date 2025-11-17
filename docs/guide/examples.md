@@ -16,7 +16,7 @@ import {
   setOutputs,
   validateCustomEnv,
   validateInputs,
-  z,
+  z
 } from "@kjanat/gha-env-validator";
 
 async function main() {
@@ -24,7 +24,7 @@ async function main() {
   const env = await group("Validating Environment", async () => {
     const schema = createEnvSchema({
       API_KEY: z.string().min(1),
-      DEPLOY_ENV: z.enum(["dev", "staging", "prod"]).default("dev"),
+      DEPLOY_ENV: z.enum(["dev", "staging", "prod"]).default("dev")
     });
     return validateCustomEnv(schema);
   });
@@ -33,7 +33,7 @@ async function main() {
   const inputs = await group("Validating Inputs", async () => {
     return validateInputs({
       version: z.string().regex(/^\d+\.\d+\.\d+$/),
-      "skip-tests": z.boolean().default(false),
+      "skip-tests": z.boolean().default(false)
     });
   });
 
@@ -50,7 +50,7 @@ async function main() {
   setOutputs({
     version: inputs.version,
     commit: sha,
-    branch,
+    branch
   });
 
   // Generate summary
@@ -59,8 +59,8 @@ async function main() {
     [
       ["Version", inputs.version],
       ["Branch", branch],
-      ["Commit", sha],
-    ],
+      ["Commit", sha]
+    ]
   );
 }
 

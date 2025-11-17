@@ -1,5 +1,5 @@
-import type { ZodObject, ZodRawShape, z } from "zod";
-import { type GitHubActionsEnv, githubActionsSchema } from "./schemas/index.js";
+import z, { type ZodObject, type ZodRawShape } from "zod";
+import { type GitHubActionsEnv, githubActionsSchema } from "~/schemas";
 
 /**
  * Options for environment variable validation
@@ -37,15 +37,15 @@ export interface ValidateEnvOptions {
  * @throws {ZodError} If validation fails
  */
 export function validateEnv(
-  options: ValidateEnvOptions = {},
+  options: ValidateEnvOptions = {}
 ): GitHubActionsEnv {
   const { env = process.env, strict = false } = options;
 
-  // In Zod v4, use the schema directly - it allows unknown keys by default
+  // In Zod v4, use looseObject for allowing unknown keys
   // strict mode uses the schema as-is (strips unknown keys)
   const schema = strict
     ? githubActionsSchema
-    : githubActionsSchema.passthrough();
+    : z.looseObject(githubActionsSchema.shape);
 
   return schema.parse(env) as GitHubActionsEnv;
 }
@@ -75,11 +75,11 @@ export function validateEnv(
  */
 export function validateCustomEnv<T extends ZodRawShape>(
   schema: ZodObject<T>,
-  options: ValidateEnvOptions = {},
+  options: ValidateEnvOptions = {}
 ): z.infer<ZodObject<T>> {
   const { env = process.env, strict = false } = options;
 
-  const finalSchema = strict ? schema : schema.passthrough();
+  const finalSchema = strict ? schema : z.looseObject(schema.shape);
 
   return finalSchema.parse(env);
 }
@@ -108,7 +108,7 @@ export function safeValidateEnv(options: ValidateEnvOptions = {}) {
 
   const schema = strict
     ? githubActionsSchema
-    : githubActionsSchema.passthrough();
+    : z.looseObject(githubActionsSchema.shape);
 
   return schema.safeParse(env);
 }
@@ -122,11 +122,11 @@ export function safeValidateEnv(options: ValidateEnvOptions = {}) {
  */
 export function safeValidateCustomEnv<T extends ZodRawShape>(
   schema: ZodObject<T>,
-  options: ValidateEnvOptions = {},
+  options: ValidateEnvOptions = {}
 ) {
   const { env = process.env, strict = false } = options;
 
-  const finalSchema = strict ? schema : schema.passthrough();
+  const finalSchema = strict ? schema : z.looseObject(schema.shape);
 
   return finalSchema.safeParse(env);
 }
