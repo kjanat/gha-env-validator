@@ -1,5 +1,9 @@
 # @kjanat/gha-env-validator
 
+[![CI](https://github.com/kjanat/gha-env-validator/actions/workflows/ci.yml/badge.svg)](https://github.com/kjanat/gha-env-validator/actions/workflows/ci.yml)
+[![npm version](https://badge.fury.io/js/@kjanat%2Fgha-env-validator.svg)](https://www.npmjs.com/package/@kjanat/gha-env-validator)
+[![License: MIT](https://img.shields.io/badge/License-MIT-yellow.svg)](https://opensource.org/licenses/MIT)
+
 Type-safe GitHub Actions environment variable validation with IntelliSense support using Zod.
 
 ## Features
