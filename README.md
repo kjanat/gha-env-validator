@@ -94,6 +94,115 @@ const runId = process.env.GITHUB_RUN_ID; // string | undefined
 const os = process.env.RUNNER_OS; // string | undefined
 ```
 
+## Workflow Command Helpers
+
+Type-safe utilities for GitHub Actions workflow commands:
+
+### Setting Environment Variables
+
+```typescript
+import { setEnvVar, setMultilineEnvVar } from "@kjanat/gha-env-validator";
+
+// Single line
+setEnvVar("NODE_ENV", "production");
+
+// Multiline (JSON, logs, etc.)
+setMultilineEnvVar("API_RESPONSE", JSON.stringify(data, null, 2));
+```
+
+### Setting Step Outputs
+
+```typescript
+import { setOutput, setOutputs } from "@kjanat/gha-env-validator";
+
+// Single output
+setOutput("version", "1.2.3");
+
+// Batch outputs
+setOutputs({
+  version: "1.2.3",
+  commit_sha: "abc123",
+  build_time: new Date().toISOString(),
+});
+```
+
+### Job Summaries
+
+```typescript
+import {
+  addJobSummary,
+  addSummary,
+  addSummaryTable,
+} from "@kjanat/gha-env-validator";
+
+// Raw markdown
+addJobSummary("## Build Results\n\n✅ All tests passed!");
+
+// With title
+addSummary("Deployment", "🚀 Deployed to production");
+
+// Tables
+addSummaryTable(
+  ["Metric", "Value"],
+  [["Tests", "42 passed"], ["Coverage", "95%"]],
+);
+```
+
+### Log Annotations
+
+```typescript
+import { debug, error, notice, warning } from "@kjanat/gha-env-validator";
+
+debug("Processing item 5 of 10");
+notice("Deployment successful");
+warning("Deprecated API usage", { file: "app.ts", line: 42 });
+error("Build failed", { file: "main.ts", line: 10, title: "Type Error" });
+```
+
+### Log Organization
+
+```typescript
+import { endGroup, group, startGroup } from "@kjanat/gha-env-validator";
+
+// Functional style
+await group("Install Dependencies", async () => {
+  console.log("Installing...");
+  await installPackages();
+});
+
+// Manual style
+startGroup("Build Process");
+console.log("Building...");
+endGroup();
+```
+
+### Utilities
+
+```typescript
+import {
+  addPath,
+  isGitHubActions,
+  maskValue,
+  setFailed,
+} from "@kjanat/gha-env-validator";
+
+// Hide secrets in logs
+maskValue(apiKey);
+
+// Add to PATH
+addPath("/usr/local/custom-tools");
+
+// Check environment
+if (isGitHubActions()) {
+  setEnvVar("CI", "true");
+}
+
+// Fail the workflow
+if (buildFailed) {
+  setFailed("Build encountered errors");
+}
+```
+
 ## GitHub Actions Workflow Example
 
 ```yaml

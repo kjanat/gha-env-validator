@@ -31,3 +31,31 @@ export {
   validateEnv,
   type ValidateEnvOptions,
 } from "./validate.js";
+
+// Export workflow command utilities
+export {
+  addJobSummary,
+  addPath,
+  addSummary,
+  addSummaryTable,
+  assertGitHubActions,
+  clearJobSummary,
+  debug,
+  endGroup,
+  error,
+  group,
+  isGitHubActions,
+  maskValue,
+  notice,
+  resumeCommands,
+  setEnvVar,
+  setEnvVars,
+  setFailed,
+  setMultilineEnvVar,
+  setMultilineOutput,
+  setOutput,
+  setOutputs,
+  startGroup,
+  stopCommands,
+  warning,
+} from "./workflow-commands.js";
