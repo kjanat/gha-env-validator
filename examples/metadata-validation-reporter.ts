@@ -7,6 +7,7 @@
 
 import {
   createEnvSchema,
+  getEnumValues,
   getSchemaMetadata,
   safeValidateCustomEnv,
   z
@@ -89,8 +90,11 @@ if (!result.success) {
       console.log(`\n   ✨ Try setting: export ${fieldName}="${meta.example}"`);
     }
 
-    if (issue.code === "invalid_enum_value" && schema?._zod?.values) {
-      console.log(`\n   ✅ Valid options: ${schema._zod.values.join(", ")}`);
+    if (issue.code === "invalid_value" && schema) {
+      const enumValues = getEnumValues(schema);
+      if (enumValues) {
+        console.log(`\n   ✅ Valid options: ${enumValues.join(", ")}`);
+      }
     }
 
     console.log();

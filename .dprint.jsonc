@@ -51,7 +51,12 @@
   },
 
   // File inclusions/exclusions
-  "excludes": ["**/node_modules", "**/*lock.*", "**/.zed/settings.json"],
+  "excludes": [
+    "**/node_modules",
+    "**/*lock.*",
+    "**/.zed/settings.json",
+    "README.md"
+  ],
 
   // Plugins
   "plugins": [

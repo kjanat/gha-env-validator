@@ -5,7 +5,11 @@
  * for all GitHub Actions environment variables.
  */
 
-import { githubActionsSchema } from "@kjanat/gha-env-validator";
+import {
+  getSchemaMetadata,
+  githubActionsSchema,
+  type ZodMetadata
+} from "@kjanat/gha-env-validator";
 
 // Group variables by category
 const varsByCategory = new Map<

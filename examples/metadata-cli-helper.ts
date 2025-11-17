@@ -54,7 +54,7 @@ function showVariable(name: string) {
     return;
   }
 
-  const meta = schema._zod?.meta || {};
+  const meta = getSchemaMetadata(schema);
 
   console.log(`\n📋 ${name}\n`);
   console.log(`Title:       ${meta.title || "N/A"}`);
