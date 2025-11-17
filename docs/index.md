@@ -81,4 +81,8 @@ bun add @kjanat/gha-env-validator zod
 yarn add @kjanat/gha-env-validator zod
 ```
 
+```bash [pnpm]
+pnpm add @kjanat/gha-env-validator zod
+```
+
 :::
