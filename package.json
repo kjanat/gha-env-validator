@@ -1,6 +1,6 @@
 {
   "name": "@kjanat/gha-env-validator",
-  "version": "0.1.1",
+  "version": "0.2.0",
   "description": "Type-safe GitHub Actions environment variable validation with IntelliSense support using Zod",
   "keywords": [
     "ci-cd",
