@@ -5,7 +5,7 @@
  * Useful for understanding available variables and their relationships.
  */
 
-import { githubActionsSchema } from "../src/index";
+import { githubActionsSchema } from "@kjanat/gha-env-validator";
 
 interface VariableInfo {
   name: string;

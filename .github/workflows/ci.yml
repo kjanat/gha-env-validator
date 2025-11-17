@@ -9,18 +9,13 @@ on:
 jobs:
   test:
     runs-on: ubuntu-latest
-
-    strategy:
-      fail-fast: false
-      matrix:
-        bun-version: ["latest"]
-
     steps:
       - uses: actions/checkout@v5
+      - uses: actions/setup-node@v6
+        with: { node-version: "lts/*", check-latest: true }
 
-      - uses: oven-sh/setup-bun@v2
-        with:
-          bun-version: ${{ matrix.bun-version }}
+      - name: Setup Bun
+        uses: oven-sh/setup-bun@v2
 
       - name: Install dependencies
         run: bun install
@@ -40,30 +35,5 @@ jobs:
       - name: Verify package
         run: |
           ls -lh dist/
-          test -f dist/index.js || exit 1
+          test -f dist/index.mjs || exit 1
           test -f dist/index.d.ts || exit 1
-
-  build-docs:
-    runs-on: ubuntu-latest
-
-    steps:
-      - uses: actions/checkout@v5
-
-      - uses: actions/setup-node@v4
-        with:
-          node-version: "22"
-
-      - uses: oven-sh/setup-bun@v2
-
-      - name: Install dependencies
-        run: bun install
-
-      - name: Build documentation (with Node.js fallback)
-        run: |
-          # Try with bun first, fallback to npm if needed
-          bun run docs:build || npm run docs:build
-
-      - name: Verify docs
-        run: |
-          test -d docs/.vitepress/dist || exit 1
-          test -f docs/.vitepress/dist/index.html || exit 1

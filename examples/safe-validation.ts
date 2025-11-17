@@ -57,16 +57,15 @@ const result = safeValidateEnv();
 
 if (result.success) {
   console.log("  ✅ Using validated environment");
-  const env = result.data;
-  // Use fully validated env
+  // Use fully validated env: result.data
 } else {
   console.log("  ⚠️  Using fallback configuration");
-  // Fall back to default values or alternative config
-  const env = {
-    GITHUB_SHA: process.env.GITHUB_SHA || "unknown",
-    GITHUB_REPOSITORY: process.env.GITHUB_REPOSITORY || "unknown/unknown",
-    // ... other fallbacks
-  };
+  // Fall back to default values or alternative config:
+  // const env = {
+  //   GITHUB_SHA: process.env.GITHUB_SHA || "unknown",
+  //   GITHUB_REPOSITORY: process.env.GITHUB_REPOSITORY || "unknown/unknown",
+  //   // ... other fallbacks
+  // };
 }
 
 console.log("\n✨ Safe validation complete!");

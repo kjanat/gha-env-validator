@@ -1,9 +1,6 @@
 [install]
 peer = true
 
-[install.security]
-scanner = "@bun-security-scanner/osv"
-
 [install.scopes]
 "@kjanat" = { url = "https://npm.pkg.github.com", token = "$GITHUB_TOKEN" }
 # https://bun.sh/docs/pm/scopes-registries

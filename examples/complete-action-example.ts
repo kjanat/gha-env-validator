@@ -25,13 +25,11 @@ import {
   isPullRequest,
   notice,
   setFailed,
-  setOutput,
   setOutputs,
   validateCustomEnv,
   validateInputs,
-  warning,
   z,
-} from "../src/index";
+} from "@kjanat/gha-env-validator";
 
 async function main() {
   try {

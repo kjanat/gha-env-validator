@@ -7,6 +7,8 @@
  * @see https://docs.github.com/en/actions/reference/workflows-and-actions/contexts#github-context
  */
 
+/** biome-ignore-all lint/suspicious/noTemplateCurlyInString: GitHub Actions syntax */
+
 import * as fs from "node:fs";
 import type {
   PullRequestEvent,

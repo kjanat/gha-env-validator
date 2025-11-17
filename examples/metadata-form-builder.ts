@@ -5,7 +5,7 @@
  * for building UIs that configure GitHub Actions workflows.
  */
 
-import { createEnvSchema, z } from "../src/index";
+import { createEnvSchema, z } from "@kjanat/gha-env-validator";
 
 // Example: Build a deployment configuration form
 const deploymentSchema = createEnvSchema({

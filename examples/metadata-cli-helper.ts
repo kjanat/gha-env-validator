@@ -5,7 +5,7 @@
  * for exploring and understanding GitHub Actions variables.
  */
 
-import { githubActionsSchema } from "../src/index";
+import { githubActionsSchema } from "@kjanat/gha-env-validator";
 
 // CLI command: Show all variables in a category
 function showCategory(category: string) {

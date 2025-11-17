@@ -5,7 +5,11 @@
  * with helpful suggestions based on variable categories and examples.
  */
 
-import { createEnvSchema, safeValidateCustomEnv, z } from "../src/index";
+import {
+  createEnvSchema,
+  safeValidateCustomEnv,
+  z,
+} from "@kjanat/gha-env-validator";
 
 // Create schema with metadata
 const deploySchema = createEnvSchema({

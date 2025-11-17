@@ -5,7 +5,7 @@
  * for all GitHub Actions environment variables.
  */
 
-import { githubActionsSchema } from "../src/index";
+import { githubActionsSchema } from "@kjanat/gha-env-validator";
 
 // Group variables by category
 const varsByCategory = new Map<string, Array<{ name: string; meta: any }>>();

@@ -316,7 +316,7 @@ describe("workflow commands", () => {
         await group("Error Group", () => {
           throw new Error("Test error");
         });
-      } catch (err) {
+      } catch (_err) {
         // Expected
       }
 
@@ -402,7 +402,6 @@ describe("workflow commands", () => {
   describe("workflow failure", () => {
     test("setFailed sets exit code", () => {
       const { setFailed } = require("../src/workflow-commands");
-      const originalExitCode = process.exitCode;
 
       try {
         setFailed("Build failed");
