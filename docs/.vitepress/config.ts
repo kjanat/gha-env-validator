@@ -25,8 +25,18 @@ export default defineConfig({
           ],
         },
         {
+          text: "Features",
+          items: [
+            { text: "Environment Validation", link: "/guide/validation" },
+            { text: "Action Inputs", link: "/guide/inputs" },
+            { text: "Workflow Commands", link: "/guide/workflow-commands" },
+            { text: "Context Utilities", link: "/guide/context" },
+            { text: "Metadata", link: "/guide/metadata" },
+          ],
+        },
+        {
           text: "Examples",
-          link: "/guide/examples",
+          items: [{ text: "Complete Examples", link: "/guide/examples" }],
         },
       ],
       "/api/": [
