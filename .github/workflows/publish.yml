@@ -26,11 +26,11 @@ jobs:
       - name: Install dependencies
         run: bun install
 
-      - name: Run tests
-        run: bun test
-
       - name: Build package
         run: bun run build
+
+      - name: Run tests
+        run: bun test
 
       - name: Verify build
         run: |
@@ -53,4 +53,9 @@ jobs:
       - name: Summary
         run: |
           echo "## 📦 Published" >> $GITHUB_STEP_SUMMARY
-          echo "Version: $(cat package.json | grep version)" >> $GITHUB_STEP_SUMMARY
+          echo "" >> $GITHUB_STEP_SUMMARY
+          echo "**Package:** @kjanat/gha-env-validator" >> $GITHUB_STEP_SUMMARY
+          echo "**Version:** $(bun pm pkg get version)" >> $GITHUB_STEP_SUMMARY
+          echo "**Event:** ${{ github.event_name }}" >> $GITHUB_STEP_SUMMARY
+          echo "" >> $GITHUB_STEP_SUMMARY
+          echo "[View on npm →](https://www.npmjs.com/package/@kjanat/gha-env-validator)" >> $GITHUB_STEP_SUMMARY
