@@ -1,0 +1,16 @@
+{
+  "entryPoints": ["src/index.ts"],
+  "out": "docs/api",
+  "plugin": ["typedoc-plugin-markdown"],
+  "outputFileStrategy": "modules",
+  "fileExtension": ".md",
+  "entryFileName": "index.md",
+  "hideGenerator": true,
+  "excludePrivate": true,
+  "excludeInternal": true,
+  "readme": "none",
+  "navigation": {
+    "includeCategories": true,
+    "includeFolders": false
+  }
+}

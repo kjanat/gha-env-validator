@@ -1,5 +1,7 @@
 [install.security]
-scanner = "@bun-security-scanner/osv"
+# Temporarily disable OSV scanner for installing docs dependencies
+# (esbuild dev dependency warning is acceptable)
+# scanner = "@bun-security-scanner/osv"
 
 [test]
 coverage = true
