@@ -1,0 +1,49 @@
+{
+  "$schema": "https://dprint.dev/schemas/v0.json",
+
+  // General
+  "indentWidth": 2,
+  "useTabs": false,
+
+  // Language specific
+  "typescript": {},
+  "markdown": {},
+  "toml": {},
+  "json": { "trailingCommas": "never" },
+  "dockerfile": {},
+  "biome": { "css.enabled": true },
+  "ruff": {},
+  "malva": {},
+  "markup": {},
+  "yaml": {},
+
+  // Exec plugin to sort package.json files
+  "exec": {
+    "cwd": "${configDir}",
+    "commands": [
+      {
+        "command": "bunx sort-package-json --stdin",
+        "fileNames": ["package.json"],
+        "stdin": true
+      }
+    ]
+  },
+
+  // File inclusions/exclusions
+  "excludes": ["**/node_modules", "**/*lock.*", "**/.zed/settings.json"],
+
+  // Plugins
+  "plugins": [
+    "https://plugins.dprint.dev/typescript-0.95.12.wasm",
+    "https://plugins.dprint.dev/json-0.21.0.wasm",
+    "https://plugins.dprint.dev/markdown-0.20.0.wasm",
+    "https://plugins.dprint.dev/toml-0.7.0.wasm",
+    "https://plugins.dprint.dev/dockerfile-0.3.3.wasm",
+    "https://plugins.dprint.dev/biome-0.11.3.wasm",
+    "https://plugins.dprint.dev/ruff-0.6.4.wasm",
+    "https://plugins.dprint.dev/g-plane/malva-v0.15.0.wasm",
+    "https://plugins.dprint.dev/g-plane/markup_fmt-v0.24.0.wasm",
+    "https://plugins.dprint.dev/g-plane/pretty_yaml-v0.5.1.wasm",
+    "https://plugins.dprint.dev/exec-0.6.0.json@a054130d458f124f9b5c91484833828950723a5af3f8ff2bd1523bd47b83b364"
+  ]
+}

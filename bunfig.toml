@@ -1,0 +1,5 @@
+[install.security]
+scanner = "@bun-security-scanner/osv"
+
+[test]
+coverage = true
