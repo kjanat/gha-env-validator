@@ -31,7 +31,8 @@
       },
       "import": "./dist/index.mjs",
       "require": "./dist/index.cjs"
-    }
+    },
+    "./package.json": "./package.json"
   },
   "main": "./dist/index.cjs",
   "module": "./dist/index.mjs",
@@ -47,6 +48,7 @@
     "docs:build": "vitepress build docs",
     "docs:dev": "vitepress dev docs",
     "docs:preview": "vitepress preview docs",
+    "format": "dprint fmt --config-discovery=false --config .dprint.jsonc --allow-no-files",
     "postinstall": "lefthook install",
     "lint": "biome check",
     "lint:fix": "biome check --write",

@@ -1,24 +1,23 @@
 # Lefthook configuration
 # https://github.com/evilmartians/lefthook
-
 pre-commit:
   parallel: false
 
   commands:
     # 1. Lint and auto-fix
     lint:
-      glob: "*.{ts,js,json,md,yml,yaml}"
+      glob: "*.{js,ts,cjs,mjs,d.cts,d.mts,jsx,tsx,json,jsonc}"
       run: |
-        bun run lint:fix
-        git add {staged_files}
+        npx @biomejs/biome check --write \
+          --no-errors-on-unmatched --files-ignore-unknown=true \
+          --colors=off {staged_files}
       stage_fixed: true
 
     # 2. Format staged files with dprint
     format:
       glob: "*.{ts,js,json,md,yml,yaml}"
       run: |
-        dprint fmt {staged_files}
-        git add {staged_files}
+        dprint fmt --config-discovery=false --config .dprint.jsonc --allow-no-files --staged {staged_files}
       stage_fixed: true
 
     # 3. Run tests
