@@ -5,6 +5,8 @@ export default defineConfig({
   description: "Type-safe GitHub Actions environment variable validation",
   base: "/gha-env-validator/",
 
+  ignoreDeadLinks: true,
+
   themeConfig: {
     nav: [
       { text: "Guide", link: "/guide/getting-started" },
@@ -23,16 +25,6 @@ export default defineConfig({
           ],
         },
         {
-          text: "Features",
-          items: [
-            { text: "Environment Validation", link: "/guide/validation" },
-            { text: "Action Inputs", link: "/guide/inputs" },
-            { text: "Workflow Commands", link: "/guide/workflow-commands" },
-            { text: "Context Utilities", link: "/guide/context" },
-            { text: "Metadata", link: "/guide/metadata" },
-          ],
-        },
-        {
           text: "Examples",
           link: "/guide/examples",
         },
@@ -40,14 +32,7 @@ export default defineConfig({
       "/api/": [
         {
           text: "API Reference",
-          items: [
-            { text: "Overview", link: "/api/" },
-            { text: "Validation", link: "/api/validation" },
-            { text: "Schemas", link: "/api/schemas" },
-            { text: "Workflow Commands", link: "/api/workflow-commands" },
-            { text: "Context", link: "/api/context" },
-            { text: "Inputs", link: "/api/inputs" },
-          ],
+          items: [{ text: "Overview", link: "/api/" }],
         },
       ],
     },
@@ -72,6 +57,4 @@ export default defineConfig({
       dark: "github-dark",
     },
   },
-
-  ignoreDeadLinks: true,
 });
