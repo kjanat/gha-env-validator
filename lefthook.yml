@@ -5,7 +5,15 @@ pre-commit:
   parallel: false
 
   commands:
-    # 1. Format staged files with dprint
+    # 1. Lint and auto-fix
+    lint:
+      glob: "*.{ts,js,json,md,yml,yaml}"
+      run: |
+        bun run lint:fix
+        git add {staged_files}
+      stage_fixed: true
+
+    # 2. Format staged files with dprint
     format:
       glob: "*.{ts,js,json,md,yml,yaml}"
       run: |
@@ -13,10 +21,10 @@ pre-commit:
         git add {staged_files}
       stage_fixed: true
 
-    # 2. Run tests
+    # 3. Run tests
     test:
       run: bun test
 
-    # 3. Type check
+    # 4. Type check
     typecheck:
       run: bun run typecheck
