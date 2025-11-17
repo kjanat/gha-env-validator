@@ -12,7 +12,7 @@
     "intellisense",
     "ci-cd"
   ],
-  "homepage": "https://github.com/kjanat/gha-env-validator#readme",
+  "homepage": "https://kjanat.github.io/gha-env-validator/",
   "bugs": {
     "url": "https://github.com/kjanat/gha-env-validator/issues"
   },
