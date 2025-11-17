@@ -12,7 +12,7 @@ import {
   isOnBranch,
   isPullRequest,
   isTag,
-} from "../src/context";
+} from "@kjanat/gha-env-validator";
 
 describe("context utilities", () => {
   let originalEnv: NodeJS.ProcessEnv;

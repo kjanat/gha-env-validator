@@ -6,7 +6,7 @@ import {
   validateCustomEnv,
   validateEnv,
   z,
-} from "../src/index";
+} from "@kjanat/gha-env-validator";
 
 describe("validateEnv", () => {
   test("validates with custom env object", () => {

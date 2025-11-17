@@ -21,7 +21,7 @@ import {
   setOutput,
   setOutputs,
   warning,
-} from "../src/workflow-commands";
+} from "@kjanat/gha-env-validator";
 
 describe("workflow commands", () => {
   let tempDir: string;

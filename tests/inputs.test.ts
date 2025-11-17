@@ -6,7 +6,7 @@ import {
   safeValidateInputs,
   validateInputs,
   z,
-} from "../src/index";
+} from "@kjanat/gha-env-validator";
 
 describe("action inputs", () => {
   let originalEnv: NodeJS.ProcessEnv;

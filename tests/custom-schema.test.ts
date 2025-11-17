@@ -1,5 +1,9 @@
 import { describe, expect, test } from "bun:test";
-import { createCustomEnvSchema, createEnvSchema, z } from "../src/index";
+import {
+  createCustomEnvSchema,
+  createEnvSchema,
+  z,
+} from "@kjanat/gha-env-validator";
 
 describe("createEnvSchema", () => {
   test("extends GitHub Actions schema with custom variables", () => {

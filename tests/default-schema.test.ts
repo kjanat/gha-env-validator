@@ -1,5 +1,5 @@
 import { describe, expect, test } from "bun:test";
-import { githubActionsSchema } from "../src/schemas/index";
+import { githubActionsSchema } from "@kjanat/gha-env-validator";
 
 describe("githubActionsSchema", () => {
   test("validates complete GitHub Actions environment", () => {
