@@ -2,7 +2,12 @@
  * Safe validation example - validation without throwing exceptions
  */
 
-import { createEnvSchema, safeValidateCustomEnv, safeValidateEnv, z } from "@kjanat/gha-env-validator";
+import {
+  createEnvSchema,
+  safeValidateCustomEnv,
+  safeValidateEnv,
+  z,
+} from "@kjanat/gha-env-validator";
 
 console.log("🔍 Safe Validation Examples\n");
 

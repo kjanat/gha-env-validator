@@ -1,4 +1,4 @@
-import { z, type ZodRawShape } from "zod";
+import { type ZodRawShape, z } from "zod";
 import { githubActionsSchema } from "./schemas/github-defaults.ts";
 
 /**

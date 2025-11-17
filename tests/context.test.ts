@@ -50,8 +50,10 @@ describe("context utilities", () => {
     process.env.GITHUB_STEP_SUMMARY = "/tmp/summary";
     process.env.GITHUB_TRIGGERING_ACTOR = "octocat";
     process.env.GITHUB_WORKFLOW = "CI";
-    process.env.GITHUB_WORKFLOW_REF = "octocat/Hello-World/.github/workflows/ci.yml@refs/heads/main";
-    process.env.GITHUB_WORKFLOW_SHA = "ffac537e6cbbf934b08745a378932722df287a53";
+    process.env.GITHUB_WORKFLOW_REF =
+      "octocat/Hello-World/.github/workflows/ci.yml@refs/heads/main";
+    process.env.GITHUB_WORKFLOW_SHA =
+      "ffac537e6cbbf934b08745a378932722df287a53";
     process.env.GITHUB_WORKSPACE = "/home/runner/work/Hello-World/Hello-World";
     process.env.RUNNER_ARCH = "X64";
     process.env.RUNNER_ENVIRONMENT = "github-hosted";

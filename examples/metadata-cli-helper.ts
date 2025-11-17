@@ -29,7 +29,8 @@ function searchVariables(keyword: string) {
 
   for (const [name, schema] of Object.entries(githubActionsSchema.shape)) {
     const meta = (schema as any)._zod?.meta || {};
-    const searchText = `${name} ${meta.title} ${meta.description}`.toLowerCase();
+    const searchText =
+      `${name} ${meta.title} ${meta.description}`.toLowerCase();
 
     if (searchText.includes(keyword.toLowerCase())) {
       console.log(`  ✓ ${name}`);

@@ -15,7 +15,11 @@
  * ```
  */
 
-import { createEnvSchema, validateCustomEnv, z } from "@kjanat/gha-env-validator";
+import {
+  createEnvSchema,
+  validateCustomEnv,
+  z,
+} from "@kjanat/gha-env-validator";
 
 // Define deployment-specific environment variables
 const deploymentSchema = createEnvSchema({

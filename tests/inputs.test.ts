@@ -1,5 +1,12 @@
 import { afterEach, beforeEach, describe, expect, test } from "bun:test";
-import { getBooleanInput, getInput, getMultilineInput, safeValidateInputs, validateInputs, z } from "../src/index";
+import {
+  getBooleanInput,
+  getInput,
+  getMultilineInput,
+  safeValidateInputs,
+  validateInputs,
+  z,
+} from "../src/index";
 
 describe("action inputs", () => {
   let originalEnv: NodeJS.ProcessEnv;
@@ -176,7 +183,7 @@ describe("action inputs", () => {
       expect(() =>
         validateInputs({
           env: z.enum(["dev", "prod"]),
-        })
+        }),
       ).toThrow();
     });
   });

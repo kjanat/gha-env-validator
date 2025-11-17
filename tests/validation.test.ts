@@ -37,10 +37,12 @@ describe("validateEnv", () => {
       GITHUB_RUN_NUMBER: "42",
       GITHUB_SERVER_URL: "https://github.com",
       GITHUB_SHA: "ffac537e6cbbf934b08745a378932722df287a53",
-      GITHUB_STEP_SUMMARY: "/home/runner/work/_temp/_runner_file_commands/step_summary",
+      GITHUB_STEP_SUMMARY:
+        "/home/runner/work/_temp/_runner_file_commands/step_summary",
       GITHUB_TRIGGERING_ACTOR: "octocat",
       GITHUB_WORKFLOW: "CI",
-      GITHUB_WORKFLOW_REF: "octocat/Hello-World/.github/workflows/ci.yml@refs/heads/main",
+      GITHUB_WORKFLOW_REF:
+        "octocat/Hello-World/.github/workflows/ci.yml@refs/heads/main",
       GITHUB_WORKFLOW_SHA: "ffac537e6cbbf934b08745a378932722df287a53",
       GITHUB_WORKSPACE: "/home/runner/work/Hello-World/Hello-World",
       RUNNER_ARCH: "X64",
@@ -86,10 +88,12 @@ describe("validateEnv", () => {
       GITHUB_RUN_NUMBER: "42",
       GITHUB_SERVER_URL: "https://github.com",
       GITHUB_SHA: "ffac537e6cbbf934b08745a378932722df287a53",
-      GITHUB_STEP_SUMMARY: "/home/runner/work/_temp/_runner_file_commands/step_summary",
+      GITHUB_STEP_SUMMARY:
+        "/home/runner/work/_temp/_runner_file_commands/step_summary",
       GITHUB_TRIGGERING_ACTOR: "octocat",
       GITHUB_WORKFLOW: "CI",
-      GITHUB_WORKFLOW_REF: "octocat/Hello-World/.github/workflows/ci.yml@refs/heads/main",
+      GITHUB_WORKFLOW_REF:
+        "octocat/Hello-World/.github/workflows/ci.yml@refs/heads/main",
       GITHUB_WORKFLOW_SHA: "ffac537e6cbbf934b08745a378932722df287a53",
       GITHUB_WORKSPACE: "/home/runner/work/Hello-World/Hello-World",
       RUNNER_ARCH: "X64",
@@ -150,10 +154,12 @@ describe("validateCustomEnv", () => {
       GITHUB_RUN_NUMBER: "42",
       GITHUB_SERVER_URL: "https://github.com",
       GITHUB_SHA: "ffac537e6cbbf934b08745a378932722df287a53",
-      GITHUB_STEP_SUMMARY: "/home/runner/work/_temp/_runner_file_commands/step_summary",
+      GITHUB_STEP_SUMMARY:
+        "/home/runner/work/_temp/_runner_file_commands/step_summary",
       GITHUB_TRIGGERING_ACTOR: "octocat",
       GITHUB_WORKFLOW: "CI",
-      GITHUB_WORKFLOW_REF: "octocat/Hello-World/.github/workflows/ci.yml@refs/heads/main",
+      GITHUB_WORKFLOW_REF:
+        "octocat/Hello-World/.github/workflows/ci.yml@refs/heads/main",
       GITHUB_WORKFLOW_SHA: "ffac537e6cbbf934b08745a378932722df287a53",
       GITHUB_WORKSPACE: "/home/runner/work/Hello-World/Hello-World",
       RUNNER_ARCH: "X64",
@@ -203,10 +209,12 @@ describe("safeValidateEnv", () => {
       GITHUB_RUN_NUMBER: "42",
       GITHUB_SERVER_URL: "https://github.com",
       GITHUB_SHA: "ffac537e6cbbf934b08745a378932722df287a53",
-      GITHUB_STEP_SUMMARY: "/home/runner/work/_temp/_runner_file_commands/step_summary",
+      GITHUB_STEP_SUMMARY:
+        "/home/runner/work/_temp/_runner_file_commands/step_summary",
       GITHUB_TRIGGERING_ACTOR: "octocat",
       GITHUB_WORKFLOW: "CI",
-      GITHUB_WORKFLOW_REF: "octocat/Hello-World/.github/workflows/ci.yml@refs/heads/main",
+      GITHUB_WORKFLOW_REF:
+        "octocat/Hello-World/.github/workflows/ci.yml@refs/heads/main",
       GITHUB_WORKFLOW_SHA: "ffac537e6cbbf934b08745a378932722df287a53",
       GITHUB_WORKSPACE: "/home/runner/work/Hello-World/Hello-World",
       RUNNER_ARCH: "X64",
@@ -273,10 +281,12 @@ describe("safeValidateCustomEnv", () => {
       GITHUB_RUN_NUMBER: "42",
       GITHUB_SERVER_URL: "https://github.com",
       GITHUB_SHA: "ffac537e6cbbf934b08745a378932722df287a53",
-      GITHUB_STEP_SUMMARY: "/home/runner/work/_temp/_runner_file_commands/step_summary",
+      GITHUB_STEP_SUMMARY:
+        "/home/runner/work/_temp/_runner_file_commands/step_summary",
       GITHUB_TRIGGERING_ACTOR: "octocat",
       GITHUB_WORKFLOW: "CI",
-      GITHUB_WORKFLOW_REF: "octocat/Hello-World/.github/workflows/ci.yml@refs/heads/main",
+      GITHUB_WORKFLOW_REF:
+        "octocat/Hello-World/.github/workflows/ci.yml@refs/heads/main",
       GITHUB_WORKFLOW_SHA: "ffac537e6cbbf934b08745a378932722df287a53",
       GITHUB_WORKSPACE: "/home/runner/work/Hello-World/Hello-World",
       RUNNER_ARCH: "X64",
@@ -328,10 +338,12 @@ describe("safeValidateCustomEnv", () => {
       GITHUB_RUN_NUMBER: "42",
       GITHUB_SERVER_URL: "https://github.com",
       GITHUB_SHA: "ffac537e6cbbf934b08745a378932722df287a53",
-      GITHUB_STEP_SUMMARY: "/home/runner/work/_temp/_runner_file_commands/step_summary",
+      GITHUB_STEP_SUMMARY:
+        "/home/runner/work/_temp/_runner_file_commands/step_summary",
       GITHUB_TRIGGERING_ACTOR: "octocat",
       GITHUB_WORKFLOW: "CI",
-      GITHUB_WORKFLOW_REF: "octocat/Hello-World/.github/workflows/ci.yml@refs/heads/main",
+      GITHUB_WORKFLOW_REF:
+        "octocat/Hello-World/.github/workflows/ci.yml@refs/heads/main",
       GITHUB_WORKFLOW_SHA: "ffac537e6cbbf934b08745a378932722df287a53",
       GITHUB_WORKSPACE: "/home/runner/work/Hello-World/Hello-World",
       RUNNER_ARCH: "X64",

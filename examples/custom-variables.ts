@@ -2,7 +2,11 @@
  * Custom variables example - extends default schema with custom env vars
  */
 
-import { createEnvSchema, validateCustomEnv, z } from "@kjanat/gha-env-validator";
+import {
+  createEnvSchema,
+  validateCustomEnv,
+  z,
+} from "@kjanat/gha-env-validator";
 
 // Define your custom environment variables
 const schema = createEnvSchema({

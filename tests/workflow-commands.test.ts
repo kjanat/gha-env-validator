@@ -324,4 +324,113 @@ describe("workflow commands", () => {
       // This is hard to test directly, but the finally block ensures it
     });
   });
+
+  describe("console commands", () => {
+    test("debug outputs debug command", () => {
+      debug("test message");
+      // Output goes to console, hard to capture but executes without error
+    });
+
+    test("notice outputs notice command", () => {
+      notice("test notice");
+    });
+
+    test("notice with file annotation", () => {
+      notice("test notice with file", {
+        file: "app.ts",
+        line: 42,
+        col: 10,
+        title: "Test Title",
+      });
+    });
+
+    test("warning outputs warning command", () => {
+      warning("test warning");
+    });
+
+    test("warning with all annotation options", () => {
+      warning("test warning", {
+        file: "test.ts",
+        line: 1,
+        col: 5,
+        endLine: 10,
+        endColumn: 15,
+        title: "Warning Title",
+      });
+    });
+
+    test("error outputs error command", () => {
+      error("test error");
+    });
+
+    test("error with file annotation", () => {
+      error("test error", {
+        file: "error.ts",
+        line: 100,
+      });
+    });
+
+    test("maskValue outputs add-mask command", () => {
+      maskValue("secret-value");
+    });
+  });
+
+  describe("manual grouping", () => {
+    test("startGroup and endGroup work", () => {
+      const { startGroup, endGroup } = require("../src/workflow-commands");
+
+      startGroup("Manual Group");
+      endGroup();
+    });
+  });
+
+  describe("command control", () => {
+    test("stopCommands returns token", () => {
+      const {
+        stopCommands,
+        resumeCommands,
+      } = require("../src/workflow-commands");
+
+      const token = stopCommands();
+      expect(token).toMatch(/^stop_/);
+      expect(token).toContain("_");
+
+      resumeCommands(token);
+    });
+  });
+
+  describe("workflow failure", () => {
+    test("setFailed sets exit code", () => {
+      const { setFailed } = require("../src/workflow-commands");
+      const originalExitCode = process.exitCode;
+
+      setFailed("Build failed");
+
+      expect(process.exitCode).toBe(1);
+
+      // Restore immediately to not affect other tests
+      process.exitCode = originalExitCode || 0;
+    });
+  });
+
+  describe("assertGitHubActions", () => {
+    test("does not throw when in GitHub Actions", () => {
+      const { assertGitHubActions } = require("../src/workflow-commands");
+
+      expect(() => assertGitHubActions()).not.toThrow();
+    });
+
+    test("throws when not in GitHub Actions", () => {
+      const { assertGitHubActions } = require("../src/workflow-commands");
+      const saved = process.env.GITHUB_ACTIONS;
+      delete process.env.GITHUB_ACTIONS;
+
+      expect(() => assertGitHubActions()).toThrow(
+        "Not running in GitHub Actions",
+      );
+
+      // Restore
+      process.env.GITHUB_ACTIONS = saved;
+    });
+  });
 });
