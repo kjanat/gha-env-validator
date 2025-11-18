@@ -1,0 +1,29 @@
+{
+  "name": "codecov-upload",
+  "version": "1.0.0",
+  "private": true,
+  "keywords": [
+    "actions"
+  ],
+  "type": "module",
+  "exports": {
+    ".": "./dist/index.mjs"
+  },
+  "scripts": {
+    "build": "bun run build.ts",
+    "typecheck": "bunx tsgo --noEmit"
+  },
+  "dependencies": {
+    "@kjanat/gha-env-validator": "file:../../..",
+    "zod": "catalog:"
+  },
+  "devDependencies": {
+    "@types/bun": "catalog:",
+    "@types/node": "catalog:",
+    "@typescript/native-preview": "catalog:",
+    "typescript": "catalog:"
+  },
+  "engines": {
+    "node": ">=24"
+  }
+}

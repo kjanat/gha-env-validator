@@ -1,0 +1,35 @@
+name: "Build Matrix Summary"
+description: "Generate rich summary tables for build matrix results with GitHub context"
+author: "@kjanat"
+
+inputs:
+  matrix-results:
+    description: "JSON array of build results with status, duration, and metadata"
+    required: true
+
+  title:
+    description: "Title for the summary table"
+    required: false
+    default: "Build Matrix Results"
+
+  include-context:
+    description: "Include GitHub context information (branch, commit, workflow)"
+    required: false
+    default: "true"
+
+outputs:
+  total-builds:
+    description: "Total number of builds in matrix"
+    value: ${{ steps.summary.outputs.total-builds }}
+
+  successful-builds:
+    description: "Number of successful builds"
+    value: ${{ steps.summary.outputs.successful-builds }}
+
+  failed-builds:
+    description: "Number of failed builds"
+    value: ${{ steps.summary.outputs.failed-builds }}
+
+runs:
+  using: node24
+  main: ./dist/index.mjs

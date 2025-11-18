@@ -1,5 +1,5 @@
-[install]
-linkWorkspacePackages = false
+[install.lockfile]
+save = true
 
 [install.scopes]
 "@kjanat" = { url = "https://npm.pkg.github.com", token = "$GITHUB_TOKEN" }

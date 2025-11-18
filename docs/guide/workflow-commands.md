@@ -72,6 +72,7 @@ import {
   addJobSummary,
   addSummary,
   addSummaryTable,
+  addSummaryCodeBlock,
   clearJobSummary
 } from "@kjanat/gha-env-validator";
 
@@ -90,6 +91,10 @@ addSummaryTable(
     ["Duration", "2m 34s", "✅"]
   ]
 );
+
+// Code blocks
+addSummaryCodeBlock("npm test -- --watch=false", "bash");
+addSummaryCodeBlock(JSON.stringify({ status: "ok" }, null, 2), "json");
 
 // Clear and restart
 clearJobSummary();

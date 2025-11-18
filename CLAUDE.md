@@ -4,7 +4,8 @@ Default to using Bun instead of Node.js.
 - Use `bun test` instead of `jest` or `vitest`
 - Use `bun build <file.html|file.ts|file.css>` instead of `webpack` or `esbuild`
 - Use `bun install` instead of `npm install` or `yarn install` or `pnpm install`
-- Use `bun run <script>` instead of `npm run <script>` or `yarn run <script>` or `pnpm run <script>`
+- Use `bun run <script>` instead of `npm run <script>` or `yarn run <script>` or
+  `pnpm run <script>`
 - Bun automatically loads .env, so don't use dotenv.
 
 ## Build System
@@ -12,7 +13,8 @@ Default to using Bun instead of Node.js.
 This project uses `tsdown` for building, not `tsc` or other bundlers:
 
 - Run `bun run build` to create dual ESM+CJS outputs
-- Output goes to `dist/` with `.mjs` (ESM), `.cjs` (CommonJS), and `.d.mts`/`.d.cts` (type declarations)
+- Output goes to `dist/` with `.mjs` (ESM), `.cjs` (CommonJS), and
+  `.d.mts`/`.d.cts` (type declarations)
 - Configuration is in `tsdown.config.ts`
 - Build runs automatically before tests and publishing
 
@@ -40,7 +42,8 @@ test("hello world", () => {
 
 ## Frontend
 
-Use HTML imports with `Bun.serve()`. Don't use `vite`. HTML imports fully support React, CSS, Tailwind.
+Use HTML imports with `Bun.serve()`. Don't use `vite`. HTML imports fully
+support React, CSS, Tailwind.
 
 Server:
 
@@ -75,7 +78,9 @@ Bun.serve({
 })
 ```
 
-HTML files can import .tsx, .jsx or .js files directly and Bun's bundler will transpile & bundle automatically. `<link>` tags can point to stylesheets and Bun's CSS bundler will bundle.
+HTML files can import .tsx, .jsx or .js files directly and Bun's bundler will
+transpile & bundle automatically. `<link>` tags can point to stylesheets and
+Bun's CSS bundler will bundle.
 
 ```html#index.html
 <html>
@@ -111,7 +116,8 @@ Then, run index.ts
 bun --hot ./index.ts
 ```
 
-For more information, read the Bun API docs in `node_modules/bun-types/docs/**.md`.
+For more information, read the Bun API docs in
+`node_modules/bun-types/docs/**.md`.
 
 ## Code Quality
 
@@ -128,9 +134,11 @@ For more information, read the Bun API docs in `node_modules/bun-types/docs/**.m
   - Runs lint, typecheck, and tests
   - Verifies dist artifacts
 
-- **Publish workflow** (`.github/workflows/publish.yml`): runs on version tags or manual dispatch
+- **Publish workflow** (`.github/workflows/publish.yml`): runs on version tags
+  or manual dispatch
   - Uses OIDC trusted publishing for npm
   - Supports dry-run mode for testing
   - Publishes with provenance attestation
 
-- **Docs workflow** (`.github/workflows/docs.yml`): deploys VitePress docs to GitHub Pages
+- **Docs workflow** (`.github/workflows/docs.yml`): deploys VitePress docs to
+  GitHub Pages

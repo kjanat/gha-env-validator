@@ -4,7 +4,7 @@ on:
   push:
     branches: [master, main]
   pull_request:
-    branches: [master, main]
+    branches:
 
 jobs:
   lint:
@@ -13,17 +13,21 @@ jobs:
       contents: read
     steps:
       - uses: actions/checkout@v5
-      - uses: actions/setup-node@v6
-        with: { node-version: "lts/*", check-latest: true }
 
-      - name: Setup Bun
-        uses: oven-sh/setup-bun@v2
+      # Type-safe setup with env validation
+      - name: Setup project with validation
+        uses: ./.github/actions/setup-project
+        id: setup
+        with:
+          node-version: "lts/*"
+          bun-version: "latest"
+          skip-build: false
 
-      - name: Install dependencies
-        run: bun install
-
-      - name: Build package first (tests import from package name)
-        run: bun run build
+      # Validate workflow environment (showcases library)
+      - name: Validate environment
+        uses: ./.github/actions/validate-workflow-env
+        with:
+          mask-sensitive: true
 
       - name: Lint
         run: bun biome check --reporter=github
@@ -38,17 +42,21 @@ jobs:
       id-token: write
     steps:
       - uses: actions/checkout@v5
-      - uses: actions/setup-node@v6
-        with: { node-version: "lts/*", check-latest: true }
 
-      - name: Setup Bun
-        uses: oven-sh/setup-bun@v2
+      # Type-safe setup with env validation
+      - name: Setup project with validation
+        uses: ./.github/actions/setup-project
+        id: setup
+        with:
+          node-version: "lts/*"
+          bun-version: "latest"
+          skip-build: false
 
-      - name: Install dependencies
-        run: bun install
-
-      - name: Build package first (tests import from package name)
-        run: bun run build
+      # Validate workflow environment
+      - name: Validate environment
+        uses: ./.github/actions/validate-workflow-env
+        with:
+          mask-sensitive: true
 
       - name: Run tests
         run: |
@@ -62,23 +70,13 @@ jobs:
             --reporter-outfile=./bun.xml \
             |& tee $GITHUB_STEP_SUMMARY
 
-      - name: Upload test results to Codecov
+      # Type-safe Codecov upload with context
+      - name: Upload coverage to Codecov
         if: ${{ !cancelled() }}
-        uses: codecov/test-results-action@v1
+        uses: ./.github/actions/codecov-upload
         with:
-          fail_ci_if_error: false
-          files: ./bun.xml
-          use_oidc: true
-        env:
-          CODECOV_TOKEN: ${{ secrets.CODECOV_TOKEN }}
-
-      - name: Upload coverage reports to Codecov
-        if: ${{ !cancelled() }}
-        uses: codecov/codecov-action@v5
-        with:
-          fail_ci_if_error: false
-          files: ./lcov.info
-          slug: ${{ github.repository }}
-          use_oidc: true
-        env:
-          CODECOV_TOKEN: ${{ secrets.CODECOV_TOKEN }}
+          test-results-file: ./bun.xml
+          coverage-file: ./lcov.info
+          codecov-token: ${{ secrets.CODECOV_TOKEN }}
+          fail-on-error: false
+          use-oidc: true

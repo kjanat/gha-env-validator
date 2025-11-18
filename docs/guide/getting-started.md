@@ -2,10 +2,12 @@
 
 ## What is GHA Env Validator?
 
-`@kjanat/gha-env-validator` is a comprehensive TypeScript SDK for GitHub Actions that provides:
+`@kjanat/gha-env-validator` is a comprehensive TypeScript SDK for GitHub Actions
+that provides:
 
 - **Type-safe environment variable validation** using Zod v4
-- **Rich IntelliSense** with hover documentation for all 43 default GitHub Actions variables
+- **Rich IntelliSense** with hover documentation for all 43 default GitHub
+  Actions variables
 - **Workflow command helpers** for outputs, summaries, annotations, and more
 - **Context utilities** for branches, repos, commits, PRs, and runners
 - **Action input validation** with type-safe schemas

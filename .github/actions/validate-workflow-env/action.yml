@@ -1,0 +1,37 @@
+name: "Validate Workflow Environment"
+description: "Type-safe validation of GitHub Actions environment variables with custom schema support"
+author: "@kjanat"
+
+inputs:
+  custom-schema:
+    description: "JSON string defining custom Zod schema for additional env vars (optional)"
+    required: false
+    default: ""
+
+  strict-mode:
+    description: "Enable strict mode (strips unknown environment variables)"
+    required: false
+    default: "false"
+
+  required-vars:
+    description: "Multiline list of required custom environment variables"
+    required: false
+    default: ""
+
+  mask-sensitive:
+    description: "Automatically mask sensitive values in logs"
+    required: false
+    default: "true"
+
+outputs:
+  validation-status:
+    description: "Validation status: success or failed"
+    value: ${{ steps.validate.outputs.validation-status }}
+
+  env-count:
+    description: "Number of environment variables validated"
+    value: ${{ steps.validate.outputs.env-count }}
+
+runs:
+  using: node24
+  main: ./dist/index.mjs
