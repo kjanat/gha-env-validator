@@ -25367,7 +25367,7 @@ config2(en_default2());
 var InputSchemaShape = {
   "test-results-file": exports_external2.string().default("bun.xml"),
   "coverage-file": exports_external2.string().default("lcov.info"),
-  "codecov-token": exports_external2.string().min(1, "Codecov token is required"),
+  "codecov-token": exports_external2.string().optional().default(""),
   "fail-on-error": exports_external2.boolean().default(false),
   "use-oidc": exports_external2.boolean().default(true)
 };
@@ -25378,7 +25378,7 @@ async function run() {
       notice("ACT detected; skipping Codecov upload action.");
       return;
     }
-    const env = validateEnv();
+    validateEnv();
     assertGitHubActions();
     const inputResult = safeValidateInputs(InputSchemaShape);
     if (!inputResult.success) {

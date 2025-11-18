@@ -14,8 +14,9 @@ inputs:
     default: "lcov.info"
 
   codecov-token:
-    description: "Codecov token for authentication"
-    required: true
+    description: "Codecov token for authentication (optional when using OIDC)"
+    required: false
+    default: ""
 
   fail-on-error:
     description: "Fail the action if upload fails"

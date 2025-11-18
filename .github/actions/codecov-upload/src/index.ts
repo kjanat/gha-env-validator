@@ -25,7 +25,7 @@ import { z } from "zod";
 const InputSchemaShape = {
   "test-results-file": z.string().default("bun.xml"),
   "coverage-file": z.string().default("lcov.info"),
-  "codecov-token": z.string().min(1, "Codecov token is required"),
+  "codecov-token": z.string().optional().default(""),
   "fail-on-error": z.boolean().default(false),
   "use-oidc": z.boolean().default(true)
 } as const;
@@ -44,7 +44,7 @@ async function run(): Promise<void> {
     }
 
     // Validate environment only after ACT check to avoid failures in local simulators
-    const env = validateEnv();
+    validateEnv();
 
     // Ensure we're running in GitHub Actions
     assertGitHubActions();
