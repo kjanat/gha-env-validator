@@ -11,7 +11,7 @@
   },
   "scripts": {
     "build": "bun run build.ts",
-    "typecheck": "bunx tsgo --noEmit"
+    "typecheck": "bunx tsc --noEmit"
   },
   "dependencies": {
     "@kjanat/gha-env-validator": "file:../../..",

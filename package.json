@@ -74,7 +74,7 @@
     "lint:fix": "biome check --write",
     "prepublishOnly": "bun run build && bun test",
     "test": "bun run build && bun test",
-    "typecheck": "bunx tsgo --noEmit"
+    "typecheck": "bunx tsc --noEmit"
   },
   "dependencies": {
     "zod": "latest"

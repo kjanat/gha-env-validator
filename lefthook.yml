@@ -17,7 +17,7 @@ pre-commit:
     format:
       glob: "*.{ts,js,json,md,yml,yaml}"
       run: |
-        dprint fmt --config-discovery=false --config .dprint.jsonc --allow-no-files --staged {staged_files}
+        bunx dprint fmt --config-discovery=false --config .dprint.jsonc --allow-no-files --staged {staged_files}
       stage_fixed: true
 
     # 3. Run tests
