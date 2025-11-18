@@ -20,10 +20,16 @@ pre-commit:
         dprint fmt --config-discovery=false --config .dprint.jsonc --allow-no-files --staged {staged_files}
       stage_fixed: true
 
-    # 3. Run tests
+    # 3. Build GitHub Actions
+    build-actions:
+      glob: ".github/actions/*/{src,build.ts}"
+      run: bun run build:actions
+      stage_fixed: true
+
+    # 4. Run tests
     test:
       run: bun test
 
-    # 4. Type check
+    # 5. Type check
     typecheck:
       run: bun run typecheck
