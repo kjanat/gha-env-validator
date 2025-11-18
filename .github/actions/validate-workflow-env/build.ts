@@ -7,6 +7,5 @@ Bun.build({
     identifiers: false,
     syntax: false
   },
-  external: ["zod"],
   naming: "[dir]/[name].mjs"
 });
