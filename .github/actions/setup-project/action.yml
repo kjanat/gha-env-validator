@@ -26,16 +26,56 @@ inputs:
 outputs:
   node-version:
     description: "Actual Node.js version installed"
-    value: ${{ steps.setup.outputs.node-version }}
+    value: ${{ steps.setup-node.outputs.node-version }}
 
   bun-version:
     description: "Actual Bun version installed"
-    value: ${{ steps.setup.outputs.bun-version }}
+    value: ${{ steps.setup-bun.outputs.bun-version }}
 
   build-status:
     description: "Build status: skipped, success, or failed"
-    value: ${{ steps.setup.outputs.build-status }}
+    value: ${{ steps.build.outputs.status }}
 
 runs:
-  using: node24
-  main: ./dist/index.mjs
+  using: composite
+  steps:
+    - name: Setup Node.js
+      id: setup-node
+      uses: actions/setup-node@v4
+      with:
+        node-version: ${{ inputs.node-version }}
+
+    - name: Setup Bun
+      id: setup-bun
+      uses: oven-sh/setup-bun@v2
+      with:
+        bun-version: ${{ inputs.bun-version }}
+
+    - name: Install dependencies
+      shell: bash
+      run: |
+        echo "📥 Installing dependencies..."
+        if [ -n "${{ inputs.install-args }}" ]; then
+          bun install ${{ inputs.install-args }}
+        else
+          bun install
+        fi
+
+    - name: Build project
+      id: build
+      if: inputs.skip-build != 'true'
+      shell: bash
+      run: |
+        echo "🔨 Building project..."
+        if bun run build; then
+          echo "status=success" >> $GITHUB_OUTPUT
+        else
+          echo "status=failed" >> $GITHUB_OUTPUT
+          exit 1
+        fi
+
+    - name: Set skipped status
+      id: skip-marker
+      if: inputs.skip-build == 'true'
+      shell: bash
+      run: echo "status=skipped" >> $GITHUB_OUTPUT
