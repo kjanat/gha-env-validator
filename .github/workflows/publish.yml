@@ -30,7 +30,6 @@ jobs:
       - uses: oven-sh/setup-bun@v2
       - name: Plan
         id: plan
-        working-directory: packages/gha-env-validator
         run: |
           PKG_NAME="$(bun pm pkg get name | tr -d '"')"
           PKG_VERSION="$(bun pm pkg get version | tr -d '"')"
@@ -87,7 +86,6 @@ jobs:
 
       - name: Verify build
         if: ${{ needs.plan.outputs.release != 'true' }}
-        working-directory: packages/gha-env-validator
         run: |
           ls -lh dist/
           test -f dist/index.mjs || exit 1
@@ -96,13 +94,11 @@ jobs:
       - name: Dry run publish
         id: dry-run
         if: ${{ needs.plan.outputs.dry-run == 'true' }}
-        working-directory: packages/gha-env-validator
         run: npm publish --dry-run --provenance
 
       - name: Publish to npm
         id: publish
         if: ${{ needs.plan.outputs.release == 'true' }}
-        working-directory: packages/gha-env-validator
         run: npm publish --access public --provenance
 
       - name: Summary

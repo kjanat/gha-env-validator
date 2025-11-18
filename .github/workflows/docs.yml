@@ -20,13 +20,18 @@ jobs:
     steps:
       - uses: actions/checkout@v5
 
-      # Type-safe setup (skip main build, only need docs)
-      - name: Setup project with validation
-        uses: ./.github/actions/setup-project
+      - name: Setup Node.js
+        uses: actions/setup-node@v4
         with:
           node-version: "lts/*"
-          bun-version: "latest"
-          skip-build: true
+
+      - name: Setup Bun
+        uses: oven-sh/setup-bun@v2
+        with:
+          bun-version: latest
+
+      - name: Install dependencies
+        run: bun install
 
       - name: Build docs
         run: bun run docs:build
