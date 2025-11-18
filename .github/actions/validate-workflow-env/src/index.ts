@@ -54,6 +54,11 @@ function isSensitive(name: string): boolean {
  */
 async function run(): Promise<void> {
   try {
+    if (process.env.ACT === "true") {
+      notice("ACT detected; skipping validate-workflow-env action.");
+      return;
+    }
+
     // Parse and validate inputs
     const inputResult = safeValidateInputs(InputSchemaShape);
 
@@ -214,7 +219,7 @@ async function createSuccessSummary(
   summary += `| Actor | \`${envData.GITHUB_ACTOR || "N/A"}\` |\n`;
   summary += `| Workflow | \`${envData.GITHUB_WORKFLOW || "N/A"}\` |\n`;
 
-  await addJobSummary(summary);
+  addJobSummary(summary);
 }
 
 /**
@@ -235,7 +240,7 @@ async function createErrorSummary(errors: z.ZodIssue[]): Promise<void> {
   summary +=
     `Check that all required environment variables are set correctly in your workflow.\n`;
 
-  await addJobSummary(summary);
+  addJobSummary(summary);
 }
 
 // Execute main function

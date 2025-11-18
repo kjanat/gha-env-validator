@@ -1,6 +1,7 @@
 # API Reference
 
-Complete API documentation is available in the [README](https://github.com/kjanat/gha-env-validator#api-reference).
+Complete API documentation is available in the
+[README](https://github.com/kjanat/gha-env-validator#api-reference).
 
 ## Core Modules
 
@@ -14,4 +15,5 @@ Complete API documentation is available in the [README](https://github.com/kjana
 
 **Inputs** - validateInputs(), getInput(), getBooleanInput()
 
-See the GitHub repository for complete TypeScript type definitions and JSDoc documentation.
+See the GitHub repository for complete TypeScript type definitions and JSDoc
+documentation.

@@ -9,6 +9,7 @@ import { safeValidateInputs } from "@kjanat/gha-env-validator/inputs";
 import {
   addJobSummary,
   addSummaryTable,
+  formatSummaryCodeBlock,
   group,
   error as logError,
   notice,
@@ -26,7 +27,7 @@ const BuildResultSchema = z.object({
   duration: z.number().optional(),
   os: z.string().optional(),
   version: z.string().optional(),
-  url: z.string().url().optional(),
+  url: z.url().optional(),
   error: z.string().optional()
 });
 
@@ -42,7 +43,7 @@ const InputSchemaShape = {
       return z.array(BuildResultSchema).parse(parsed);
     } catch (err) {
       ctx.addIssue({
-        code: z.ZodIssueCode.custom,
+        code: "custom",
         message: `Invalid matrix-results JSON: ${err}`
       });
       return z.NEVER;
@@ -149,7 +150,7 @@ async function generateSummary(
   results: BuildResult[],
   stats: BuildStatistics
 ): Promise<void> {
-  let summary = `# ${inputs.title}\n\n`;
+  addJobSummary(`# ${inputs.title}\n\n`);
 
   // Add GitHub context if requested
   if (inputs["include-context"]) {
@@ -158,37 +159,38 @@ async function generateSummary(
     const commitSha = getCommitSha("short");
     const workflowRun = getWorkflowRun();
 
-    summary += `## Context\n\n`;
-    summary += `| Property | Value |\n`;
-    summary += `|----------|-------|\n`;
-    summary += `| Repository | \`${repo.full}\` |\n`;
-    summary += `| Branch | \`${branch}\` |\n`;
-    summary += `| Commit | \`${commitSha}\` |\n`;
-    summary += `| Run | [#${workflowRun.number}](${workflowRun.url}) |\n\n`;
+    addJobSummary(`## Context\n\n`);
+    addSummaryTable(
+      ["Property", "Value"],
+      [
+        ["Repository", `\`${repo.full}\``],
+        ["Branch", `\`${branch}\``],
+        ["Commit", `\`${commitSha}\``],
+        ["Run", `[#${workflowRun.number}](${workflowRun.url})`]
+      ]
+    );
+    addJobSummary(`\n`);
   }
 
   // Add statistics
-  summary += `## Statistics\n\n`;
-  summary += `| Metric | Value |\n`;
-  summary += `|--------|-------|\n`;
-  summary += `| Total Builds | ${stats.total} |\n`;
-  summary += `| ✅ Successful | ${stats.successful} |\n`;
-  summary += `| ❌ Failed | ${stats.failed} |\n`;
-  summary += `| ⏭️ Skipped | ${stats.skipped} |\n`;
-  summary += `| Success Rate | ${stats.successRate.toFixed(1)}% |\n`;
+  addJobSummary(`## Statistics\n\n`);
+  const statisticsRows: string[][] = [
+    ["Total Builds", stats.total.toString()],
+    ["✅ Successful", stats.successful.toString()],
+    ["❌ Failed", stats.failed.toString()],
+    ["⏭️ Skipped", stats.skipped.toString()],
+    ["Success Rate", `${stats.successRate.toFixed(1)}%`]
+  ];
 
   if (stats.averageDuration > 0) {
-    summary += `| Average Duration | ${
+    statisticsRows.push([
+      "Average Duration",
       formatDuration(stats.averageDuration)
-    } |\n`;
+    ]);
   }
 
-  summary += `\n`;
-
-  // Add results table
-  summary += `## Results\n\n`;
-
-  await addJobSummary(summary);
+  addSummaryTable(["Metric", "Value"], statisticsRows);
+  addJobSummary(`\n## Results\n\n`);
 
   // Create results table
   const headers = ["Build", "Status", "Duration", "Platform"];
@@ -205,18 +207,14 @@ async function generateSummary(
   if (stats.failed > 0) {
     const failedBuilds = results.filter((r) => r.status === "failed");
 
-    let errorSummary = `\n## ❌ Failed Builds\n\n`;
+    const failedSections = failedBuilds.map((build) => {
+      const errorContent = build.error
+        ? formatSummaryCodeBlock(build.error)
+        : `_No error details available_`;
+      return `### ${build.name}\n\n${errorContent}`;
+    });
 
-    for (const build of failedBuilds) {
-      errorSummary += `### ${build.name}\n\n`;
-      if (build.error) {
-        errorSummary += `\`\`\`\n${build.error}\n\`\`\`\n\n`;
-      } else {
-        errorSummary += `_No error details available_\n\n`;
-      }
-    }
-
-    await addJobSummary(errorSummary);
+    addJobSummary(`\n## ❌ Failed Builds\n\n${failedSections.join("\n\n")}\n`);
   }
 }
 

@@ -37,9 +37,5 @@ outputs:
     value: ${{ steps.setup.outputs.build-status }}
 
 runs:
-  using: composite
-  steps:
-    - name: Validate and setup
-      id: setup
-      shell: bash
-      run: node ${{ github.action_path }}/dist/index.js
+  using: node24
+  main: ./dist/index.mjs

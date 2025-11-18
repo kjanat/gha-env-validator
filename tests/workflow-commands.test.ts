@@ -6,10 +6,12 @@ import {
   addJobSummary,
   addPath,
   addSummary,
+  addSummaryCodeBlock,
   addSummaryTable,
   clearJobSummary,
   debug,
   error,
+  formatSummaryCodeBlock,
   group,
   isGitHubActions,
   maskValue,
@@ -283,6 +285,20 @@ describe("workflow commands", () => {
       expect(content).toContain("| A | B | C |");
       expect(content).toContain("| D | E | F |");
       expect(content).toContain("| G | H | I |");
+    });
+
+    test("formatSummaryCodeBlock wraps code with fences and language", () => {
+      const block = formatSummaryCodeBlock("echo hello", "bash");
+      expect(block).toBe("```bash\necho hello\n```");
+    });
+
+    test("addSummaryCodeBlock writes fenced block to summary", () => {
+      addSummaryCodeBlock("const x = 1;", "ts");
+
+      const content = fs.readFileSync(summaryFile, "utf-8");
+      expect(content).toContain("```ts");
+      expect(content).toContain("const x = 1;");
+      expect(content.trimEnd().endsWith("```")).toBe(true);
     });
   });
 

@@ -3,7 +3,8 @@
 All notable changes to this project will be documented in this file.
 
 The format is based on [Keep a Changelog](https://keepachangelog.com/en/1.1.0/),
-and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0.html).
+and this project adheres to
+[Semantic Versioning](https://semver.org/spec/v2.0.0.html).
 
 ## [0.2.0] - 2025-11-17
 
@@ -11,15 +12,18 @@ and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0
 
 #### Type-Safe Zod Metadata Utilities
 
-- **New `metadata.ts` module** with comprehensive Zod schema introspection utilities
+- **New `metadata.ts` module** with comprehensive Zod schema introspection
+  utilities
   - `getSchemaMetadata()` - Safely extract metadata from schemas
   - `getZodTypeName()` - Get internal Zod type names
   - `isBooleanSchema()` - Check if schema represents boolean type
   - `isSchemaOptional()` - Determine if schema is optional
   - `isZodEnum()` - Type guard for enum schemas
   - `getEnumValues()` - Extract enum values safely
-- **Eliminated all 21 explicit `any` types** across the codebase for improved type safety
-- Enables powerful tooling scenarios: form builders, documentation generators, validation reporters
+- **Eliminated all 21 explicit `any` types** across the codebase for improved
+  type safety
+- Enables powerful tooling scenarios: form builders, documentation generators,
+  validation reporters
 
 ### 🏗️ Build System Migration
 
@@ -44,7 +48,8 @@ and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0
 
 #### Modern CI/CD Pipeline
 
-- **Split CI workflow** into dedicated `lint` and `test` jobs for better parallelization
+- **Split CI workflow** into dedicated `lint` and `test` jobs for better
+  parallelization
 - **Codecov integration** for test coverage reporting with LCOV format
 - **Enhanced publish workflow**:
   - Planning job with dry-run capability

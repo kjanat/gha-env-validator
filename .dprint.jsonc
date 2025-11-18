@@ -65,6 +65,7 @@
     "**/node_modules",
     "**/*lock.*",
     "**/.zed/settings.json",
+    "**/dist",
     "README.md"
   ],
 

@@ -42,8 +42,13 @@ docs/.vitepress/cache
 _*.md
 
 # Bundler
-dist/
+/dist/
 
 # Bun
 bun.xml
 lcov.info
+
+# Vitepress
+**/cache/
+
+!.github/actions/**/dist

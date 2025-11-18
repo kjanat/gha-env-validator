@@ -1,24 +1,5 @@
 {
-  "compilerOptions": {
-    "lib": ["ESNext"],
-    "target": "ESNext",
-    "module": "ESNext",
-    "moduleDetection": "force",
-    "moduleResolution": "bundler",
-    "allowImportingTsExtensions": false,
-    "verbatimModuleSyntax": true,
-    "esModuleInterop": true,
-    "resolveJsonModule": true,
-    "strict": true,
-    "skipLibCheck": true,
-    "noEmit": true,
-    "types": ["bun-types"],
-    "baseUrl": "../../../",
-    "paths": {
-      "@kjanat/gha-env-validator": ["packages/gha-env-validator/src/index.ts"],
-      "@kjanat/gha-env-validator/*": ["packages/gha-env-validator/src/*"],
-      "~/*": ["packages/gha-env-validator/src/*"]
-    }
-  },
-  "include": ["src", "../../../packages/gha-env-validator/src"]
+  "extends": "../tsconfig.json",
+  "buildOptions": {},
+  "include": ["src"]
 }

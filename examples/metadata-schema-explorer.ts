@@ -146,12 +146,9 @@ function generateJsonSchemaStub(vars: VariableInfo[]) {
       title: v.title,
       description: v.description,
       examples: [v.example],
-      category: v.category
+      category: v.category,
+      ...(v.enum ? { enum: v.enum } : {})
     };
-
-    if (v.enum) {
-      properties[v.name].enum = v.enum;
-    }
   });
 
   return {

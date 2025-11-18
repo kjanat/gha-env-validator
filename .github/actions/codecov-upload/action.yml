@@ -37,11 +37,5 @@ outputs:
     value: ${{ steps.upload.outputs.coverage-status }}
 
 runs:
-  using: composite
-  steps:
-    - name: Upload to Codecov
-      id: upload
-      shell: bash
-      run: node ${{ github.action_path }}/dist/index.js
-      env:
-        CODECOV_TOKEN: ${{ inputs.codecov-token }}
+  using: node24
+  main: ./dist/index.mjs

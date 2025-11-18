@@ -33,9 +33,5 @@ outputs:
     value: ${{ steps.validate.outputs.env-count }}
 
 runs:
-  using: composite
-  steps:
-    - name: Validate environment
-      id: validate
-      shell: bash
-      run: node ${{ github.action_path }}/dist/index.js
+  using: node24
+  main: ./dist/index.mjs

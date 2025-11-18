@@ -530,6 +530,35 @@ export function addSummary(title: string, markdown: string): void {
 }
 
 /**
+ * Adds a fenced code block to the job summary.
+ *
+ * @example
+ * ```typescript
+ * import { addSummaryCodeBlock } from '@kjanat/gha-env-validator';
+ *
+ * addSummaryCodeBlock('npm test', 'bash');
+ * addSummaryCodeBlock(JSON.stringify({ status: 'ok' }, null, 2), 'json');
+ * ```
+ *
+ * @param code - Code or log content to fence
+ * @param lang - Optional language hint for syntax highlighting
+ */
+export function formatSummaryCodeBlock(code: string, lang = ""): string {
+  const fence = "```";
+  return `${fence}${lang}\n${code}\n${fence}`;
+}
+
+/**
+ * Adds a fenced code block to the job summary.
+ *
+ * @param code - Code or log content to fence
+ * @param lang - Optional language hint for syntax highlighting
+ */
+export function addSummaryCodeBlock(code: string, lang = ""): void {
+  addJobSummary(`${formatSummaryCodeBlock(code, lang)}\n\n`);
+}
+
+/**
  * Adds a table to the job summary.
  *
  * @example

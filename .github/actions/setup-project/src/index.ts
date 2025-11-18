@@ -1,17 +1,18 @@
 #!/usr/bin/env node
-import { validateEnv } from "@kjanat/gha-env-validator";
-import { getRepoInfo } from "@kjanat/gha-env-validator/context";
-import { safeValidateInputs } from "@kjanat/gha-env-validator/inputs";
+import { execSync, spawnSync } from "node:child_process";
 import {
   addJobSummary,
   endGroup,
   error,
+  getRepoInfo,
   notice,
+  safeValidateInputs,
   setFailed,
   setOutput,
-  startGroup
-} from "@kjanat/gha-env-validator/workflow-commands";
-import { $ } from "bun";
+  startGroup,
+  validateEnv,
+  warning
+} from "@kjanat/gha-env-validator";
 import { z } from "zod";
 
 /**
@@ -32,6 +33,11 @@ type SetupInputs = z.infer<typeof InputSchema>;
  */
 async function run(): Promise<void> {
   try {
+    if (process.env.ACT === "true") {
+      notice("ACT detected; skipping setup-project action.");
+      return;
+    }
+
     // Validate GitHub Actions environment
     validateEnv();
 
@@ -63,7 +69,7 @@ async function run(): Promise<void> {
     setOutput("build-status", buildStatus);
 
     // Add summary
-    await addJobSummary(`
+    addJobSummary(`
 ## ✅ Project Setup Complete
 
 | Component | Version/Status |
@@ -128,13 +134,25 @@ async function installDependencies(extraArgs: string): Promise<void> {
 
   notice(`Running: ${command}`);
 
-  try {
-    // Execute bun install
-    await $`bun install ${args.split(" ").filter(Boolean)}`;
-    notice("Dependencies installed successfully");
-  } catch (err) {
-    throw new Error(`Failed to install dependencies: ${err}`);
+  if (!bunAvailable()) {
+    warning("Bun is not available; skipping install step.");
+    endGroup();
+    return;
   }
+
+  const result = spawnSync(
+    "bun",
+    ["install", ...args.split(" ").filter(Boolean)],
+    {
+      stdio: "inherit"
+    }
+  );
+
+  if (result.status !== 0) {
+    throw new Error("Failed to install dependencies");
+  }
+
+  notice("Dependencies installed successfully");
 
   endGroup();
 }
@@ -142,22 +160,38 @@ async function installDependencies(extraArgs: string): Promise<void> {
 /**
  * Run build step
  */
-async function runBuild(): Promise<"success" | "failed"> {
+async function runBuild(): Promise<"success" | "failed" | "skipped"> {
   startGroup("🔨 Build Project");
 
   notice("Running: bun run build");
 
-  try {
-    await $`bun run build`;
+  if (!bunAvailable()) {
+    warning("Bun is not available; skipping build step.");
+    endGroup();
+    return "skipped";
+  }
+
+  const result = spawnSync("bun", ["run", "build"], { stdio: "inherit" });
+
+  if (result.status === 0) {
     notice("Build completed successfully");
     endGroup();
     return "success";
-  } catch (err) {
-    error(`Build failed: ${err}`);
-    endGroup();
-    return "failed";
   }
+
+  error("Build failed");
+  endGroup();
+  return "failed";
 }
 
 // Execute main function
 run();
+
+function bunAvailable(): boolean {
+  try {
+    execSync("bun --version", { stdio: "ignore" });
+    return true;
+  } catch {
+    return false;
+  }
+}

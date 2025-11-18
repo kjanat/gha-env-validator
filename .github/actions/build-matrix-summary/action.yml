@@ -31,9 +31,5 @@ outputs:
     value: ${{ steps.summary.outputs.failed-builds }}
 
 runs:
-  using: composite
-  steps:
-    - name: Generate summary
-      id: summary
-      shell: bash
-      run: node ${{ github.action_path }}/dist/index.js
+  using: node24
+  main: ./dist/index.mjs

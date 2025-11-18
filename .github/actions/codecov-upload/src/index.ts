@@ -1,23 +1,22 @@
 #!/usr/bin/env node
 import { existsSync } from "node:fs";
 import {
+  addSummaryTable,
   assertGitHubActions,
+  endGroup,
+  error,
   getCommitSha,
   getPullRequestInfo,
   getRepoInfo,
-  isPullRequest
-} from "@kjanat/gha-env-validator";
-import { safeValidateInputs } from "@kjanat/gha-env-validator/inputs";
-import {
-  addSummaryTable,
-  endGroup,
-  error,
+  isPullRequest,
   notice,
+  safeValidateInputs,
   setFailed,
   setOutput,
   startGroup,
+  validateEnv,
   warning
-} from "@kjanat/gha-env-validator/workflow-commands";
+} from "@kjanat/gha-env-validator";
 import { z } from "zod";
 
 /**
@@ -39,6 +38,14 @@ type CodecovInputs = z.infer<typeof InputSchema>;
  */
 async function run(): Promise<void> {
   try {
+    if (process.env.ACT === "true") {
+      notice("ACT detected; skipping Codecov upload action.");
+      return;
+    }
+
+    // Validate environment only after ACT check to avoid failures in local simulators
+    const env = validateEnv();
+
     // Ensure we're running in GitHub Actions
     assertGitHubActions();
 

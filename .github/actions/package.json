@@ -1,0 +1,20 @@
+{
+  "name": "@actions/gha-env-validator-workspace",
+  "private": true,
+  "workspaces": [
+    "./*"
+  ],
+  "scripts": {
+    "build": "bun run --filter '*' build",
+    "build:watch": "bun run --filter '*' build --watch",
+    "typecheck": "bun run --filter '*' typecheck"
+  },
+  "dependencies": {},
+  "catalog": {
+    "zod": "latest",
+    "@types/bun": "latest",
+    "@types/node": "latest",
+    "typescript": "next",
+    "@typescript/native-preview": "latest"
+  }
+}

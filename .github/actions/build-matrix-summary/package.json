@@ -1,16 +1,29 @@
 {
-  "name": "build-matrix-summary-action",
+  "name": "build-matrix-summary",
   "version": "1.0.0",
   "private": true,
+  "keywords": [
+    "actions"
+  ],
   "type": "module",
+  "exports": {
+    ".": "./dist/index.mjs"
+  },
   "scripts": {
-    "build": "bun build src/main.ts --target=bun --outfile=dist/index.js --packages=external",
-    "typecheck": "tsc --noEmit"
+    "build": "bun run build.ts",
+    "typecheck": "bunx tsgo --noEmit"
   },
   "dependencies": {
-    "@kjanat/gha-env-validator": "workspace:*"
+    "@kjanat/gha-env-validator": "file:../../..",
+    "zod": "catalog:"
   },
   "devDependencies": {
-    "zod": "^4.1.12"
+    "@types/bun": "catalog:",
+    "@types/node": "catalog:",
+    "@typescript/native-preview": "catalog:",
+    "typescript": "catalog:"
+  },
+  "engines": {
+    "node": ">=24"
   }
 }
