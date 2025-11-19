@@ -4,20 +4,15 @@ Welcome to the interactive playground for `@kjanat/gha-env-validator`!
 
 ## Quick Start
 
-This project uses **Bun** for package management and execution. After dependencies install, try:
+After dependencies install, build the package first:
 
 ```bash
-# Run a basic example
-bun examples/basic-usage.ts
-
-# Run the complete action example
-bun examples/complete-action-example.ts
-
-# Run other examples
-bun examples/custom-variables.ts
-bun examples/safe-validation.ts
-bun examples/workflow-integration.ts
+npm run build
 ```
+
+Then explore the source code and examples in the `examples/` directory.
+
+> **Note**: StackBlitz doesn't support Bun or GitHub Actions environment variables, so this is mainly for code exploration. For full functionality, use locally or in a GitHub Actions workflow.
 
 ## Available Examples
 
