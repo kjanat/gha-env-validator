@@ -83,4 +83,4 @@ See the `examples/` directory in the repository for:
 
 Try the package live:
 
-[Open in StackBlitz →](https://stackblitz.com/edit/gha-env-validator-demo)
+[Open in StackBlitz →](https://stackblitz.com/~/github/kjanat/gha-env-validator)
