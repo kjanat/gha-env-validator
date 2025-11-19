@@ -57,7 +57,7 @@
     "docs:dev": "vitepress dev docs",
     "docs:preview": "vitepress preview docs",
     "format": "dprint fmt --config-discovery=false --config .dprint.jsonc --allow-no-files",
-    "postinstall": "lefthook install",
+    "postinstall": "lefthook install || true",
     "lint": "biome check",
     "lint:fix": "biome check --write",
     "prepublishOnly": "bun run build && bun test",
